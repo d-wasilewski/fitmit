@@ -2,11 +2,16 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+import Start from "./pages/start";
+import Login from "./pages/login";
+import Register from "./pages/register";
+
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Fitmit</Text>
-      <StatusBar style="auto" />
+      <Start />
+      {/* {/* <Login /> */}
+      {/* <Register /> */}
     </View>
   );
 }
