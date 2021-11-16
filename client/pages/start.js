@@ -4,13 +4,20 @@ import bgPhoto from "../assets/startScreenBackground.jpg";
 
 import Button from "../components/Button";
 
-const Start = () => {
+const Start = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
-          <Button title={"get started"} />
-          <Button secondary title={"login"} />
+          <Button
+            title={"get started"}
+            onPress={() => navigation.navigate("Register")}
+          />
+          <Button
+            secondary
+            title={"login"}
+            onPress={() => navigation.navigate("Login")}
+          />
         </View>
       </ImageBackground>
     </View>

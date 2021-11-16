@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Button = (props) => {
-  const { title } = props;
+  const { title, onPress } = props;
   const [variant] = useState(props.primary);
 
   let text;
   props.secondary
     ? (text = <Text style={[styles.btn_secondary, styles.btn]}>{title}</Text>)
     : (text = <Text style={[styles.btn_primary, styles.btn]}>{title}</Text>);
-
-  const onPress = () => console.log(variant);
 
   return (
     <TouchableOpacity
@@ -27,6 +25,7 @@ const styles = StyleSheet.create({
   btn_primary: {
     color: "black",
     backgroundColor: "#6BF300",
+    // to trzeba bedzie zmienic jak sie doda inputy
     marginTop: "70vh",
     // fontFamily: "Roboto", XD
     // TODO: znalezc nowego fonta
