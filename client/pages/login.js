@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
 
 import Button from "../components/Button";
+import Input from "../components/Input";
 
 const Start = () => {
   return (
     <View>
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
+        <Input placeholder='Username'></Input>
           <Button
             secondary
             title={"login"}
