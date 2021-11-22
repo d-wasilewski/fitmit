@@ -9,10 +9,10 @@ const Start = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
-          <Button
+          {/* <Button
             title={"get started"}
             onPress={() => navigation.navigate("Register")}
-          />
+          /> */}
           <Button
             secondary
             title={"login"}
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
   child: {
     height: "100%",
     backgroundColor: "rgba(0,0,0,0.3)",
+    flex: 1,
+    // flex,
   },
 });
 

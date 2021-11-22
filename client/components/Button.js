@@ -26,14 +26,18 @@ const styles = StyleSheet.create({
     color: "black",
     backgroundColor: "#6BF300",
     // to trzeba bedzie zmienic jak sie doda inputy
-    marginTop: "70vh",
+
     // fontFamily: "Roboto", XD
     // TODO: znalezc nowego fonta
   },
-  btn_secondary: { color: "#6BF300" },
+  btn_secondary: {
+    color: "#6BF300",
+    marginTop: 40,
+  },
   container: {
     // flex: 1,
     justifyContent: "center",
+    marginTop: "70vh",
   },
   btn: {
     flex: 1,
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
     margin: "auto",
     textTransform: "uppercase",
     border: "2px solid #6BF300",
-    borderRadius: 9999,
+    borderRadius: 999,
     paddingVertical: 10,
     marginVertical: 10,
   },
