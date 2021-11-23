@@ -4,12 +4,15 @@ import bgPhoto from "../assets/startScreenBackground.jpg";
 import TopBar from "../components/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const Register = () => {
+const Register = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TopBar leftIcon={faArrowLeft} color={"#F0F0F0"} />
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
-        <TopBar color={"#F0F0F0"} leftIcon={faArrowLeft} />
+        <TopBar
+          color={"#F0F0F0"}
+          leftIcon={faArrowLeft}
+          onPressLeft={() => navigation.navigate("Start")}
+        />
         <Text style={styles.center}>Register page</Text>
         <View></View>
       </ImageBackground>
