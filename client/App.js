@@ -19,11 +19,10 @@ export default function App() {
     // </View>
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
-        // screenOptions={{
-        //   headerShown: false,
-        // }}
-        // zakomentowane dla łatwiejszej nawigacji dopóki nie zrobimy swojego headera
+        initialRouteName="Start"
+        screenOptions={{
+          headerShown: false,
+        }}
       >
         <Stack.Screen name="Start" component={Start} />
         <Stack.Screen name="Login" component={Login} />

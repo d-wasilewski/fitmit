@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     color: "black",
     backgroundColor: "#6BF300",
     // to trzeba bedzie zmienic jak sie doda inputy
-
+    marginTop: "70vh",
     // fontFamily: "Roboto", XD
     // TODO: znalezc nowego fonta
   },
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     justifyContent: "center",
-    marginTop: "70vh",
   },
   btn: {
     flex: 1,

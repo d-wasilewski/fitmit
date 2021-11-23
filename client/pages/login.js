@@ -1,8 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
+
 import LoginForm from "../components/LoginForm";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
 import Button from "../components/Button";
+import TopBar from "../components/TopBar";
 
 const Start = () => {
   return (
@@ -10,6 +14,7 @@ const Start = () => {
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
           <LoginForm></LoginForm>
+          <TopBar leftIcon={faArrowLeft} color={"#F0F0F0"} />
           <Button
             secondary
             title={"login"}
