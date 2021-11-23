@@ -23,7 +23,6 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-        // zakomentowane dla łatwiejszej nawigacji dopóki nie zrobimy swojego headera
       >
         <Stack.Screen name="Start" component={Start} />
         <Stack.Screen name="Login" component={Login} />
