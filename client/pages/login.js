@@ -22,7 +22,7 @@ const Start = ({ navigation }) => {
           <Button
             secondary
             title={"login"}
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("Home")}
           />
         </View>
       </ImageBackground>

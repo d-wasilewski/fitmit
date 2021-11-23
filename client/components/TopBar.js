@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   icon: {
-    width: 32,
-    height: 32,
+    width: 30,
+    height: 30,
     justifyContent: "center",
     alignItems: "center",
     color: "white",
