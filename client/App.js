@@ -12,11 +12,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Start />
-    //   {/* {/* <Login /> */}
-    //   {/* <Register /> */}
-    // </View>
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Start"

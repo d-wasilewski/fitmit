@@ -1,27 +1,30 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Logo from "../assets/logo.png";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const TopBar = (props) => {
-  const { leftIcon, rightIcon, color } = props;
+  const { leftIcon, rightIcon, color, onPressLeft, onPressRight } = props;
 
   const leftStyleIcon = leftIcon === undefined ? styles.invisible : undefined;
   const rightStyleIcon = rightIcon === undefined ? styles.invisible : undefined;
 
   return (
-    //   TODO: jak sie usunie 1 z ikon to poprawic styl 🦍🦍🦍
     <View style={styles.container}>
-      <FontAwesomeIcon
-        icon={leftIcon ? leftIcon : faArrowLeft}
-        style={[styles.icon, { color }, leftStyleIcon]}
-      />
+      <TouchableOpacity onPress={onPressLeft}>
+        <FontAwesomeIcon
+          icon={leftIcon ? leftIcon : faArrowLeft}
+          style={[styles.icon, { color }, leftStyleIcon]}
+        />
+      </TouchableOpacity>
       <Image source={Logo} style={styles.image} />
-      <FontAwesomeIcon
-        icon={rightIcon ? rightIcon : faArrowLeft}
-        style={[styles.icon, { color }, rightStyleIcon]}
-      />
+      <TouchableOpacity onPress={onPressRight}>
+        <FontAwesomeIcon
+          icon={rightIcon ? rightIcon : faArrowLeft}
+          style={[styles.icon, { color }, rightStyleIcon]}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

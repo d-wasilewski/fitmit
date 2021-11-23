@@ -8,13 +8,17 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/Button";
 import TopBar from "../components/TopBar";
 
-const Start = () => {
+const Start = ({ navigation }) => {
   return (
     <View>
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
           <LoginForm></LoginForm>
-          <TopBar leftIcon={faArrowLeft} color={"#F0F0F0"} />
+          <TopBar
+            leftIcon={faArrowLeft}
+            color={"#F0F0F0"}
+            onPressLeft={() => navigation.navigate("Start")}
+          />
           <Button
             secondary
             title={"login"}
