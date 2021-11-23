@@ -1,23 +1,28 @@
 import React from "react";
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
-
 import Button from "../components/Button";
+import TopBar from "../components/TopBar";
 
 const Start = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
-          {/* <Button
-            title={"get started"}
-            onPress={() => navigation.navigate("Register")}
-          /> */}
-          <Button
-            secondary
-            title={"login"}
-            onPress={() => navigation.navigate("Login")}
-          />
+          <TopBar color={"#F0F0F0"} />
+          <View>
+            <Button
+              title={"get started"}
+              onPress={() => navigation.navigate("Register")}
+            />
+          </View>
+          <View>
+            <Button
+              secondary
+              title={"login"}
+              onPress={() => navigation.navigate("Login")}
+            />
+          </View>
         </View>
       </ImageBackground>
     </View>
@@ -40,7 +45,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "rgba(0,0,0,0.3)",
     flex: 1,
-    // flex,
+    // flexDirection: "column",
   },
 });
 
