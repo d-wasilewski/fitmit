@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
         color={colors.greenSecondary}
         onPressLeft={() => navigation.navigate("Home")}
       />
-      <HomeMenu />
+      <HomeMenu navigation={navigation} />
     </View>
   );
 };

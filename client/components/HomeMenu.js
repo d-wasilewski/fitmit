@@ -6,7 +6,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 
-const HomeMenu = () => {
+const HomeMenu = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity>
@@ -15,7 +15,7 @@ const HomeMenu = () => {
       <TouchableOpacity>
         <FontAwesomeIcon icon={faHome} style={[styles.icon]} />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("User")}>
         <FontAwesomeIcon icon={faUserCircle} style={[styles.icon]} />
       </TouchableOpacity>
     </View>
