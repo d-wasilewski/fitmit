@@ -6,6 +6,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 import TopBar from "../components/TopBar";
+import HomeMenu from "../components/HomeMenu";
 
 const Home = ({ navigation }) => {
   return (
@@ -16,6 +17,7 @@ const Home = ({ navigation }) => {
         color={colors.greenSecondary}
         onPressLeft={() => navigation.navigate("Home")}
       />
+      <HomeMenu />
     </View>
   );
 };
