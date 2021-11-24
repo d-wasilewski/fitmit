@@ -14,7 +14,6 @@ const Register = ({ navigation }) => {
           onPressLeft={() => navigation.navigate("Start")}
         />
         <Text style={styles.center}>Register page</Text>
-        <View></View>
       </ImageBackground>
     </View>
   );
@@ -22,7 +21,8 @@ const Register = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100vh",
+    height: "100%",
+    flex: 1,
   },
   center: {
     alignItems: "center",

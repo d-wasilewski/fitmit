@@ -1,17 +1,24 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Logo from "../assets/logo.png";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const TopBar = (props) => {
   const { leftIcon, rightIcon, color, onPressLeft, onPressRight } = props;
+  const { height } = useWindowDimensions();
 
   const leftStyleIcon = leftIcon === undefined ? styles.invisible : undefined;
   const rightStyleIcon = rightIcon === undefined ? styles.invisible : undefined;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: height * 0.08 }]}>
       <TouchableOpacity onPress={onPressLeft}>
         <FontAwesomeIcon
           icon={leftIcon ? leftIcon : faArrowLeft}
@@ -31,8 +38,7 @@ const TopBar = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "8vh",
-    position: "fixed",
+    position: "absolute",
     top: 0,
     left: 0,
     width: "100%",
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   image: {
-    width: "200px",
+    width: 200,
     height: 30,
     marginTop: 15,
   },

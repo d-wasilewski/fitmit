@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
@@ -17,9 +18,14 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import HomeMenu from "../components/HomeMenu";
 
 const User = ({ navigation }) => {
+  const { height } = useWindowDimensions();
   return (
     <View style={styles.container}>
-      <ImageBackground source={bgImg} resizeMode="cover" style={styles.image}>
+      <ImageBackground
+        source={bgImg}
+        resizeMode="cover"
+        style={[styles.image, { height: height * 0.3 }]}
+      >
         <Image style={styles.profilePicture} source={Papaj} />
         <TouchableOpacity
           style={styles.backArrow}
@@ -70,7 +76,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "30vh",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
     width: 180,
     height: 180,
     backgroundColor: "green",
-    borderRadius: "100%",
+    borderRadius: 9999,
     marginTop: "20%",
   },
   name: {

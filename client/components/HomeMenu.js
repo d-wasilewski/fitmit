@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faSearchLocation } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
@@ -7,8 +13,9 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 
 const HomeMenu = ({ navigation }) => {
+  const { height } = useWindowDimensions();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: height * 0.1 }]}>
       <TouchableOpacity>
         <FontAwesomeIcon icon={faSearchLocation} style={[styles.icon]} />
       </TouchableOpacity>
@@ -24,11 +31,10 @@ const HomeMenu = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: "fixed",
+    position: "absolute",
     bottom: 0,
     left: 0,
     width: "100%",
-    height: "10vh",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",

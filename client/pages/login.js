@@ -15,7 +15,7 @@ const Start = ({ navigation }) => {
         <View style={styles.child}>
           <LoginForm></LoginForm>
           <TopBar
-            leftIcon={faArrowLeft}
+            // leftIcon={faArrowLeft}
             color={"#F0F0F0"}
             onPressLeft={() => navigation.navigate("Start")}
           />
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
     // flex: 1,
     // transform: "scale(1.2)",
     // TODO: przeskalowac recznie image
-    height: "100vh",
-    width: "100vw",
+    height: "100%",
+    width: "100%",
   },
   child: {
     height: "100%",
