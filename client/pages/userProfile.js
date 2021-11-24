@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -7,18 +7,22 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
+  Pressable,
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
-import Papaj from "../assets/papaj.jpg";
+import noImg from "../assets/no-img.png";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
+import ImagePicker from "../components/ImagePicker";
 
 import HomeMenu from "../components/HomeMenu";
 
 const User = ({ navigation }) => {
   const { height } = useWindowDimensions();
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -26,7 +30,7 @@ const User = ({ navigation }) => {
         resizeMode="cover"
         style={[styles.image, { height: height * 0.3 }]}
       >
-        <Image style={styles.profilePicture} source={Papaj} />
+        <ImagePicker />
         <TouchableOpacity
           style={styles.backArrow}
           onPress={() => navigation.navigate("Home")}
@@ -35,7 +39,7 @@ const User = ({ navigation }) => {
         </TouchableOpacity>
       </ImageBackground>
 
-      <Text style={styles.name}>Papaj</Text>
+      <Text style={styles.name}>MiciuPapajciu</Text>
       <View style={styles.aboutMe}>
         <Text style={styles.aboutMeText}>About me</Text>
         <TouchableOpacity>
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
   backArrow: {
     position: "absolute",
     left: "7%",
-    top: 15,
+    top: 55,
   },
   iconTop: {
     color: colors.blackPrimary,
@@ -84,7 +88,6 @@ const styles = StyleSheet.create({
     height: 180,
     backgroundColor: "green",
     borderRadius: 9999,
-    marginTop: "20%",
   },
   name: {
     fontSize: 40,
