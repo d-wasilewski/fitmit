@@ -21,13 +21,13 @@ const Start = ({ navigation }) => {
       >
         <View style={[styles.child, { width, height }]}>
           <TopBar color={"#F0F0F0"} />
-          <View>
+          <View style={[styles.primmary_button]}>
             <Button
               title={"get started"}
               onPress={() => navigation.navigate("Register")}
             />
           </View>
-          <View>
+          <View style={styles.secondary_button}>
             <Button
               secondary
               title={"login"}
@@ -46,9 +46,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // backgroundColor: "red",
   },
   image: {
     flex: 1,
@@ -57,7 +54,19 @@ const styles = StyleSheet.create({
   },
   child: {
     backgroundColor: "rgba(0,0,0,0.3)",
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
+  primmary_button: {
+    height: "6%",
+    width: "70%",
+    marginBottom: "15%"
+  },
+  secondary_button: {
+    height: "6%",
+    width: "70%",
+    marginBottom: "35%"
+  }
 });
 
 export default Start;

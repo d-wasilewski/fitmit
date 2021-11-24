@@ -31,9 +31,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar hidden={false} animated={true} translucent={true} />
+      <StatusBar hidden={false} animated={true} translucent={false} />
       <Stack.Navigator
-        initialRouteName="User"
+        initialRouteName="Start"
         screenOptions={{
           headerShown: false,
         }}
