@@ -4,19 +4,21 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 const Button = (props) => {
   const { title, onPress } = props;
 
-  let text;
+  let text = 
   props.secondary
-    ? (text = <Text style={[styles.btn_secondary, styles.btn]}>Login</Text>)
-    : (text = <Text style={[styles.btn_primary, styles.btn]}>{title}</Text>);
+    ? (<Text style={[styles.btn, styles.btn_secondary]}>{title}</Text>)
+    : (<Text style={[styles.btn, styles.btn_primary]}>{title}</Text>);
 
-  return (
-    <TouchableOpacity
+    return (
+
+      <TouchableOpacity
       activeOpacity={0.8}
       style={styles.container}
       onPress={onPress}
-    >
+      >
       {text}
-    </TouchableOpacity>
+      </TouchableOpacity>
+    
   );
 };
 
@@ -25,23 +27,21 @@ const styles = StyleSheet.create({
     color: "black",
     backgroundColor: "#6BF300",
     // to trzeba bedzie zmienic jak sie doda inputy
-    marginTop: "70%",
+    // marginTop: "70%",
     // fontFamily: "Roboto", XD
     // TODO: znalezc nowego fonta
   },
   btn_secondary: {
     color: "#6BF300",
-    marginTop: 40,
   },
   container: {
-    // flex: 1,
-    justifyContent: "center",
-  },
-  btn: {
-    flex: 1,
     justifyContent: "center",
     width: "100%",
-    height: "auto",
+  },
+  btn: {
+    paddingTop: "7%",
+    height: "100%",
+    width: "100%",
     textAlign: "center",
     margin: "auto",
     textTransform: "uppercase",
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingVertical: 10,
     marginVertical: 10,
-    height: "30%",
   },
 });
 
