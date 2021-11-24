@@ -1,8 +1,8 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
 
 import Start from "./pages/start";
 import Login from "./pages/login";
@@ -13,8 +13,25 @@ import User from "./pages/userProfile";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [loaded] = useFonts({
+    RobotoRegular: require("./assets/fonts/Roboto-Regular.ttf"),
+    RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
+    RobotoBlackItalic: require("./assets/fonts/Roboto-BlackItalic.ttf"),
+    RobotoBold: require("./assets/fonts/Roboto-Bold.ttf"),
+    RobotoBoldItalic: require("./assets/fonts/Roboto-BoldItalic.ttf"),
+    RobotoLight: require("./assets/fonts/Roboto-Light.ttf"),
+    RobotoLightItalic: require("./assets/fonts/Roboto-LightItalic.ttf"),
+    RobotoMedium: require("./assets/fonts/Roboto-Medium.ttf"),
+    RobotoMediumItalic: require("./assets/fonts/Roboto-MediumItalic.ttf"),
+    RobotoThin: require("./assets/fonts/Roboto-Thin.ttf"),
+    RobotoThinItalic: require("./assets/fonts/Roboto-ThinItalic.ttf"),
+  });
+
+  if (!loaded) return null;
+
   return (
     <NavigationContainer>
+      <StatusBar hidden={false} animated={true} translucent={true} />
       <Stack.Navigator
         initialRouteName="User"
         screenOptions={{
