@@ -29,6 +29,18 @@ export default function App() {
 
   if (!loaded) return null;
 
+  const config = {
+    animation: 'spring',
+    config: {
+      stiffness: 1000,
+      damping: 50,
+      mass: 3,
+      overshootClamping: false,
+      restDisplacementThreshold: 0.01,
+      restSpeedThreshold: 0.01,
+    },
+  }
+
   return (
     <NavigationContainer>
       <StatusBar hidden={false} animated={true} translucent={false} />
@@ -36,6 +48,7 @@ export default function App() {
         initialRouteName="Start"
         screenOptions={{
           headerShown: false,
+          animation: "slide_from_right"
         }}
       >
         <Stack.Screen name="Start" component={Start} />
