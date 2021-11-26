@@ -15,14 +15,9 @@ const Start = ({ navigation }) => {
         <View style={styles.child}>
           <LoginForm></LoginForm>
           <TopBar
-            // leftIcon={faArrowLeft}
+            leftIcon={faArrowLeft}
             color={"#F0F0F0"}
             onPressLeft={() => navigation.navigate("Start")}
-          />
-          <Button
-            secondary
-            title={"login"}
-            onPress={() => navigation.navigate("Home")}
           />
         </View>
       </ImageBackground>
