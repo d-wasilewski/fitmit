@@ -13,12 +13,14 @@ const Start = ({ navigation }) => {
     <View>
       <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
         <View style={styles.child}>
-          <LoginForm></LoginForm>
           <TopBar
             leftIcon={faArrowLeft}
             color={"#F0F0F0"}
             onPressLeft={() => navigation.navigate("Start")}
           />
+          <View style={styles.form}>
+            <LoginForm></LoginForm>
+          </View>
         </View>
       </ImageBackground>
     </View>
@@ -41,6 +43,12 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "rgba(0,0,0,0.3)",
   },
+  form: {
+    height: "100%",
+    width: "70%",
+    justifyContent: "flex-end",
+    marginBottom: "63%"
+  }
 });
 
 export default Start;
