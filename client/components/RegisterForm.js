@@ -6,7 +6,7 @@ import { Formik as PoteznyForm } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 
-const RegisterForm = () => {
+const RegisterForm = ({ navigation }) => {
   const handleSubmit = (values) => {
     const { login, password, email } = values;
     axios
@@ -27,7 +27,7 @@ const RegisterForm = () => {
       .catch((err) => console.log(err));
     console.log(values);
 
-    // TODO: nawigacja po kliknieciu i walidacji
+    navigation.navigate("Home");
   };
 
   const SignupSchema = Yup.object().shape({
@@ -37,7 +37,7 @@ const RegisterForm = () => {
       .required("To pole jest wymagane!"),
     password: Yup.string()
       .min(4, "Hasło nie może mieć mniej niż 4 znaki!")
-      .max(4, "Hasło nie może mieć więcej niż 20 znaków!")
+      .max(20, "Hasło nie może mieć więcej niż 20 znaków!")
       .required("To pole jest wymagane!"),
     email: Yup.string()
       .email("Niepoprawny email")

@@ -17,13 +17,17 @@ const HomeMenu = ({ navigation }) => {
   return (
     <View style={[styles.container, { height: height * 0.1 }]}>
       <TouchableOpacity>
-        <FontAwesomeIcon icon={faSearchLocation} style={[styles.icon]} />
+        <FontAwesomeIcon
+          icon={faSearchLocation}
+          style={[styles.icon]}
+          size={30}
+        />
       </TouchableOpacity>
       <TouchableOpacity>
-        <FontAwesomeIcon icon={faHome} style={[styles.icon]} />
+        <FontAwesomeIcon icon={faHome} style={[styles.icon]} size={30} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("User")}>
-        <FontAwesomeIcon icon={faUserCircle} style={[styles.icon]} />
+        <FontAwesomeIcon icon={faUserCircle} style={[styles.icon]} size={30} />
       </TouchableOpacity>
     </View>
   );
@@ -41,8 +45,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blackSecondary,
   },
   icon: {
-    width: 30,
-    height: 30,
     justifyContent: "center",
     alignItems: "center",
     color: colors.greenSecondary,

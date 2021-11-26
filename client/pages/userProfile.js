@@ -35,7 +35,11 @@ const User = ({ navigation }) => {
           style={styles.backArrow}
           onPress={() => navigation.navigate("Home")}
         >
-          <FontAwesomeIcon icon={faArrowLeft} style={styles.iconTop} />
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            style={styles.iconTop}
+            size={25}
+          />
         </TouchableOpacity>
       </ImageBackground>
 
@@ -67,12 +71,10 @@ const styles = StyleSheet.create({
   backArrow: {
     position: "absolute",
     left: "7%",
-    top: 55,
+    top: 40,
   },
   iconTop: {
     color: colors.blackPrimary,
-    width: 30,
-    height: 30,
   },
   container: {
     flex: 1,

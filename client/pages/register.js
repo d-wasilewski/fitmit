@@ -28,7 +28,7 @@ const Register = ({ navigation }) => {
             onPressLeft={() => navigation.navigate("Start")}
           />
           <View style={styles.form}>
-            <RegisterForm />
+            <RegisterForm navigation={navigation} />
           </View>
         </View>
       </ImageBackground>

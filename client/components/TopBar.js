@@ -23,6 +23,7 @@ const TopBar = (props) => {
         <FontAwesomeIcon
           icon={leftIcon ? leftIcon : faArrowLeft}
           style={[styles.icon, { color }, leftStyleIcon]}
+          size={25}
         />
       </TouchableOpacity>
       <Image source={Logo} style={styles.image} />
@@ -30,6 +31,7 @@ const TopBar = (props) => {
         <FontAwesomeIcon
           icon={rightIcon ? rightIcon : faArrowLeft}
           style={[styles.icon, { color }, rightStyleIcon]}
+          size={25}
         />
       </TouchableOpacity>
     </View>
@@ -48,21 +50,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   icon: {
-    width: 30,
-    height: 30,
     justifyContent: "center",
     alignItems: "center",
     color: "white",
     marginHorizontal: 25,
-    marginTop: 15,
+    marginTop: 30,
   },
   invisible: {
     opacity: 0,
   },
   image: {
-    width: "70%",
-    height: 42,
-    marginTop: 60,
+    width: "65%",
+    height: 37,
+    marginTop: 30,
   },
 });
 export default TopBar;
