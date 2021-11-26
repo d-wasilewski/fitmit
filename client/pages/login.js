@@ -1,5 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  useWindowDimensions,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
 
 import LoginForm from "../components/LoginForm";
@@ -9,17 +14,22 @@ import Button from "../components/Button";
 import TopBar from "../components/TopBar";
 
 const Start = ({ navigation }) => {
+  const { height, width } = useWindowDimensions();
   return (
     <View>
-      <ImageBackground source={bgPhoto} resizeMode="cover" style={styles.image}>
-        <View style={styles.child}>
+      <ImageBackground
+        source={bgPhoto}
+        resizeMode="cover"
+        style={[styles.image]}
+      >
+        <View style={[styles.child]}>
           <TopBar
             leftIcon={faArrowLeft}
             color={"#F0F0F0"}
             onPressLeft={() => navigation.navigate("Start")}
           />
           <View style={styles.form}>
-            <LoginForm></LoginForm>
+            <LoginForm navigation={navigation} />
           </View>
         </View>
       </ImageBackground>
@@ -47,8 +57,8 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "70%",
     justifyContent: "flex-end",
-    marginBottom: "63%"
-  }
+    marginBottom: "63%",
+  },
 });
 
 export default Start;
