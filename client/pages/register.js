@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
 import TopBar from "../components/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import RegisterForm from "../components/RegisterForm";
 
 const Register = ({ navigation }) => {
   return (
@@ -13,7 +14,7 @@ const Register = ({ navigation }) => {
           leftIcon={faArrowLeft}
           onPressLeft={() => navigation.navigate("Start")}
         />
-        <Text style={styles.center}>Register page</Text>
+        <RegisterForm />
       </ImageBackground>
     </View>
   );

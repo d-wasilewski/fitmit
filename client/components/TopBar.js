@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   image: {
-    width: 200,
-    height: 30,
-    marginTop: 15,
+    width: "70%",
+    height: 42,
+    marginTop: 60,
   },
 });
 export default TopBar;
