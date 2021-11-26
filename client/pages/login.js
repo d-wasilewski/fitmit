@@ -40,7 +40,6 @@ const Start = ({ navigation }) => {
 const styles = StyleSheet.create({
   center: {
     alignItems: "center",
-    flex: 1,
   },
   image: {
     // flex: 1,
@@ -52,6 +51,8 @@ const styles = StyleSheet.create({
   child: {
     height: "100%",
     backgroundColor: "rgba(0,0,0,0.3)",
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   form: {
     height: "100%",
