@@ -28,15 +28,15 @@ export default function App() {
   });
 
   if (!loaded) return null;
-  
+
   return (
     <NavigationContainer>
       <StatusBar hidden={false} animated={true} translucent={false} />
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Register"
         screenOptions={{
           headerShown: false,
-          animation: "slide_from_right"
+          animation: "slide_from_right",
         }}
       >
         <Stack.Screen name="Start" component={Start} />

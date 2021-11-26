@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import Input from "./LoginInput";
 import Button from "./Button";
 import { Formik as PoteznyForm } from "formik";
 import axios from "axios";
+import * as Yup from "yup";
 
 const RegisterForm = () => {
   const handleSubmit = (values) => {
     const { login, password, email } = values;
     axios
       .post(
-        "http://192.168.100.147:5000/api/register",
+        "http://192.168.1.11:5000/api/register",
         {
           username: login,
           email,
@@ -22,22 +23,44 @@ const RegisterForm = () => {
           },
         }
       )
-      .then((res) => console.log(res))
+      .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
     console.log(values);
 
     // TODO: nawigacja po kliknieciu i walidacji
   };
 
+  const SignupSchema = Yup.object().shape({
+    login: Yup.string()
+      .min(4, "Login nie może mieć mniej niż 4 znaki!")
+      .max(20, "Login nie może mieć więcej niż 20 znaków!")
+      .required("To pole jest wymagane!"),
+    password: Yup.string()
+      .min(4, "Hasło nie może mieć mniej niż 4 znaki!")
+      .max(4, "Hasło nie może mieć więcej niż 20 znaków!")
+      .required("To pole jest wymagane!"),
+    email: Yup.string()
+      .email("Niepoprawny email")
+      .required("To pole jest wymagane!"),
+  });
+
   return (
     <PoteznyForm
       initialValues={{ login: "", password: "", email: "" }}
       onSubmit={(values) => handleSubmit(values)}
+      validationSchema={SignupSchema}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+      }) => (
         <View style={styles.form}>
           {/* TODO: dodac onblur */}
-          <View style={styles.input} >
+          <View style={styles.input}>
             <Input
               placeholder="Login"
               onChange={handleChange("login")}
@@ -45,7 +68,10 @@ const RegisterForm = () => {
               name="login"
             />
           </View>
-          <View style={styles.input} >
+          {errors.login && touched.login ? (
+            <Text style={styles.error}>{errors.login}</Text>
+          ) : null}
+          <View style={styles.input}>
             <Input
               placeholder="Email"
               onChange={handleChange("email")}
@@ -53,7 +79,10 @@ const RegisterForm = () => {
               name="email"
             />
           </View>
-          <View style={styles.input} >
+          {errors.email && touched.email ? (
+            <Text style={styles.error}>{errors.email}</Text>
+          ) : null}
+          <View style={styles.input}>
             <Input
               placeholder="Password"
               onChange={handleChange("password")}
@@ -62,6 +91,9 @@ const RegisterForm = () => {
               secureTextEntry={true}
             />
           </View>
+          {errors.password && touched.password ? (
+            <Text style={styles.error}>{errors.password}</Text>
+          ) : null}
           <View style={styles.primmary_button}>
             <Button onPress={handleSubmit} title={"Login"} />
           </View>
@@ -75,15 +107,19 @@ const styles = StyleSheet.create({
   form: {
     height: "100%",
     width: "100%",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   primmary_button: {
     height: "6%",
     width: "100%",
-    marginTop: "30%"  // Podnosi inputy do góry
+    marginTop: "30%", // Podnosi inputy do góry
   },
   input: {
     marginBottom: "10%", // Zwieksza przerwy miedzy inputami
-  }
-})
+  },
+  error: {
+    color: "red",
+    textAlign: "center",
+  },
+});
 export default RegisterForm;
