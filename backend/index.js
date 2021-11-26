@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 
 const routersUrls = require("./routes/routes");
+const routerUserUrls = require("./routes/users.js");
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(morgan("tiny"));
 app.use(helmet());
 
 app.use("/api", routersUrls);
+app.use("/api", routerUserUrls);
 app.listen(5000, () => {
   console.log("Server is running");
 });
