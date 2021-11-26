@@ -29,7 +29,7 @@ export default function App() {
     ComfortaaLight: require("./assets/fonts/Comfortaa-Light.ttf"),
     ComfortaaMedium: require("./assets/fonts/Comfortaa-Medium.ttf"),
     ComfortaaSemiBold: require("./assets/fonts/Comfortaa-SemiBold.ttf"),
-    ComfortaaBOld: require("./assets/fonts/Comfortaa-Bold.ttf"),
+    ComfortaaBold: require("./assets/fonts/Comfortaa-Bold.ttf"),
   });
 
   if (!loaded) return null;
