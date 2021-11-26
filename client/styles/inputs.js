@@ -8,7 +8,7 @@ const defaultStyle = Object.assign(fonts.roboto_medium, {
   paddingVertical: 19,
   minWidth: 150,
   minHeight: 40,
-  width: "70%",
+  width: "100%",
   letterSpacing: 0.08,
 });
 
