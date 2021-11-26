@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import Input from "./LoginInput";
+import Button from "./Button";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -41,6 +42,11 @@ class LoginForm extends React.Component {
           name="password"
           secureTextEntry={true}
         ></Input>
+        <Button
+          secondary
+          title={"login"}
+          onPress={() => navigation.navigate("Home")}
+        />
       </View>
     );
   }
