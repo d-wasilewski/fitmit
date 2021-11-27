@@ -15,6 +15,7 @@ import TopBar from "../components/TopBar";
 import HomeMenu from "../components/HomeMenu";
 import Greeting from "../components/homepage/Greeting";
 import ActivityCard from "../components/homepage/activities/ActivityCard";
+import ActivitySlider from "../components/homepage/activities/ActivitySlider";
 
 const Home = ({ navigation }) => {
   return (
@@ -28,10 +29,8 @@ const Home = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.content}>
         {/* todo zmienic na dynamiczne */}
         <Greeting username="Miciu"></Greeting>
-        {/* tymczasowo */}
-        <ScrollView>
-          <ActivityCard></ActivityCard>
-        </ScrollView>
+        {/* podac dane w postaci cards= ... */}
+        <ActivitySlider></ActivitySlider>
       </ScrollView>
       <HomeMenu navigation={navigation} />
     </View>

@@ -1,35 +1,52 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../../styles/colors";
 
 const ActivityCard = (props) => {
-  const statistics = [
-    { name: "Steps", value: 4560 },
-    { name: "Calories", value: 2480 },
-    { name: "Time In Action", value: 80 },
-  ];
+  const {
+    statistics = [
+      { name: "Steps", value: 4560 },
+      { name: "Calories", value: 2480 },
+      { name: "Time In Action", value: 80 },
+    ],
+    weekDay = "Today",
+    date = "24.10.2021",
+    gradientColor = "#002C3F",
+    style,
+  } = props;
+
+  const windowWidth = Dimensions.get("window").width;
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          width: windowWidth * 0.88,
+          marginLeft: windowWidth * 0.03,
+        },
+        style,
+      ]}
+    >
       <LinearGradient
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 0 }}
-        colors={["#002C3F", "#1c1c1c"]}
+        colors={[gradientColor, "#1c1c1c"]}
         style={styles.gradient}
       >
         <View style={styles.wrapper}>
           <View style={styles.part}>
             <View>
               <Text style={styles.cardTitle}>Activity</Text>
-              <Text style={styles.cardWeekDay}>Today</Text>
+              <Text style={styles.cardWeekDay}>{weekDay}</Text>
             </View>
-            <Text style={styles.cardDate}>24.10.2021</Text>
+            <Text style={styles.cardDate}>{date}</Text>
           </View>
           <View style={[styles.part, { alignItems: "flex-end" }]}>
             {statistics.map((activity, index) => {
               return (
-                <View>
+                <View key={activity.name}>
                   <Text style={styles.dataName}>{activity.name}</Text>
                   <Text style={styles.dataValue}>{activity.value}</Text>
                 </View>
@@ -44,7 +61,6 @@ const ActivityCard = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
     height: 160,
   },
   gradient: {
@@ -61,8 +77,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    paddingHorizontal: "5%",
-    paddingVertical: "10%",
+    padding: 15,
+    paddingBottom: 20,
   },
   cardTitle: {
     fontFamily: "ComfortaaBold",
