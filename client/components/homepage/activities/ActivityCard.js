@@ -6,9 +6,9 @@ import colors from "../../../styles/colors";
 const ActivityCard = (props) => {
   const {
     statistics = [
-      { name: "Steps", value: 4560 },
-      { name: "Calories", value: 2480 },
-      { name: "Time In Action", value: 80 },
+      { name: "Steps", value: 4560, unit: "m" },
+      { name: "Calories", value: 2480, unit: "kcal" },
+      { name: "Time In Action", value: "1:20", unit: "hr" },
     ],
     weekDay = "Today",
     date = "24.10.2021",
@@ -48,7 +48,12 @@ const ActivityCard = (props) => {
               return (
                 <View key={activity.name}>
                   <Text style={styles.dataName}>{activity.name}</Text>
-                  <Text style={styles.dataValue}>{activity.value}</Text>
+                  <View style={styles.valueWrapper}>
+                    <Text style={styles.dataValue}>{activity.value}</Text>
+                    <Text style={[styles.dataName, { fontSize: 12 }]}>
+                      {activity.unit}
+                    </Text>
+                  </View>
                 </View>
               );
             })}
@@ -102,6 +107,10 @@ const styles = StyleSheet.create({
   dataValue: {
     fontFamily: "ComfortaaRegular",
     color: colors.white,
+  },
+  valueWrapper: {
+    flexDirection: "row",
+    alignItems: "baseline",
   },
 });
 

@@ -10,19 +10,19 @@ const ActivitySlider = (props) => {
     cards = [
       {
         statistics: [
-          { name: "Steps", value: 4560 },
-          { name: "Calories", value: 2480 },
-          { name: "Time In Action", value: 80 },
+          { name: "Steps", value: 4560, unit: "m" },
+          { name: "Calories", value: 2480, unit: "kcal" },
+          { name: "Time In Action", value: "1:20", unit: "hr" },
         ],
         weekDay: "Today",
         date: "24.10.2021",
       },
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
+      { date: "23.10.2021" },
+      { date: "22.10.2021" },
+      { date: "21.10.2021" },
+      { date: "20.10.2021" },
+      { date: "19.10.2021" },
+      { date: "18.10.2021" },
     ],
   } = props;
   const colors = [
@@ -40,13 +40,15 @@ const ActivitySlider = (props) => {
       {cards.map((card, index) => {
         return index != cards.length - 1 ? (
           <ActivityCard
-            gradientColor={colors[index]}
+            key={card.date}
+            gradientColor={colors[index % colors.length]}
             {...cards[index]}
           ></ActivityCard>
         ) : (
           <ActivityCard
+            key={card.date}
             style={{ marginRight: windowWidth * 0.05 }}
-            gradientColor={colors[index]}
+            gradientColor={colors[index % colors.length]}
             {...cards[index]}
           ></ActivityCard>
         );

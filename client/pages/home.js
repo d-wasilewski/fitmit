@@ -16,6 +16,7 @@ import HomeMenu from "../components/HomeMenu";
 import Greeting from "../components/homepage/Greeting";
 import ActivityCard from "../components/homepage/activities/ActivityCard";
 import ActivitySlider from "../components/homepage/activities/ActivitySlider";
+import EventCard from "../components/homepage/upcoming_events/EventCard";
 
 const Home = ({ navigation }) => {
   return (
@@ -30,7 +31,11 @@ const Home = ({ navigation }) => {
         {/* todo zmienic na dynamiczne */}
         <Greeting username="Miciu"></Greeting>
         {/* podac dane w postaci cards= ... */}
+        {/* Dodac jeszcze przy wartosci m, kcal i hr */}
         <ActivitySlider></ActivitySlider>
+        <ScrollView>
+          <EventCard></EventCard>
+        </ScrollView>
       </ScrollView>
       <HomeMenu navigation={navigation} />
     </View>
@@ -49,6 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     marginTop: "40%",
+    paddingBottom: 200,
   },
 });
 
