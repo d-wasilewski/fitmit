@@ -36,7 +36,11 @@ const ActivitySlider = (props) => {
   ];
 
   return (
-    <ScrollView horizontal style={[styles.container]}>
+    <ScrollView
+      horizontal
+      style={[styles.container]}
+      showsHorizontalScrollIndicator={false}
+    >
       {cards.map((card, index) => {
         return index != cards.length - 1 ? (
           <ActivityCard

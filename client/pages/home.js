@@ -17,6 +17,8 @@ import Greeting from "../components/homepage/Greeting";
 import ActivityCard from "../components/homepage/activities/ActivityCard";
 import ActivitySlider from "../components/homepage/activities/ActivitySlider";
 import EventCard from "../components/homepage/upcoming_events/EventCard";
+import EventSlider from "../components/homepage/upcoming_events/EventSlider";
+import EventSection from "../components/homepage/EventSection";
 
 const Home = ({ navigation }) => {
   return (
@@ -27,15 +29,16 @@ const Home = ({ navigation }) => {
         color={colors.greenSecondary}
         onPressLeft={() => navigation.navigate("Home")}
       />
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         {/* todo zmienic na dynamiczne */}
         <Greeting username="Miciu"></Greeting>
         {/* podac dane w postaci cards= ... */}
         {/* Dodac jeszcze przy wartosci m, kcal i hr */}
         <ActivitySlider></ActivitySlider>
-        <ScrollView>
-          <EventCard></EventCard>
-        </ScrollView>
+        <EventSection></EventSection>
       </ScrollView>
       <HomeMenu navigation={navigation} />
     </View>
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    marginTop: "40%",
+    marginTop: "30%",
     paddingBottom: 200,
   },
 });

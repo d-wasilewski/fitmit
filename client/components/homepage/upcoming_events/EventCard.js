@@ -17,6 +17,7 @@ import avatar from "../../../assets/papaj.jpg";
 const EventCard = (props) => {
   const windowWidth = Dimensions.get("window").width;
 
+  // dodac obiekt eventu z danymi
   const {
     users = [
       { name: "papaj" },
@@ -25,10 +26,11 @@ const EventCard = (props) => {
       { name: "papaj" },
       { name: "papaj" },
     ],
+    style,
   } = props;
 
   return (
-    <View style={[styles.container, { width: windowWidth * 0.88 }]}>
+    <View style={[styles.container, { width: windowWidth * 0.88 }, style]}>
       {/* Obrazek */}
       <ImageBackground
         source={backgroundImage}
