@@ -19,6 +19,7 @@ import ActivitySlider from "../components/homepage/activities/ActivitySlider";
 import EventCard from "../components/homepage/upcoming_events/EventCard";
 import EventSlider from "../components/homepage/upcoming_events/EventSlider";
 import EventSection from "../components/homepage/EventSection";
+import GenericCard from "../components/homepage/cards/GenericCard";
 
 const Home = ({ navigation }) => {
   return (
