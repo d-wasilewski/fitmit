@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Logo from "../assets/logo.png";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import colors from "../styles/colors";
 
 const TopBar = (props) => {
   const { leftIcon, rightIcon, color, onPressLeft, onPressRight } = props;
@@ -48,6 +49,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
+    elevation: 10,
+    zIndex: 10,
+    backgroundColor: colors.blackPrimary,
   },
   icon: {
     justifyContent: "center",
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "65%",
-    height: 37,
+    height: "60%",
     marginTop: 30,
   },
 });

@@ -53,6 +53,26 @@ const fonts = {
     fontWeight: "900",
     fontStyle: "italic",
   },
+  comfortaa_regular: {
+    fontFamily: "ComfortaaRegular",
+    fontWeight: "400",
+  },
+  comfortaa_medium: {
+    fontFamily: "ComfortaaMedium",
+    fontWeight: "500",
+  },
+  comfortaa_semibold: {
+    fontFamily: "ComfortaaSemiBold",
+    fontWeight: "600",
+  },
+  comfortaa_bold: {
+    fontFamily: "ComfortaaBold",
+    fontWeight: "700",
+  },
+  comfortaa_light: {
+    fontFamily: "ComfortaaLight",
+    fontWeight: "300",
+  },
 };
 
 export default fonts;

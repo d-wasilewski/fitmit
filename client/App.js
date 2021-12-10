@@ -25,6 +25,11 @@ export default function App() {
     RobotoMediumItalic: require("./assets/fonts/Roboto-MediumItalic.ttf"),
     RobotoThin: require("./assets/fonts/Roboto-Thin.ttf"),
     RobotoThinItalic: require("./assets/fonts/Roboto-ThinItalic.ttf"),
+    ComfortaaRegular: require("./assets/fonts/Comfortaa-Regular.ttf"),
+    ComfortaaLight: require("./assets/fonts/Comfortaa-Light.ttf"),
+    ComfortaaMedium: require("./assets/fonts/Comfortaa-Medium.ttf"),
+    ComfortaaSemiBold: require("./assets/fonts/Comfortaa-SemiBold.ttf"),
+    ComfortaaBold: require("./assets/fonts/Comfortaa-Bold.ttf"),
   });
 
   if (!loaded) return null;
@@ -33,7 +38,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar hidden={false} animated={true} translucent={false} />
       <Stack.Navigator
-        initialRouteName="Start"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
           animation: "slide_from_right",
