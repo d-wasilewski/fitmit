@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -29,6 +30,10 @@
     "react-native-screens": "~3.8.0",
     "react-native-svg": "^12.1.1",
     "react-native-web": "0.17.1",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

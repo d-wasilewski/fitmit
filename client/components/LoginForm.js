@@ -5,26 +5,15 @@ import Button from "./Button";
 import { Formik as PoteznyForm } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+
+import { loginUser } from "../redux/actions/userActions";
 
 const LoginForm = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (values) => {
-    const { login, password } = values;
-    axios
-      .post(
-        "http://192.168.1.11:5000/api/login",
-        {
-          username: login,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-    console.log(values);
+    dispatch(loginUser(values));
 
     navigation.navigate("Home");
   };
