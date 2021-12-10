@@ -3,25 +3,25 @@ import {
   View,
   StyleSheet,
   ImageBackground,
-  Image,
   Text,
   TouchableOpacity,
   useWindowDimensions,
-  Pressable,
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
-import noImg from "../assets/no-img.png";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
-
 import HomeMenu from "../components/HomeMenu";
 
 const User = ({ navigation }) => {
   const { height } = useWindowDimensions();
+  const { username, desc, profilePicture } = useSelector(
+    (state) => state?.user?.user
+  );
 
   return (
     <View style={styles.container}>
@@ -43,7 +43,7 @@ const User = ({ navigation }) => {
         </TouchableOpacity>
       </ImageBackground>
 
-      <Text style={styles.name}>MiciuPapajciu</Text>
+      <Text style={styles.name}>{username}</Text>
       <View style={styles.aboutMe}>
         <Text style={styles.aboutMeText}>About me</Text>
         <TouchableOpacity>
@@ -51,15 +51,7 @@ const User = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.desc}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris libero
-        sem, accumsan at augue eget, commodo venenatis lectus. Pellentesque
-        habitant morbi tristique senectus et netus et malesuada fames ac turpis
-        egestas. Vestibulum dolor elit, fringilla ac neque at, mollis mattis
-        turpis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia curae
-      </Text>
+      <Text style={styles.desc}>{desc ? desc : "No personal info"}</Text>
 
       <HomeMenu />
     </View>

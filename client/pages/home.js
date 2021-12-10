@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import colors from "../styles/colors";
+import { useSelector } from "react-redux";
 
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +24,8 @@ import GenericCard from "../components/homepage/cards/GenericCard";
 import GenericCardHolder from "../components/homepage/cards/GenericCardHolder";
 
 const Home = ({ navigation }) => {
+  const { username } = useSelector((state) => state.user.user);
+
   return (
     <View style={styles.container}>
       <TopBar
@@ -36,7 +39,7 @@ const Home = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         {/* todo zmienic na dynamiczne */}
-        <Greeting username="Miciu"></Greeting>
+        <Greeting username={username}></Greeting>
         {/* podac dane w postaci cards= ... */}
         {/* Dodac jeszcze przy wartosci m, kcal i hr */}
         <ActivitySlider></ActivitySlider>
