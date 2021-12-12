@@ -7,9 +7,9 @@ import {
   ScrollView,
 } from "react-native";
 import colors from "../styles/colors";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faQuidditch } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 import TopBar from "../components/TopBar";
@@ -23,22 +23,28 @@ import EventSection from "../components/homepage/EventSection";
 import GenericCard from "../components/homepage/cards/GenericCard";
 import GenericCardHolder from "../components/homepage/cards/GenericCardHolder";
 
-const Home = ({ navigation }) => {
-  const { username } = useSelector((state) => state.user.user);
+import { logoutUser } from "../redux/actions/userActions";
 
+const Home = ({ navigation }) => {
+  const { username } = useSelector((state) => state?.user?.user);
+  const dispatch = useDispatch();
+
+  const leftIconPress = () => {
+    dispatch(logoutUser());
+    navigation.navigate("Start");
+  };
   return (
     <View style={styles.container}>
       <TopBar
-        leftIcon={faBars}
+        leftIcon={faQuidditch}
         rightIcon={faBell}
         color={colors.greenSecondary}
-        onPressLeft={() => navigation.navigate("Home")}
+        onPressLeft={leftIconPress}
       />
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* todo zmienic na dynamiczne */}
         <Greeting username={username}></Greeting>
         {/* podac dane w postaci cards= ... */}
         {/* Dodac jeszcze przy wartosci m, kcal i hr */}
