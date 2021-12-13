@@ -12,6 +12,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import User from "./pages/userProfile";
 import store from "./redux/store";
+import CardList from "./pages/cardList";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +45,7 @@ export default function App() {
       <NavigationContainer>
         <StatusBar hidden={false} animated={true} translucent={false} />
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="CardList"
           screenOptions={{
             headerShown: false,
             animation: "slide_from_right",
@@ -55,6 +56,8 @@ export default function App() {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="User" component={User} />
+          {/* tymczasowo */}
+          <Stack.Screen name="CardList" component={CardList} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
