@@ -4,6 +4,8 @@ import {
   useWindowDimensions,
   StyleSheet,
   ImageBackground,
+  TouchableOpacity,
+  Text
 } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
 
@@ -24,12 +26,17 @@ const Start = ({ navigation }) => {
       >
         <View style={[styles.child]}>
           <TopBar
-            leftIcon={faArrowLeft}
             color={"#F0F0F0"}
-            onPressLeft={() => navigation.navigate("Start")}
           />
           <View style={styles.form}>
             <LoginForm navigation={navigation} />
+          </View>
+          <View style={styles.getStarted}>
+          <Text style={styles.text}>Don't have an account yet?</Text>
+            <TouchableOpacity 
+              onPress={() => navigation.navigate("Register")}>
+              <Text style={styles.signUp}>SIGN UP NOW</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -58,8 +65,24 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "70%",
     justifyContent: "flex-end",
-    marginBottom: "63%",
+    marginBottom: "20%",
   },
+  getStarted: {
+    marginBottom: "30%",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  text: {
+    color: "#f0f0f0",
+    fontSize: 15,
+    marginLeft: "10%"
+  },
+  signUp: {
+    color: "#6BF300",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: "10%"
+  }
 });
 
 export default Start;
