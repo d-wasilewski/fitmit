@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
+  useWindowDimensions,
   ScrollView,
 } from "react-native";
 import colors from "../styles/colors";
@@ -12,8 +12,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { faQuidditch } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 
-import TopBar from "../components/TopBar";
-import HomeMenu from "../components/HomeMenu";
+import TopBar from "../components/shared/TopBar";
+import HomeMenu from "../components/shared/HomeMenu";
 import Greeting from "../components/homepage/Greeting";
 import ActivityCard from "../components/homepage/activities/ActivityCard";
 import ActivitySlider from "../components/homepage/activities/ActivitySlider";
@@ -28,19 +28,15 @@ import { logoutUser } from "../redux/actions/userActions";
 const Home = ({ navigation }) => {
   const { username } = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
+  const { height } = useWindowDimensions();
 
   const leftIconPress = () => {
     dispatch(logoutUser());
-    navigation.navigate("Start");
+    navigation.navigate("Login");
   };
+
   return (
     <View style={styles.container}>
-      <TopBar
-        leftIcon={faQuidditch}
-        rightIcon={faBell}
-        color={colors.greenSecondary}
-        onPressLeft={leftIconPress}
-      />
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -74,6 +70,14 @@ const Home = ({ navigation }) => {
           ]}
         ></GenericCardHolder>
       </ScrollView>
+      <View style={[styles.boxBehindLogo, { height: height * 0.1 }]}>
+        <TopBar
+          leftIcon={faQuidditch}
+          rightIcon={faBell}
+          color={colors.greenSecondary}
+          onPressLeft={leftIconPress}
+        />
+      </View>
       <HomeMenu navigation={navigation} />
     </View>
   );
@@ -92,6 +96,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: "30%",
     paddingBottom: 200,
+  },
+  boxBehindLogo: {
+    width: "100%",
+
+    backgroundColor: colors.blackPrimary,
+    position: "absolute",
   },
 });
 

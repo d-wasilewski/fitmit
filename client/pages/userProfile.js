@@ -15,7 +15,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
-import HomeMenu from "../components/HomeMenu";
+import HomeMenu from "../components/shared/HomeMenu";
 
 const User = ({ navigation }) => {
   const { height } = useWindowDimensions();

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
-import Button from "./Button";
+import Button from "./shared/Button";
 import { Formik as PoteznyForm } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
@@ -67,11 +67,11 @@ const LoginForm = ({ navigation }) => {
             <Button onPress={handleSubmit} title={"Login"} />
           </View>
           <View style={styles.checkbox}>
-            <BouncyCheckbox 
-              size={25} 
+            <BouncyCheckbox
+              size={25}
               fillColor="#6BF300"
               textStyle={styles.text}
-              text="Don't logout" 
+              text="Don't logout"
               // onPress={(isChecked) => {}}
             />
           </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#f0f0f0",
     textDecorationLine: "none",
-  }
+  },
 });
 
 export default LoginForm;

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faMapMarked } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import colors from "../styles/colors";
+import colors from "../../styles/colors";
 
 const HomeMenu = ({ navigation }) => {
   const { height } = useWindowDimensions();

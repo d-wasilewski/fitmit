@@ -7,9 +7,9 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import Logo from "../assets/logo.png";
+import Logo from "../../assets/logo.png";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import colors from "../styles/colors";
+import colors from "../../styles/colors";
 
 const TopBar = (props) => {
   const { leftIcon, rightIcon, color, onPressLeft, onPressRight } = props;
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     elevation: 10,
     zIndex: 10,
-    backgroundColor: colors.blackPrimary,
+    backgroundColor: "transparent",
   },
   icon: {
     justifyContent: "center",

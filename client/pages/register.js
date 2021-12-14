@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
-import TopBar from "../components/TopBar";
+import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import RegisterForm from "../components/RegisterForm";
 

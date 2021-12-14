@@ -5,17 +5,17 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
-  Text
+  Text,
 } from "react-native";
 import bgPhoto from "../assets/startScreenBackground.jpg";
 
 import LoginForm from "../components/LoginForm";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-import Button from "../components/Button";
-import TopBar from "../components/TopBar";
+import Button from "../components/shared/Button";
+import TopBar from "../components/shared/TopBar";
 
-const Start = ({ navigation }) => {
+const Login = ({ navigation }) => {
   const { height, width } = useWindowDimensions();
   return (
     <View>
@@ -25,16 +25,13 @@ const Start = ({ navigation }) => {
         style={[styles.image]}
       >
         <View style={[styles.child]}>
-          <TopBar
-            color={"#F0F0F0"}
-          />
+          <TopBar color={"#F0F0F0"} />
           <View style={styles.form}>
             <LoginForm navigation={navigation} />
           </View>
           <View style={styles.getStarted}>
-          <Text style={styles.text}>Don't have an account yet?</Text>
-            <TouchableOpacity 
-              onPress={() => navigation.navigate("Register")}>
+            <Text style={styles.text}>Don't have an account yet?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
               <Text style={styles.signUp}>SIGN UP NOW</Text>
             </TouchableOpacity>
           </View>
@@ -75,14 +72,14 @@ const styles = StyleSheet.create({
   text: {
     color: "#f0f0f0",
     fontSize: 15,
-    marginLeft: "10%"
+    marginLeft: "10%",
   },
   signUp: {
     color: "#6BF300",
     fontSize: 20,
     fontWeight: "bold",
-    marginLeft: "10%"
-  }
+    marginLeft: "10%",
+  },
 });
 
-export default Start;
+export default Login;

@@ -8,7 +8,6 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 
-import Start from "./pages/start";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Home from "./pages/home";
@@ -73,13 +72,13 @@ export default function App() {
         <NavigationContainer>
           <StatusBar hidden={false} animated={true} translucent={false} />
           <Stack.Navigator
-            initialRouteName={routeName}
+            // initialRouteName={routeName}
+            initialRouteName="Home"
             screenOptions={{
               headerShown: false,
               animation: "slide_from_right",
             }}
           >
-            <Stack.Screen name="Start" component={Start} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Home" component={Home} />
