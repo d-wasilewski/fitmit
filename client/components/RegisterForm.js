@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
 import Button from "./Button";
 import { Formik as PoteznyForm } from "formik";
@@ -94,8 +95,17 @@ const RegisterForm = ({ navigation }) => {
           {errors.password && touched.password ? (
             <Text style={styles.error}>{errors.password}</Text>
           ) : null}
+          <View style={styles.checkbox}>
+            <BouncyCheckbox 
+              size={25} 
+              fillColor="#6BF300"
+              textStyle={styles.text}
+              text="I accept regulamin" 
+              // onPress={(isChecked) => {}}
+            />
+          </View>
           <View style={styles.primmary_button}>
-            <Button onPress={handleSubmit} title={"Login"} />
+            <Button onPress={handleSubmit} title={"Register"} />
           </View>
         </View>
       )}
@@ -121,5 +131,14 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
   },
+  checkbox: {
+    color: "#f0f0f0",
+    alignItems: "center",
+    marginTop: "10%",
+  },
+  text: {
+    color: "#f0f0f0",
+    textDecorationLine: "none",
+  }
 });
 export default RegisterForm;

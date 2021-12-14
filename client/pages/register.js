@@ -25,7 +25,7 @@ const Register = ({ navigation }) => {
           <TopBar
             color={"#F0F0F0"}
             leftIcon={faArrowLeft}
-            onPressLeft={() => navigation.navigate("Start")}
+            onPressLeft={() => navigation.navigate("Login")}
           />
           <View style={styles.form}>
             <RegisterForm navigation={navigation} />
