@@ -52,3 +52,21 @@ const setAuthorizationHeader = async (token) => {
   }
   axios.defaults.headers.common["Authorization"] = authToken;
 };
+
+// export const changeProfilePicture = (userData, history) => (dispatch) => {
+//   //   dispatch({ type: LOADING_UI });
+//   const { login: username, password } = userData;
+
+//   axios
+//     .post("/profilePicture", { picture })
+//     .then((res) => {
+//       console.log(res.data);
+//       setAuthorizationHeader(res.data.token);
+//       dispatch({
+//         type: SET_USER,
+//         payload: res.data,
+//       });
+//       //   dodac nawigacje po logowaniu
+//     })
+//     .catch((err) => console.log(err));
+// };

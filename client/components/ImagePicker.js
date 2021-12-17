@@ -11,10 +11,20 @@ import {
   MediaTypeOptions,
 } from "expo-image-picker";
 import noImg from "../assets/no-img.png";
+import * as FileSystem from 'expo-file-system';
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const ImagePicker = () => {
   const { height } = useWindowDimensions();
   const [image, setImage] = useState(null);
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values) => {
+    dispatch(loginUser(values));
+
+    navigation.navigate("Home");
+  };
 
   useEffect(() => {
     (async () => {
@@ -24,6 +34,8 @@ const ImagePicker = () => {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
       }
+      // console.log(image);
+
     })();
   }, []);
 
@@ -36,8 +48,28 @@ const ImagePicker = () => {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      try {
+        const base64Convert = await FileSystem.readAsStringAsync(result.uri, { encoding: 'base64' });
+        const base64Image = "data:image/png;base64," + base64Convert;
+
+        setImage(base64Image);
+
+        axios
+          // .put("/61a3d45f9932c823085c1ec7", { userId: "61a3d45f9932c823085c1ec7", profilePicture: image})
+          .post("/uploadImage", { userId: "61bb863b74f87664aae7ed7d", profilePicture: base64Image})
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+
+        
+
+      } catch(e) {
+        console.log(e);
+      }
+      
     }
+
   };
   return (
     <Pressable
