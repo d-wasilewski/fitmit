@@ -13,15 +13,22 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../styles/colors";
 
 const TopBar = (props) => {
-  const { leftIcon, rightIcon, color, onPressLeft, onPressRight, title } =
-    props;
+  const {
+    leftIcon,
+    rightIcon,
+    color,
+    onPressLeft,
+    onPressRight,
+    title,
+    style,
+  } = props;
   const { height } = useWindowDimensions();
 
   const leftStyleIcon = leftIcon === undefined ? styles.invisible : undefined;
   const rightStyleIcon = rightIcon === undefined ? styles.invisible : undefined;
 
   return (
-    <View style={[styles.container, { height: height * 0.08 }]}>
+    <View style={[styles.container, { height: height * 0.08 }, style]}>
       <TouchableOpacity onPress={onPressLeft}>
         <FontAwesomeIcon
           icon={leftIcon ? leftIcon : faArrowLeft}
