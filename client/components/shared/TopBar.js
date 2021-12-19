@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   useWindowDimensions,
+  Text,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Logo from "../../assets/logo.png";
@@ -12,7 +13,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../styles/colors";
 
 const TopBar = (props) => {
-  const { leftIcon, rightIcon, color, onPressLeft, onPressRight } = props;
+  const { leftIcon, rightIcon, color, onPressLeft, onPressRight, title } =
+    props;
   const { height } = useWindowDimensions();
 
   const leftStyleIcon = leftIcon === undefined ? styles.invisible : undefined;
@@ -27,7 +29,11 @@ const TopBar = (props) => {
           size={25}
         />
       </TouchableOpacity>
-      <Image source={Logo} style={styles.image} />
+      {title ? (
+        <Text style={[styles.title, { color }]}>{title}</Text>
+      ) : (
+        <Image source={Logo} style={styles.image} />
+      )}
       <TouchableOpacity onPress={onPressRight}>
         <FontAwesomeIcon
           icon={rightIcon ? rightIcon : faArrowLeft}
@@ -52,6 +58,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     zIndex: 10,
     backgroundColor: "transparent",
+    minHeight: 80,
   },
   icon: {
     justifyContent: "center",
@@ -66,6 +73,11 @@ const styles = StyleSheet.create({
   image: {
     width: "65%",
     height: "60%",
+    marginTop: 30,
+  },
+  title: {
+    fontFamily: "ComfortaaBold",
+    fontSize: 24,
     marginTop: 30,
   },
 });

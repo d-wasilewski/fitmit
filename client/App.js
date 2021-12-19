@@ -16,7 +16,6 @@ import store from "./redux/store";
 import CardList from "./pages/cardList";
 
 import { loginUser, logoutUser } from "./redux/actions/userActions";
-import CardList from "./pages/cardList";
 
 const Stack = createNativeStackNavigator();
 
