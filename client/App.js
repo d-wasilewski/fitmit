@@ -13,6 +13,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import User from "./pages/userProfile";
 import store from "./redux/store";
+import CardList from "./pages/cardList";
 
 import { loginUser, logoutUser } from "./redux/actions/userActions";
 import CardList from "./pages/cardList";
