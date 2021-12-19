@@ -89,17 +89,24 @@ const CardList = (props) => {
           />
         </View>
       </ImageBackground>
-      <ScrollView style={styles.cardListWrapper}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.cardListWrapper}
+      >
         {/* cards */}
-        {cards.map((val, index) => {
-          return (
-            // ? jako key id grupy/znajomego?
-            <View key={val.title} style={styles.card}>
-              <Image source={val.img} style={styles.cardImage} />
-              <Text style={styles.cardText}>{val.title}</Text>
-            </View>
-          );
-        })}
+        {cards
+          .filter((val, index) => {
+            return val.title.toLowerCase().includes(inputValue.toLowerCase());
+          })
+          .map((val, index) => {
+            return (
+              // ? jako key id grupy/znajomego?
+              <View key={val.title} style={styles.card}>
+                <Image source={val.img} style={styles.cardImage} />
+                <Text style={styles.cardText}>{val.title}</Text>
+              </View>
+            );
+          })}
       </ScrollView>
       <HomeMenu color={colors.orange}></HomeMenu>
     </View>
@@ -143,6 +150,7 @@ const styles = StyleSheet.create({
     width: "85%",
     flexDirection: "column",
     alignContent: "center",
+    paddingBottom: 100,
   },
   card: {
     backgroundColor: colors.blackSecondary,
