@@ -2,8 +2,6 @@ const UserSchema = require("../models/UserSchema");
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 
-module.exports = router;
-
 //update user
 router.put("/:id", async (req, res) => {
   console.log(req.body.userId, req.params.id);
@@ -35,3 +33,4 @@ router.get("/:id", async (req, res) => {
 });
 
 // add a friend (?)
+module.exports = router;

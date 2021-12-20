@@ -8,6 +8,7 @@ const helmet = require("helmet");
 
 const routersUrls = require("./routes/routes");
 const routerUserUrls = require("./routes/users.js");
+const groupsUrls = require("./routes/groups.js");
 
 dotenv.config();
 
@@ -18,8 +19,10 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(helmet());
 
+app.use("/api/group", groupsUrls);
 app.use("/api", routersUrls);
 app.use("/api", routerUserUrls);
+
 app.listen(5000, () => {
   console.log("Server is running");
 });
