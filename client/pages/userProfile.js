@@ -19,7 +19,7 @@ import HomeMenu from "../components/shared/HomeMenu";
 
 const User = ({ navigation }) => {
   const { height } = useWindowDimensions();
-  const { username, desc, profilePicture } = useSelector(
+  const { username, desc } = useSelector(
     (state) => state?.user?.user
   );
 

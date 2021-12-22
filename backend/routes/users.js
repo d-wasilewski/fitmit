@@ -7,37 +7,29 @@ module.exports = router;
 
 router.post("/uploadImage", async (req, res) => {
   const user = await UserSchema.findById(req.body.userId)
-  console.log("User: ", user);
+ 
   if(user.profilePicture.url != "") {
     try {
-      const deletedResponse = await cloudinary.uploader.destroy(user.profilePicture.public_id)
-      console.log(deletedResponse);
-      console.log("wykonalem najpierw usuniecie");
+      await cloudinary.uploader.destroy(user.profilePicture.public_id)
     } catch (e) {
-      console.log(e);
     }
   }
-
 
   try {
     const uploadedResponse = await cloudinary.uploader.upload(req.body.profilePicture, {
       upload_preset: 'dev_setups'
     });
-    console.log("Testowe: ")
-    console.log(uploadedResponse.public_id);
-    console.log(uploadedResponse.secure_url);
+
     const userAfterUpdate = await UserSchema.findByIdAndUpdate(req.body.userId, {    
       profilePicture: {
         url : uploadedResponse.secure_url,
         public_id : uploadedResponse.public_id
       }
-    })
-    console.log("Updated user: ", userAfterUpdate)
-    console.log("no to gnow: ", uploadedResponse)
-    return res.status(201).json(user)
+    }, {new: true})
+
+    return res.status(201).json(userAfterUpdate)
     
   } catch (e) {
-    console.log(e)
     return res.status(500).json(e)
   }
 })

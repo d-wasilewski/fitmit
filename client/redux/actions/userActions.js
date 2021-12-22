@@ -1,4 +1,4 @@
-import { SET_USER, SET_UNAUTHENTICATED } from "../types";
+import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE } from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -53,20 +53,17 @@ const setAuthorizationHeader = async (token) => {
   axios.defaults.headers.common["Authorization"] = authToken;
 };
 
-// export const changeProfilePicture = (userData, history) => (dispatch) => {
-//   //   dispatch({ type: LOADING_UI });
-//   const { login: username, password } = userData;
+export const changeProfilePicture = (userId, profilePicture) => (dispatch) => {
 
-//   axios
-//     .post("/profilePicture", { picture })
-//     .then((res) => {
-//       console.log(res.data);
-//       setAuthorizationHeader(res.data.token);
-//       dispatch({
-//         type: SET_USER,
-//         payload: res.data,
-//       });
-//       //   dodac nawigacje po logowaniu
-//     })
-//     .catch((err) => console.log(err));
-// };
+  axios
+  .post("/uploadImage", { userId , profilePicture})
+  .then((res) => {
+    console.log(res.data);
+    dispatch({
+      type: CHANGE_PICTURE,
+      payload: res.data.profilePicture.url
+    })
+  })
+  .catch((err) => console.log(err));
+}
+
