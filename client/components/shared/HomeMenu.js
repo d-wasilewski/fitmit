@@ -11,7 +11,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../styles/colors";
 
-const HomeMenu = ({ navigation, color }) => {
+const HomeMenu = ({ navigation, color = colors.greenSecondary }) => {
   const { height } = useWindowDimensions();
   return (
     <View style={[styles.container, { height: height * 0.1 }]}>
