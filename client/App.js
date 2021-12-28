@@ -14,6 +14,7 @@ import Home from "./pages/home";
 import User from "./pages/userProfile";
 import store from "./redux/store";
 import CardList from "./pages/cardList";
+import Chat from "./pages/chat";
 
 import { loginUser, logoutUser } from "./redux/actions/userActions";
 
@@ -75,7 +76,7 @@ export default function App() {
           <StatusBar hidden={false} animated={true} translucent={false} />
           <Stack.Navigator
             // initialRouteName={routeName}
-            initialRouteName="CardList"
+            initialRouteName="Chat"
             screenOptions={{
               headerShown: false,
               animation: "slide_from_right",
@@ -87,6 +88,7 @@ export default function App() {
             <Stack.Screen name="User" component={User} />
             {/* tymczasowo */}
             <Stack.Screen name="CardList" component={CardList} />
+            <Stack.Screen name="Chat" component={Chat} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
