@@ -28,6 +28,7 @@
     "react-native": "0.64.3",
     "react-native-bouncy-checkbox": "^2.1.8",
     "react-native-dotenv": "^3.3.0",
+    "react-native-modal": "^13.0.0",
     "react-native-network-info": "^5.2.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",

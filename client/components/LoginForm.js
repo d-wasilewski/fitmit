@@ -4,9 +4,8 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
 import Button from "./shared/Button";
 import { Formik as PoteznyForm } from "formik";
-import axios from "axios";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { loginUser } from "../redux/actions/userActions";
 

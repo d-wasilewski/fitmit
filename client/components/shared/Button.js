@@ -4,21 +4,20 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 const Button = (props) => {
   const { title, onPress } = props;
 
-  let text = 
-  props.secondary
-    ? (<Text style={[styles.btn, styles.btn_secondary]}>{title}</Text>)
-    : (<Text style={[styles.btn, styles.btn_primary]}>{title}</Text>);
+  let text = props.secondary ? (
+    <Text style={[styles.btn, styles.btn_secondary]}>{title}</Text>
+  ) : (
+    <Text style={[styles.btn, styles.btn_primary]}>{title}</Text>
+  );
 
-    return (
-
-      <TouchableOpacity
+  return (
+    <TouchableOpacity
       activeOpacity={0.8}
       style={styles.container}
       onPress={onPress}
-      >
+    >
       {text}
-      </TouchableOpacity>
-    
+    </TouchableOpacity>
   );
 };
 

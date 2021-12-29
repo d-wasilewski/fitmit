@@ -75,7 +75,7 @@ export default function App() {
           <StatusBar hidden={false} animated={true} translucent={false} />
           <Stack.Navigator
             // initialRouteName={routeName}
-            initialRouteName="CardList"
+            initialRouteName="Home"
             screenOptions={{
               headerShown: false,
               animation: "slide_from_right",
