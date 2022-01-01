@@ -2,9 +2,12 @@ import React from "react";
 import { View, StyleSheet, ImageBackground, Text } from "react-native";
 import EventSlider from "./upcoming_events/EventSlider";
 import bgImg from "../../assets/greenwavy.png";
+import bgImgOrange from "../../assets/orangewavy.png";
 import colors from "../../styles/colors";
 
 const EventSection = (props) => {
+  const backgroundImage = props.altBg ? bgImgOrange : bgImg;
+
   const styles = StyleSheet.create({
     container: {
       marginTop: "5%",
@@ -27,7 +30,7 @@ const EventSection = (props) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={bgImg}
+        source={backgroundImage}
         resizeMode="cover"
         style={{ width: "100%", minHeight: 150 }}
       >
@@ -35,7 +38,7 @@ const EventSection = (props) => {
           <Text style={styles.headerText}>Upcoming Events</Text>
         </View>
       </ImageBackground>
-      <EventSlider style={styles.slider}></EventSlider>
+      <EventSlider style={styles.slider} altBg={props.altBg}></EventSlider>
     </View>
   );
 };

@@ -72,7 +72,7 @@ const GroupProfile = (props) => {
           </View>
         </ImageBackground>
         <View style={styles.contentWrapper}>
-          <EventSection />
+          <EventSection altBg />
           <GenericCardHolder
             title="Members"
             colors={["rgba(255, 153, 0, 0.2) ", "rgba(38, 38, 38, 0.1)"]}
