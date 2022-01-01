@@ -16,6 +16,8 @@ import HomeMenu from "../components/shared/HomeMenu";
 import ImagePicker from "../components/ImagePicker";
 import EventSection from "../components/homepage/EventSection";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import GroupsCard from "../components/homepage/cards/GroupsCard";
+import GenericCardHolder from "../components/homepage/cards/GenericCardHolder";
 
 import {
   faCommentDots,
@@ -28,7 +30,7 @@ const GroupProfile = (props) => {
 
   return (
     <View style={[styles.container]}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground source={bgImg} style={styles.headerImage}>
           <TopBar
             title="Group"
@@ -40,40 +42,55 @@ const GroupProfile = (props) => {
           <ImagePicker
             style={{ marginTop: 0, borderWidth: 2, borderColor: colors.orange }}
           />
-          <View style={styles.contentWrapper}>
-            <View style={styles.groupControlsWrapper}>
-              <Text style={[styles.groupName, { marginTop: height }]}>
-                Drążkowe Świry
-              </Text>
-              <View style={styles.quickButtonWrapper}>
-                <TouchableOpacity
-                  style={[styles.iconWrapper, { marginLeft: 0 }]}
-                >
-                  <FontAwesomeIcon
-                    icon={faCommentDots}
-                    style={styles.icon}
-                    size={25}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.iconWrapper}>
-                  <FontAwesomeIcon
-                    icon={faUserPlus}
-                    style={styles.icon}
-                    size={25}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.iconWrapper}>
-                  <FontAwesomeIcon
-                    icon={faBellSlash}
-                    style={styles.icon}
-                    size={25}
-                  />
-                </TouchableOpacity>
-              </View>
+          <View style={styles.groupControlsWrapper}>
+            <Text style={[styles.groupName, { marginTop: height }]}>
+              Drążkowe Świry
+            </Text>
+            <View style={styles.quickButtonWrapper}>
+              <TouchableOpacity style={[styles.iconWrapper, { marginLeft: 0 }]}>
+                <FontAwesomeIcon
+                  icon={faCommentDots}
+                  style={styles.icon}
+                  size={25}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconWrapper}>
+                <FontAwesomeIcon
+                  icon={faUserPlus}
+                  style={styles.icon}
+                  size={25}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconWrapper}>
+                <FontAwesomeIcon
+                  icon={faBellSlash}
+                  style={styles.icon}
+                  size={25}
+                />
+              </TouchableOpacity>
             </View>
-            <EventSection />
           </View>
         </ImageBackground>
+        <View style={styles.contentWrapper}>
+          <EventSection />
+          <GenericCardHolder
+            title="Members"
+            colors={["rgba(255, 153, 0, 0.2) ", "rgba(38, 38, 38, 0.1)"]}
+            cards={[
+              { data: { title: "Dronszki s pyponszem", text: "Damian: JD" } },
+              { data: { title: "Dronszkponszem", text: "Miciu: JD" } },
+              { data: { title: "Dronszonszem", text: "Damidasan: JD" } },
+              { data: { title: "Dronsonszem", text: "Damidsaan: JD" } },
+              { data: { title: "Dronszknszem", text: "Damiadsadn: JD" } },
+              {
+                data: {
+                  title: "Dronszki s pypzem",
+                  text: "Damian: JadsdasD",
+                },
+              },
+            ]}
+          />
+        </View>
       </ScrollView>
       <HomeMenu color={colors.orange}></HomeMenu>
     </View>
@@ -86,6 +103,11 @@ const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "column",
     alignItems: "center",
+  },
+  scrollContainer: {
+    flexDirection: "column",
+    width: "100%",
+    paddingBottom: 50,
   },
   headerImage: {
     width: "100%",
@@ -105,6 +127,7 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     width: "100%",
+    marginTop: 200,
   },
   groupControlsWrapper: {
     justifyContent: "space-between",
@@ -113,7 +136,7 @@ const styles = StyleSheet.create({
   },
   quickButtonWrapper: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     width: "100%",
     marginTop: 12,
   },
