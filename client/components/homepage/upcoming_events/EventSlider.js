@@ -5,6 +5,14 @@ import EventCard from "./EventCard";
 
 const EventSlider = (props) => {
   const windowWidth = Dimensions.get("window").width;
+  const styles = StyleSheet.create({
+    element: {
+      marginLeft: windowWidth * 0.03,
+    },
+    lastElement: {
+      marginRight: windowWidth * 0.05,
+    },
+  });
 
   const {
     cards = [
@@ -15,29 +23,31 @@ const EventSlider = (props) => {
     ],
     style,
     altBg,
+    expandable,
   } = props;
+
+  if (expandable) cards.push({});
 
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={style}>
       {cards.map((val, index) => {
+        if (val.groupName == undefined) return null;
         return index != cards.length - 1 ? (
-          <EventCard
-            key={val + index}
-            style={{ marginLeft: windowWidth * 0.03 }}
-            altBg={altBg}
-          />
+          <EventCard key={val + index} style={styles.element} altBg={altBg} />
         ) : (
           <EventCard
             key={val + index}
-            style={{
-              marginLeft: windowWidth * 0.03,
-              marginRight: windowWidth * 0.05,
-            }}
+            style={[styles.element, styles.lastElement]}
             altBg={altBg}
           />
         );
       })}
-      {props.expandable ? <EventAddCard altBg /> : null}
+      {expandable ? (
+        <EventAddCard
+          altBg={altBg}
+          style={[styles.element, styles.lastElement]}
+        />
+      ) : null}
     </ScrollView>
   );
 };
