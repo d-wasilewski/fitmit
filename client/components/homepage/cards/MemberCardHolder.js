@@ -4,8 +4,12 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import colors from "../../../styles/colors";
+import MemberAddModal from "./MemberAddModal";
+import { useState } from "react";
 
 const MemberCardHolder = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={{ width: "100%", alignItems: "flex-end" }}>
       <GenericCardHolder
@@ -26,9 +30,13 @@ const MemberCardHolder = () => {
           },
         ]}
       ></GenericCardHolder>
-      <Pressable style={styles.addButton}>
+      <Pressable
+        style={styles.addButton}
+        onPress={() => setModalVisible(!isModalVisible)}
+      >
         <FontAwesomeIcon icon={faPlus} style={styles.icon} size={44} />
       </Pressable>
+      <MemberAddModal title="Members" visible={isModalVisible} />
     </View>
   );
 };
