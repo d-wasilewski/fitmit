@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Dimensions,
   Pressable,
+  ScrollView,
 } from "react-native";
 import colors from "../../../styles/colors";
+import ModalGenericCard from "./modal/ModalCard";
 import ModalSearch from "./modal/ModalSearch";
 
 const MemberAddModal = (props) => {
@@ -23,7 +25,19 @@ const MemberAddModal = (props) => {
             <Text style={styles.text}>{title}</Text>
           </View>
           <View style={styles.contentWrapper}>
-            <ModalSearch></ModalSearch>
+            <ModalSearch />
+            <ScrollView
+              style={styles.cardsWrapper}
+              showsVerticalScrollIndicator={false}
+            >
+              <ModalGenericCard status="good"></ModalGenericCard>
+              <ModalGenericCard status="bad"></ModalGenericCard>
+              <ModalGenericCard status="pending"></ModalGenericCard>
+              <ModalGenericCard status="unknown"></ModalGenericCard>
+              <ModalGenericCard status="unknown"></ModalGenericCard>
+              <ModalGenericCard status="unknown"></ModalGenericCard>
+              <ModalGenericCard status="unknown"></ModalGenericCard>
+            </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
             <Pressable
@@ -89,6 +103,10 @@ const styles = StyleSheet.create({
     height: "75%",
     alignItems: "center",
     paddingTop: 20,
+  },
+  cardsWrapper: {
+    marginTop: 20,
+    width: "100%",
   },
   buttonsWrapper: {
     position: "relative",
