@@ -36,7 +36,11 @@ const MemberCardHolder = () => {
       >
         <FontAwesomeIcon icon={faPlus} style={styles.icon} size={44} />
       </Pressable>
-      <MemberAddModal title="Members" visible={isModalVisible} />
+      <MemberAddModal
+        onQuit={() => setModalVisible(!isModalVisible)}
+        title="Members"
+        visible={isModalVisible}
+      />
     </View>
   );
 };

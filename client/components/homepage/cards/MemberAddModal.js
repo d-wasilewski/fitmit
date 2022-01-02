@@ -13,12 +13,12 @@ import ModalGenericCard from "./modal/ModalCard";
 import ModalSearch from "./modal/ModalSearch";
 
 const MemberAddModal = (props) => {
-  const { visible, title } = props;
+  const { visible, title, onQuit } = props;
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
 
   return (
-    <Modal visible={visible} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.modal}>
         <View style={[styles.content, { marginTop: marginSize }]}>
           <View style={styles.headerWrapper}>
@@ -41,6 +41,7 @@ const MemberAddModal = (props) => {
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
             <Pressable
+              onPress={onQuit}
               style={[
                 styles.button,
                 {
@@ -52,6 +53,8 @@ const MemberAddModal = (props) => {
               <Text style={styles.buttonText}>CANCEL</Text>
             </Pressable>
             <Pressable
+              on
+              onPress={onQuit}
               style={[
                 styles.button,
                 {
