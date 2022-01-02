@@ -1,28 +1,55 @@
 import React from "react";
 import { ScrollView, StyleSheet, Dimensions } from "react-native";
+import EventAddCard from "./EventAddCard";
 import EventCard from "./EventCard";
 
 const EventSlider = (props) => {
   const windowWidth = Dimensions.get("window").width;
+  const styles = StyleSheet.create({
+    element: {
+      marginLeft: windowWidth * 0.03,
+    },
+    lastElement: {
+      marginRight: windowWidth * 0.05,
+    },
+  });
 
-  const { cards = [], style } = props;
+  const {
+    cards = [
+      { groupName: "Drążkowe Świry" },
+      { groupName: "Drążkowe Świry" },
+      { groupName: "Drążkowe Świry" },
+      { groupName: "Drążkowe Świry" },
+    ],
+    style,
+    altBg,
+    expandable,
+  } = props;
+
+  if (expandable) cards.push({});
 
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={style}>
-      <EventCard style={{ marginLeft: windowWidth * 0.03 }}></EventCard>
-      <EventCard style={{ marginLeft: windowWidth * 0.03 }}></EventCard>
-      <EventCard
-        style={{
-          marginLeft: windowWidth * 0.03,
-          marginRight: windowWidth * 0.05,
-        }}
-      ></EventCard>
+      {cards.map((val, index) => {
+        if (val.groupName == undefined) return null;
+        return index != cards.length - 1 ? (
+          <EventCard key={val + index} style={styles.element} altBg={altBg} />
+        ) : (
+          <EventCard
+            key={val + index}
+            style={[styles.element, styles.lastElement]}
+            altBg={altBg}
+          />
+        );
+      })}
+      {expandable ? (
+        <EventAddCard
+          altBg={altBg}
+          style={[styles.element, styles.lastElement]}
+        />
+      ) : null}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default EventSlider;

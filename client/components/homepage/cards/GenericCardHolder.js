@@ -12,6 +12,7 @@ const GenericCardHolder = (props) => {
     title,
     cards = [],
     colors = ["rgba(255, 0, 0, 0.2)", "rgba(38, 38, 38, 0.1)"],
+    style,
   } = props;
 
   return (
@@ -19,7 +20,7 @@ const GenericCardHolder = (props) => {
       colors={colors}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={styles.container}
+      style={[styles.container, style]}
     >
       <Text style={styles.title}>{title}</Text>
       {cards.map((val) => {

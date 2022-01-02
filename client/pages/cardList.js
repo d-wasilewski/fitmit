@@ -70,7 +70,6 @@ const CardList = (props) => {
   return (
     <View style={[styles.container]}>
       <ImageBackground source={bgImg} style={styles.headerImage}>
-        {/* <Navbar title="Groups"></Navbar> */}
         <TopBar
           title="Groups"
           color={colors.blackPrimary}

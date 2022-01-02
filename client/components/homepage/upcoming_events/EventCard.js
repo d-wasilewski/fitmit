@@ -27,7 +27,13 @@ const EventCard = (props) => {
       { name: "papaj" },
     ],
     style,
+    altBg,
   } = props;
+
+  const additionalStyle = altBg ? styles.altBgColor : {};
+  const gradientColors = altBg
+    ? ["#FF9900", "#503000"]
+    : ["#00B26A", "#002818"];
 
   return (
     <View style={[styles.container, { width: windowWidth * 0.88 }, style]}>
@@ -40,7 +46,7 @@ const EventCard = (props) => {
       {/* Panel na dole */}
 
       <LinearGradient
-        colors={["#00B26A", "#002818"]}
+        colors={gradientColors}
         style={styles.gradient}
         start={{ x: 0, y: 1 }}
         end={{ x: 0.9, y: 0.1 }}
@@ -73,7 +79,7 @@ const EventCard = (props) => {
           </View>
           <View style={{ alignItems: "flex-end" }}>
             {/* Element kalendarzowy */}
-            <View style={styles.calendarWrapper}>
+            <View style={[styles.calendarWrapper, additionalStyle]}>
               <FontAwesomeIcon
                 icon={faCalendar}
                 color={colors.white}
@@ -88,7 +94,7 @@ const EventCard = (props) => {
             <View style={styles.distanceWrapper}>
               <FontAwesomeIcon
                 icon={faMapMarkerAlt}
-                color={colors.greenSecondary}
+                color={altBg ? colors.orange : colors.greenSecondary}
                 size={14}
               />
               <Text
@@ -146,6 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  altBgColor: { backgroundColor: colors.orange },
   distanceWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",

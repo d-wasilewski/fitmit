@@ -12,7 +12,7 @@ import {
 } from "expo-image-picker";
 import noImg from "../assets/no-img.png";
 
-const ImagePicker = () => {
+const ImagePicker = (props) => {
   const { height } = useWindowDimensions();
   const [image, setImage] = useState(null);
 
@@ -42,10 +42,13 @@ const ImagePicker = () => {
   return (
     <Pressable
       onPressIn={pickImage}
-      style={{
-        marginTop: height * 0.12,
-        borderRadius: 9999,
-      }}
+      style={[
+        {
+          marginTop: height * 0.12,
+          borderRadius: 9999,
+        },
+        props.style,
+      ]}
     >
       {image ? (
         <Image style={[styles.profilePicture]} source={{ uri: image }} />
