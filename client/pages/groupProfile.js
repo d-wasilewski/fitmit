@@ -30,7 +30,10 @@ const GroupProfile = (props) => {
 
   return (
     <View style={[styles.container]}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
         <ImageBackground source={bgImg} style={styles.headerImage}>
           <TopBar
             title="Group"
@@ -72,7 +75,7 @@ const GroupProfile = (props) => {
           </View>
         </ImageBackground>
         <View style={styles.contentWrapper}>
-          <EventSection altBg />
+          <EventSection altBg expandable />
           <GenericCardHolder
             title="Members"
             colors={["rgba(255, 153, 0, 0.2) ", "rgba(38, 38, 38, 0.1)"]}

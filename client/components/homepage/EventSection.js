@@ -38,7 +38,11 @@ const EventSection = (props) => {
           <Text style={styles.headerText}>Upcoming Events</Text>
         </View>
       </ImageBackground>
-      <EventSlider style={styles.slider} altBg={props.altBg}></EventSlider>
+      <EventSlider
+        style={styles.slider}
+        altBg={props.altBg}
+        expandable={props.expandable}
+      ></EventSlider>
     </View>
   );
 };
