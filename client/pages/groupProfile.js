@@ -24,6 +24,7 @@ import {
   faUserPlus,
   faBellSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
 
 const GroupProfile = (props) => {
   const height = Dimensions.get("window").height * 0.03;
@@ -76,23 +77,7 @@ const GroupProfile = (props) => {
         </ImageBackground>
         <View style={styles.contentWrapper}>
           <EventSection altBg expandable />
-          <GenericCardHolder
-            title="Members"
-            colors={["rgba(255, 153, 0, 0.2) ", "rgba(38, 38, 38, 0.1)"]}
-            cards={[
-              { data: { title: "Dronszki s pyponszem", text: "Damian: JD" } },
-              { data: { title: "Dronszkponszem", text: "Miciu: JD" } },
-              { data: { title: "Dronszonszem", text: "Damidasan: JD" } },
-              { data: { title: "Dronsonszem", text: "Damidsaan: JD" } },
-              { data: { title: "Dronszknszem", text: "Damiadsadn: JD" } },
-              {
-                data: {
-                  title: "Dronszki s pypzem",
-                  text: "Damian: JadsdasD",
-                },
-              },
-            ]}
-          />
+          <MemberCardHolder />
         </View>
       </ScrollView>
       <HomeMenu color={colors.orange}></HomeMenu>
@@ -110,7 +95,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexDirection: "column",
     width: "100%",
-    paddingBottom: 50,
+    paddingBottom: 80,
   },
   headerImage: {
     width: "100%",

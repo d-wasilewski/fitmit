@@ -10,9 +10,6 @@ const GroupsCard = () => {
   }
   return (
     <GenericCardHolder
-      style={{
-        overflow: "visible",
-      }}
       title="Groups"
       cards={[
         { data: { title: "Dronszki s pyponszem", text: "Damian: JD" } },
