@@ -1,3 +1,4 @@
+import { setStatusBarHidden } from "expo-status-bar";
 import React from "react";
 import { View, Text } from "react-native";
 import GenericCardHolder from "./GenericCardHolder";
@@ -9,6 +10,9 @@ const GroupsCard = () => {
   }
   return (
     <GenericCardHolder
+      style={{
+        overflow: "visible",
+      }}
       title="Groups"
       cards={[
         { data: { title: "Dronszki s pyponszem", text: "Damian: JD" } },
