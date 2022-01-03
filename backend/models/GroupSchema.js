@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 const user = require("./UserSchema");
+// var user = null;
+// process.nextTick(() => (user = require("./UserSchema")));
+
 const Schema = mongoose.Schema;
 
-const groupSchema = new mongoose.Schema({
-  username: {
+const GroupSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  creator: {
     type: String,
     required: true,
   },
@@ -18,4 +25,4 @@ const groupSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("group", groupSchema);
+module.exports = mongoose.model("group", GroupSchema);
