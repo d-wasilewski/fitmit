@@ -12,33 +12,40 @@ router.get("/groups", async (req, res) => {
   }
 });
 
-// router.get("/groupsByGroupId/:groupId", async (req, res) => {
-//   try {
-//     const user = await GroupSchema.findById(req.params.groupId).populate(
-//       "members"
-//     );
-
-//     res.status(200).json(user);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
-
-router.get("/groups/:userId", async (req, res) => {
+router.get("/groupsByUserId/:userId", async (req, res) => {
   try {
-    const user = await UserSchema.findById(req.params.userId).populate({
-      path: "groups",
-      select: ["name", "groupPicture", "members"],
-      // populate: { path: "members" },
+    const groupsOfGivenUser = await GroupSchema.find({
+      members: { $in: [req.params.userId] },
     });
 
-    res.status(200).json(user.groups);
+    res.status(200).json(groupsOfGivenUser);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
+
+router.get("/usersOfTheGroup", async (req, res) => {
+  groups = req.body.members;
+  console.log(groups);
+  populatedUsers = await UserSchema.find({ _id: { $in: groups } });
+  res.json(populatedUsers);
+});
+
+// router.get("/groups/:userId", async (req, res) => {
+//   try {
+//     const user = await UserSchema.findById(req.params.userId).populate({
+//       path: "groups",
+//       select: ["name", "groupPicture", "members"],
+//       // populate: { path: "members" },
+//     });
+
+//     res.status(200).json(user.groups);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
 
 // router.get("/groups/:userId", async (req, res) => {
 //   try {
@@ -88,6 +95,7 @@ router.post("/:groupId/:userId", async (req, res) => {
     },
   });
   console.log(exists);
+  res.json(exists);
 });
 
 module.exports = router;

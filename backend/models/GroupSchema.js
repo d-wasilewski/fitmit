@@ -18,7 +18,7 @@ const GroupSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  members: [{ type: Schema.Types.ObjectId, ref: user }],
+  members: [{ type: Schema.Types.ObjectId }],
   date: {
     type: Date,
     default: Date.now,
