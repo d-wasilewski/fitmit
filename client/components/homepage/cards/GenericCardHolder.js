@@ -1,4 +1,4 @@
-import React, { Children, useState } from "react";
+import React, { Children, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import GenericCard from "./GenericCard";
@@ -10,7 +10,7 @@ import GroupAddModal from "./GroupAddModal";
 const GenericCardHolder = (props) => {
   const {
     title,
-    cards = [],
+    cards,
     colors = ["rgba(255, 0, 0, 0.2)", "rgba(38, 38, 38, 0.1)"],
     style,
   } = props;
@@ -23,8 +23,13 @@ const GenericCardHolder = (props) => {
       style={[styles.container, style]}
     >
       <Text style={styles.title}>{title}</Text>
-      {cards.map((val) => {
-        return <GenericCard key={val.data.title} data={val.data}></GenericCard>;
+      {cards.map((val, index) => {
+        return (
+          <GenericCard
+            key={val.data.name + index}
+            data={val.data}
+          ></GenericCard>
+        );
       })}
       {props.children}
     </LinearGradient>

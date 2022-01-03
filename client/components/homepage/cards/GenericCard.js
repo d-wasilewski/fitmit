@@ -9,8 +9,8 @@ const GenericCard = (props) => {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.textWrapper}>
-        <Text style={styles.title}>{data.title}</Text>
-        <Text style={styles.text}>{data.text}</Text>
+        <Text style={styles.title}>{data.name}</Text>
+        <Text style={styles.text}>{data.creator}</Text>
       </View>
       <View style={styles.img}>
         <Image

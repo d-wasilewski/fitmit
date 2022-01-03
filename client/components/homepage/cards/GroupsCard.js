@@ -1,25 +1,30 @@
-import { setStatusBarHidden } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import GenericCardHolder from "./GenericCardHolder";
 import GroupAddModal from "./GroupAddModal";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const GroupsCard = () => {
-  {
-    /* podac dane w postaci cards= ... */
-  }
+  const { _id: userId } = useSelector((state) => state.user.user);
+  const [groupsData, setGroupsData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(async () => {
+    await axios
+      .get("group/groupsByUserId/61a3ddd918f0eb38b61371ff")
+      .then((res) => {
+        res.data.forEach((val) => {
+          groupsData.push({ data: val });
+        });
+      });
+
+    setGroupsData(groupsData);
+    setLoaded(true);
+  }, [userId, loaded]);
+
   return (
-    <GenericCardHolder
-      title="Groups"
-      cards={[
-        { data: { title: "Dronszki s pyponszem", text: "Damian: JD" } },
-        { data: { title: "Dronszkponszem", text: "Miciu: JD" } },
-        { data: { title: "Dronszonszem", text: "Damidasan: JD" } },
-        { data: { title: "Dronsonszem", text: "Damidsaan: JD" } },
-        { data: { title: "Dronszknszem", text: "Damiadsadn: JD" } },
-        { data: { title: "Dronszki s pypzem", text: "Damian: JadsdasD" } },
-      ]}
-    >
+    <GenericCardHolder title="Groups" cards={groupsData}>
       <GroupAddModal />
     </GenericCardHolder>
   );
