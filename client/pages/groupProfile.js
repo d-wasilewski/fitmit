@@ -16,8 +16,7 @@ import HomeMenu from "../components/shared/HomeMenu";
 import ImagePicker from "../components/ImagePicker";
 import EventSection from "../components/homepage/EventSection";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import GroupsCard from "../components/homepage/cards/GroupsCard";
-import GenericCardHolder from "../components/homepage/cards/GenericCardHolder";
+import { useState } from "react";
 
 import {
   faCommentDots,
@@ -28,6 +27,8 @@ import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
 
 const GroupProfile = (props) => {
   const height = Dimensions.get("window").height * 0.03;
+
+  const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
 
   return (
     <View style={[styles.container]}>
@@ -58,7 +59,12 @@ const GroupProfile = (props) => {
                   size={25}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.iconWrapper}>
+              <TouchableOpacity
+                style={styles.iconWrapper}
+                onPress={() =>
+                  setAddMemberModalVisible(!isAddMemberModalVisible)
+                }
+              >
                 <FontAwesomeIcon
                   icon={faUserPlus}
                   style={styles.icon}
@@ -77,7 +83,12 @@ const GroupProfile = (props) => {
         </ImageBackground>
         <View style={styles.contentWrapper}>
           <EventSection altBg expandable />
-          <MemberCardHolder />
+          <MemberCardHolder
+            setModalVisible={() =>
+              setAddMemberModalVisible(!isAddMemberModalVisible)
+            }
+            isModalVisible={isAddMemberModalVisible}
+          />
         </View>
       </ScrollView>
       <HomeMenu color={colors.orange}></HomeMenu>
