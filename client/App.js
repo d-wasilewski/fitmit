@@ -16,14 +16,14 @@ import store from "./redux/store";
 import CardList from "./pages/cardList";
 import GroupProfile from "./pages/groupProfile";
 
-import { loginUser, logoutUser } from "./redux/actions/userActions";
+import { getUserData, logoutUser } from "./redux/actions/userActions";
+import { SET_AUTHENTICATED } from "./redux/types";
 
 const Stack = createNativeStackNavigator();
 
 axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
 
 export default function App() {
-  const [tok, setTok] = useState("");
   const [loading, setLoading] = useState(true);
   const [routeName, setRouteName] = useState("Login");
 
@@ -32,21 +32,20 @@ export default function App() {
 
     if (tok) {
       const decodedToken = jwtDecode(tok);
-      // console.log("Token : ", decodedToken);
+
       if (decodedToken.exp * 1000 < Date.now()) {
         store.dispatch(logoutUser());
-        // console.log("wylogowywuje");
         setRouteName("Login");
       } else {
-        axios.defaults.headers.common["Authorization"] = tok;
-        // FIXME: zmienic loginUser na SET_AUTHENTICATED i GET_USER/{id_z_tokenu}
-        store.dispatch(loginUser({ login: "User", password: "12345" }));
+        console.log("Token: ", decodedToken);
+        // axios.defaults.headers.common["Authorization"] = tok;
+        store.dispatch({ type: SET_AUTHENTICATED });
+        store.dispatch(getUserData(decodedToken.user_id));
         setRouteName("Home");
-        // console.log("loguje");
       }
     }
     setLoading(false);
-  }, [tok, loading, routeName]);
+  }, [loading, routeName]);
 
   const [loaded] = useFonts({
     RobotoRegular: require("./assets/fonts/Roboto-Regular.ttf"),
@@ -75,8 +74,8 @@ export default function App() {
         <NavigationContainer>
           <StatusBar hidden={false} animated={true} translucent={false} />
           <Stack.Navigator
-            // initialRouteName={routeName}
-            initialRouteName="GroupProfile"
+            initialRouteName={routeName}
+            // initialRouteName="GroupProfile"
             screenOptions={{
               headerShown: false,
               animation: "slide_from_right",

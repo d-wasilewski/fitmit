@@ -30,18 +30,18 @@ export const logoutUser = () => async (dispatch) => {
   dispatch({ type: SET_UNAUTHENTICATED });
 };
 
-// export const getUserData = () => (dispatch) => {
-//   //   dispatch({ type: LOADING_USER });
-//   axios
-//     .get("/user")
-//     .then((res) => {
-//       dispatch({
-//         type: SET_USER,
-//         payload: res.data,
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
+export const getUserData = (userId) => (dispatch) => {
+  //   dispatch({ type: LOADING_USER });
+  axios
+    .get(`${userId}`)
+    .then((res) => {
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
 const setAuthorizationHeader = async (token) => {
   const authToken = `Bearer ${token}`;
