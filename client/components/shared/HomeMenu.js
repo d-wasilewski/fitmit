@@ -22,7 +22,7 @@ const HomeMenu = ({ navigation, color = colors.greenSecondary }) => {
           size={30}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <FontAwesomeIcon
           icon={faHome}
           style={[styles.icon, { color }]}

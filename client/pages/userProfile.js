@@ -11,17 +11,17 @@ import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faGrinTears } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
+import TopBar from "../components/shared/TopBar";
 
 const User = ({ navigation }) => {
   const { height } = useWindowDimensions();
-  const { username, desc, profilePicture } = useSelector(
-    (state) => state?.user?.user
-  );
+  const { username, desc } = useSelector((state) => state?.user?.user);
 
   return (
     <View style={styles.container}>
@@ -30,19 +30,17 @@ const User = ({ navigation }) => {
         resizeMode="cover"
         style={[styles.image, { height: height * 0.3 }]}
       >
-        <ImagePicker />
-        <TouchableOpacity
-          style={styles.backArrow}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            style={styles.iconTop}
-            size={25}
-          />
-        </TouchableOpacity>
+        <ImagePicker
+          style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
+        />
       </ImageBackground>
-
+      <TopBar
+        title
+        leftIcon={faArrowLeft}
+        rightIcon={faGrinTears}
+        color={colors.blackPrimary}
+        onPressRight={() => navigation.navigate("Settings")}
+      />
       <Text style={styles.name}>{username}</Text>
       <View style={styles.aboutMe}>
         <Text style={styles.aboutMeText}>About me</Text>
@@ -53,7 +51,7 @@ const User = ({ navigation }) => {
 
       <Text style={styles.desc}>{desc ? desc : "No personal info"}</Text>
 
-      <HomeMenu />
+      <HomeMenu navigation={navigation} />
     </View>
   );
 };

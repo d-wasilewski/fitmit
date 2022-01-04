@@ -15,6 +15,7 @@ import User from "./pages/userProfile";
 import store from "./redux/store";
 import CardList from "./pages/cardList";
 import GroupProfile from "./pages/groupProfile";
+import Settings from "./pages/settings";
 
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
@@ -88,6 +89,7 @@ export default function App() {
             {/* tymczasowo */}
             <Stack.Screen name="CardList" component={CardList} />
             <Stack.Screen name="GroupProfile" component={GroupProfile} />
+            <Stack.Screen name="Settings" component={Settings} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
