@@ -4,29 +4,15 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
 import Button from "./shared/Button";
 import { Formik as PoteznyForm } from "formik";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { registerUser } from "../redux/actions/userActions";
 
 const RegisterForm = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (values) => {
-    const { login, password, email } = values;
-    axios
-      .post(
-        "http://192.168.1.11:5000/api/register",
-        {
-          username: login,
-          email,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-    console.log(values);
+    dispatch(registerUser(values));
 
     navigation.navigate("Home");
   };

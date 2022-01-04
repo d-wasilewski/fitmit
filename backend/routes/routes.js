@@ -40,7 +40,9 @@ router.post("/register", async (req, res) => {
     );
     user.token = token;
 
-    return res.status(201).json(user);
+    const { password: passwordNotToReturn, date, __v, ...other } = user._doc;
+
+    return res.status(201).json(other);
   } catch (err) {
     return res.status(500).json(err);
   }
