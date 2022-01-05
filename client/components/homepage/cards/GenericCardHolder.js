@@ -23,9 +23,15 @@ const GenericCardHolder = (props) => {
       style={[styles.container, style]}
     >
       <Text style={styles.title}>{title}</Text>
-      {cards.map((val, index) => {
-        return <GenericCard key={val.name + index} data={val}></GenericCard>;
-      })}
+      {cards.length > 0 ? (
+        cards.map((val, index) => {
+          return <GenericCard key={val.name + index} data={val}></GenericCard>;
+        })
+      ) : (
+        <Text style={styles.noGroupsMessage}>
+          You don't have any group yet!
+        </Text>
+      )}
       {props.children}
     </LinearGradient>
   );
@@ -70,6 +76,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 65,
     height: 65,
+  },
+  noGroupsMessage: {
+    color: colors.grey100,
+    fontStyle: "italic",
   },
 });
 
