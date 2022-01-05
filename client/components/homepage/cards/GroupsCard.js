@@ -2,26 +2,24 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import GenericCardHolder from "./GenericCardHolder";
 import GroupAddModal from "./GroupAddModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { getGroups } from "../../../redux/actions/groupActions";
 
 const GroupsCard = () => {
   const { _id: userId } = useSelector((state) => state.user.user);
+  const { groupList } = useSelector((state) => state.groups);
+  const dispatch = useDispatch();
   const [groupsData, setGroupsData] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(async () => {
-    await axios
-      .get("group/groupsByUserId/61a3ddd918f0eb38b61371ff")
-      .then((res) => {
-        res.data.forEach((val) => {
-          groupsData.push({ data: val });
-        });
-      });
-
-    setGroupsData(groupsData);
+    if (userId) {
+      dispatch(getGroups(userId));
+    }
+    setGroupsData(groupList);
     setLoaded(true);
-  }, [userId, loaded]);
+  }, [loaded]);
 
   return (
     <GenericCardHolder title="Groups" cards={groupsData}>

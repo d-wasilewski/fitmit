@@ -19,6 +19,7 @@ import Settings from "./pages/settings";
 
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
+import { getGroups } from "./redux/actions/groupActions";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,8 @@ export default function App() {
         // axios.defaults.headers.common["Authorization"] = tok;
         store.dispatch({ type: SET_AUTHENTICATED });
         store.dispatch(getUserData(decodedToken.user_id));
+        store.dispatch(getGroups(decodedToken.user_id));
+
         setRouteName("Home");
       }
     }

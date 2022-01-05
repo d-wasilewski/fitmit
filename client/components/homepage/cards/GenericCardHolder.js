@@ -24,12 +24,7 @@ const GenericCardHolder = (props) => {
     >
       <Text style={styles.title}>{title}</Text>
       {cards.map((val, index) => {
-        return (
-          <GenericCard
-            key={val.data.name + index}
-            data={val.data}
-          ></GenericCard>
-        );
+        return <GenericCard key={val.name + index} data={val}></GenericCard>;
       })}
       {props.children}
     </LinearGradient>
