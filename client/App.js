@@ -26,7 +26,7 @@ axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [routeName, setRouteName] = useState("GroupProfile");
+  const [routeName, setRouteName] = useState("Login");
 
   useEffect(async () => {
     const tok = await AsyncStorage.getItem("authToken");

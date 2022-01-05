@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
 import Button from "./shared/Button";
@@ -7,6 +7,7 @@ import { Formik as PoteznyForm } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { registerUser } from "../redux/actions/userActions";
+import ModalTermsOfService from "./homepage/cards/modal/ModalTermsOfService";
 
 const RegisterForm = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,9 @@ const RegisterForm = ({ navigation }) => {
 
     navigation.navigate("Home");
   };
+
+  const [isTermsOfServiceModalVisible, setTermsOfServiceModalVisible] =
+    useState(false);
 
   const SignupSchema = Yup.object().shape({
     login: Yup.string()
@@ -86,13 +90,37 @@ const RegisterForm = ({ navigation }) => {
               size={25}
               fillColor="#6BF300"
               textStyle={styles.text}
-              text="I accept regulamin"
+              text="I accept "
               // onPress={(isChecked) => {}}
             />
+            <Pressable
+              onPress={() =>
+                setTermsOfServiceModalVisible(!isTermsOfServiceModalVisible)
+              }
+            >
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    fontFamily: "RobotoMedium",
+                    textDecorationLine: "underline",
+                  },
+                ]}
+              >
+                terms of service
+              </Text>
+            </Pressable>
           </View>
           <View style={styles.primmary_button}>
             <Button onPress={handleSubmit} title={"Register"} />
           </View>
+          <ModalTermsOfService
+            visible={isTermsOfServiceModalVisible}
+            title="Terms Of Service"
+            onQuit={() =>
+              setTermsOfServiceModalVisible(!isTermsOfServiceModalVisible)
+            }
+          />
         </View>
       )}
     </PoteznyForm>
@@ -121,10 +149,13 @@ const styles = StyleSheet.create({
     color: "#f0f0f0",
     alignItems: "center",
     marginTop: "10%",
+    flexDirection: "row",
   },
   text: {
     color: "#f0f0f0",
     textDecorationLine: "none",
+    fontFamily: "RobotoRegular",
+    fontSize: 15,
   },
 });
 export default RegisterForm;
