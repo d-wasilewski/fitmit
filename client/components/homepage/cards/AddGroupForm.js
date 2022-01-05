@@ -4,12 +4,15 @@ import ModalInput from "../../shared/ModalInput";
 import { Formik as PoteznyForm } from "formik";
 import * as Yup from "yup";
 import Button from "../../shared/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { createGroup, getGroups } from "../../../redux/actions/groupActions";
 
 const AddGroupForm = ({ setModal }) => {
-  const handleSubmit = (values) => {
-    console.log(values);
-    // navigation.navigate("Home");
+  const { _id: userId } = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
 
+  const handleSubmit = (values) => {
+    dispatch(createGroup(userId, values.name));
     setModal(false);
   };
 

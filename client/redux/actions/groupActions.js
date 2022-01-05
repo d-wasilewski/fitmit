@@ -12,7 +12,9 @@ export const getGroups = (userId) => (dispatch) => {
 
 export const createGroup = (userId, name) => (dispatch) => {
   axios.post(`group/create/${userId}`, { name }).then((res) => {
-    getGroups(userId);
-    console.log(res.data);
+    dispatch({
+      type: CREATE_GROUP,
+      payload: res.data,
+    });
   });
 };

@@ -10,19 +10,22 @@ const GroupsCard = () => {
   const { _id: userId } = useSelector((state) => state.user.user);
   const { groupList } = useSelector((state) => state.groups);
   const dispatch = useDispatch();
-  const [groupsData, setGroupsData] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (userId) {
       dispatch(getGroups(userId));
     }
-    setGroupsData(groupList);
     setLoaded(true);
   }, [loaded]);
 
+  useEffect(() => {
+    // rerender component every time groupList changes (user creates a group)
+    setLoaded(true);
+  }, [groupList]);
+
   return (
-    <GenericCardHolder title="Groups" cards={groupsData}>
+    <GenericCardHolder title="Groups" cards={groupList}>
       <GroupAddModal />
     </GenericCardHolder>
   );
