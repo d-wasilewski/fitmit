@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getGroups } from "../../../redux/actions/groupActions";
 
-const GroupsCard = () => {
+const GroupsCard = ({ navigation }) => {
   const { _id: userId } = useSelector((state) => state.user.user);
   const { groupList } = useSelector((state) => state.groups);
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const GroupsCard = () => {
   }, [groupList]);
 
   return (
-    <GenericCardHolder title="Groups" cards={groupList}>
+    <GenericCardHolder title="Groups" cards={groupList} navigation={navigation}>
       <GroupAddModal />
     </GenericCardHolder>
   );

@@ -1,19 +1,31 @@
 import React, { Children, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import GenericCard from "./GenericCard";
 import colors from "../../../styles/colors";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import GroupAddModal from "./GroupAddModal";
+import { useDispatch } from "react-redux";
+import { SET_CURRENT_GROUP_NAME } from "../../../redux/types";
 
 const GenericCardHolder = (props) => {
+  const dispatch = useDispatch();
   const {
     title,
     cards,
     colors = ["rgba(255, 0, 0, 0.2)", "rgba(38, 38, 38, 0.1)"],
     style,
+    navigation,
   } = props;
+
+  const handleClick = (name) => {
+    navigation.navigate("GroupProfile");
+    dispatch({ type: SET_CURRENT_GROUP_NAME, payload: name });
+  };
 
   return (
     <LinearGradient
@@ -25,7 +37,14 @@ const GenericCardHolder = (props) => {
       <Text style={styles.title}>{title}</Text>
       {cards.length > 0 ? (
         cards.map((val, index) => {
-          return <GenericCard key={val.name + index} data={val}></GenericCard>;
+          return (
+            <Pressable
+              key={val._id + index + val.name}
+              onPress={() => handleClick(val.name)}
+            >
+              <GenericCard data={val}></GenericCard>
+            </Pressable>
+          );
         })
       ) : (
         <Text style={styles.noGroupsMessage}>

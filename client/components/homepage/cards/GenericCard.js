@@ -4,7 +4,7 @@ import colors from "../../../styles/colors";
 import avatar from "../../../assets/papaj.jpg";
 
 const GenericCard = (props) => {
-  const { style, data = { title: "", text: "" } } = props;
+  const { style, data = { title: "", text: "", _id } } = props;
 
   return (
     <View style={[styles.container, style]}>

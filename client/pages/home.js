@@ -48,7 +48,7 @@ const Home = ({ navigation }) => {
         {/* Dodac jeszcze przy wartosci m, kcal i hr */}
         <ActivitySlider />
         <EventSection />
-        <GroupsCard />
+        <GroupsCard navigation={navigation} />
         {/* <GenericCardHolder
           title="Friends"
           colors={["rgba(255, 0, 168, 0.2) ", "rgba(38, 38, 38, 0.1)"]}

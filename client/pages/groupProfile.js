@@ -24,9 +24,11 @@ import {
   faBellSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
+import { useSelector } from "react-redux";
 
-const GroupProfile = (props) => {
+const GroupProfile = ({ navigation }) => {
   const height = Dimensions.get("window").height * 0.03;
+  const { currentGroupName } = useSelector((state) => state.groups);
 
   const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
 
@@ -43,13 +45,14 @@ const GroupProfile = (props) => {
             leftIcon={faArrowLeft}
             position="relative"
             style={styles.topbar}
+            onPressLeft={() => navigation.navigate("Home")}
           />
           <ImagePicker
             style={{ marginTop: 0, borderWidth: 2, borderColor: colors.orange }}
           />
           <View style={styles.groupControlsWrapper}>
             <Text style={[styles.groupName, { marginTop: height }]}>
-              Drążkowe Świry
+              {currentGroupName}
             </Text>
             <View style={styles.quickButtonWrapper}>
               <TouchableOpacity style={[styles.iconWrapper, { marginLeft: 0 }]}>

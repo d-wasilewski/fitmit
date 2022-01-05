@@ -15,19 +15,7 @@ const MemberCardHolder = (props) => {
         style={{ marginBottom: -30 }}
         title="Members"
         colors={["rgba(255, 153, 0, 0.2) ", "rgba(38, 38, 38, 0.1)"]}
-        cards={[
-          { data: { title: "Dronszki s pyponszem", text: "Damian: JD" } },
-          { data: { title: "Dronszkponszem", text: "Miciu: JD" } },
-          { data: { title: "Dronszonszem", text: "Damidasan: JD" } },
-          { data: { title: "Dronsonszem", text: "Damidsaan: JD" } },
-          { data: { title: "Dronszknszem", text: "Damiadsadn: JD" } },
-          {
-            data: {
-              title: "Dronszki s pypzem",
-              text: "Damian: JadsdasD",
-            },
-          },
-        ]}
+        cards={[{ name: "Dronszki s pyponszem", creator: "Damian: JD" }]}
       ></GenericCardHolder>
       <Pressable style={styles.addButton} onPress={setModalVisible}>
         <FontAwesomeIcon icon={faPlus} style={styles.icon} size={44} />
