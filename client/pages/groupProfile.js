@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 
 const GroupProfile = ({ navigation }) => {
   const height = Dimensions.get("window").height * 0.03;
+
   const { currentGroupName } = useSelector((state) => state.groups);
 
   const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
@@ -37,6 +38,7 @@ const GroupProfile = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
+        style={{ width: "100%" }}
       >
         <ImageBackground source={bgImg} style={styles.headerImage}>
           <TopBar
