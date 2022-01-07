@@ -5,10 +5,44 @@ import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import { faArrowLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import Button from "../components/shared/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserData } from "../redux/actions/userActions";
 
 const Settings = ({ navigation }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const { dontLogout, notificationsOn } = useSelector(
+    (state) => state.user.user.settings
+  );
+  const { _id: userId } = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const [isLogoutEnabled, setIsLogoutEnabled] = useState(dontLogout);
+  const [isNotificationsEnabled, setIsNotificationsEnabled] =
+    useState(notificationsOn);
+  const [showButton, setShowButton] = useState(false);
+
+  const toggleLogoutSwitch = () => {
+    setIsLogoutEnabled((previousState) => !previousState);
+    setShowButton(true);
+  };
+
+  const toggleNotificationsSwitch = () => {
+    setIsNotificationsEnabled((previousState) => !previousState);
+    setShowButton(true);
+  };
+
+  const handleSave = () => {
+    setShowButton(false);
+
+    dispatch(
+      updateUserData(userId, {
+        userId,
+        settings: {
+          dontLogout: isLogoutEnabled,
+          notificationsOn: isNotificationsEnabled,
+        },
+      })
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -25,10 +59,10 @@ const Settings = ({ navigation }) => {
           <Text style={styles.settingText}>Don't log out</Text>
           <Switch
             trackColor={{ false: "#767577", true: colors.grey100 }}
-            thumbColor={isEnabled ? colors.greenPrimary : "#f4f3f4"}
+            thumbColor={isLogoutEnabled ? colors.greenPrimary : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleLogoutSwitch}
+            value={isLogoutEnabled}
           />
         </View>
         <View style={styles.settingWrapper}>
@@ -36,10 +70,10 @@ const Settings = ({ navigation }) => {
           <Switch
             style={styles.switch}
             trackColor={{ false: "#767577", true: colors.grey100 }}
-            thumbColor={isEnabled ? colors.orange : "#f4f3f4"}
+            thumbColor={isNotificationsEnabled ? colors.orange : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleNotificationsSwitch}
+            value={isNotificationsEnabled}
           />
         </View>
       </View>
@@ -54,6 +88,11 @@ const Settings = ({ navigation }) => {
           />
         </View>
       </View>
+      {showButton ? (
+        <View style={styles.button}>
+          <Button title="Save changes" onPress={handleSave} />
+        </View>
+      ) : null}
       <View style={styles.contact}>
         <Text style={styles.contactText}>Contact us</Text>
       </View>
@@ -98,6 +137,11 @@ const styles = StyleSheet.create({
   contact: { position: "absolute", bottom: 10 },
   contactText: {
     color: colors.grey200,
+  },
+  button: {
+    marginTop: 25,
+    height: 33,
+    width: "45%",
   },
 });
 

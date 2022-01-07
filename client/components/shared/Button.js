@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   btn: {
     paddingTop: "7%",

@@ -30,6 +30,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   groups: [{ type: Schema.Types.ObjectId, ref: group }],
+  settings: {
+    dontLogout: {
+      type: Boolean,
+      default: false,
+    },
+    notificationsOn: {
+      type: Boolean,
+      default: true,
+    },
+  },
   date: {
     type: Date,
     default: Date.now,

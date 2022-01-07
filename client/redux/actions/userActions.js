@@ -61,6 +61,17 @@ export const getUserData = (userId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const updateUserData = (userId, newData) => (dispatch) => {
+  axios
+    .put(`/${userId}`, {
+      newData,
+    })
+    .then((res) => console.log("User po pucie: ", res.data))
+    .catch((err) => console.log(err));
+};
+
+export const refreshToken = (userId) => (dispatch) => {};
+
 const setAuthorizationHeader = async (token) => {
   const authToken = `Bearer ${token}`;
   try {
