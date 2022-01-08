@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import colors from "../../../../../styles/colors";
+import ModalDatePicker from "../ModalDatePicker";
 import ModalDropdownItem from "../ModalDropdownItem";
 import ModalDropdownMenu from "../ModalDropdownMenu";
 import ModalInput from "../ModalInput";
@@ -19,7 +20,8 @@ const ModalAddEvent = (props) => {
   const buttonTopMargin = marginSize * 0.3;
 
   const [eventType, setEventType] = useState(null);
-  console.log(eventType);
+  const [eventDate, setEventDate] = useState(null);
+  const [eventTime, setEventTime] = useState(null);
 
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
@@ -38,7 +40,7 @@ const ModalAddEvent = (props) => {
                 title="Event type"
                 style={styles.elementMargin}
                 onUpdate={setEventType}
-                label="😎 chose sport"
+                label="😎 select sport"
               >
                 <ModalDropdownItem label="🏀 Basketball" value="BASKETBALL" />
                 <ModalDropdownItem label="🏐 Volleyball" value="VOLLEYBALL" />
@@ -49,6 +51,14 @@ const ModalAddEvent = (props) => {
                   value="CALISTHENICS"
                 />
               </ModalDropdownMenu>
+              <View style={[styles.pickerWrapper, styles.elementMargin]}>
+                <ModalDatePicker
+                  title="Date"
+                  style={{ width: "47%" }}
+                  onChange={setEventDate}
+                />
+                <ModalDatePicker title="Date" style={{ width: "47%" }} />
+              </View>
             </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
@@ -144,6 +154,11 @@ const styles = StyleSheet.create({
   },
   elementMargin: {
     marginTop: 20,
+  },
+  pickerWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
 });
 

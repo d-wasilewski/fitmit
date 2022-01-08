@@ -18,7 +18,10 @@ const ModalInput = (props) => {
 };
 
 const styles = StyleSheet.create({
-  wrapper: {},
+  wrapper: {
+    width: "100%",
+    padding: 1,
+  },
   labelText: {
     fontSize: 16,
     color: colors.orange,
