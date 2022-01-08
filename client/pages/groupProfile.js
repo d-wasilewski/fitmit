@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   View,
@@ -16,7 +16,7 @@ import HomeMenu from "../components/shared/HomeMenu";
 import ImagePicker from "../components/ImagePicker";
 import EventSection from "../components/homepage/EventSection";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { useState } from "react";
+import axios from "axios";
 
 import {
   faCommentDots,
@@ -28,8 +28,22 @@ import { useSelector } from "react-redux";
 
 const GroupProfile = ({ navigation }) => {
   const height = Dimensions.get("window").height * 0.03;
+  const { currentGroup } = useSelector((state) => state.groups);
 
-  const { currentGroupName } = useSelector((state) => state.groups);
+  const dummyUser = [
+    {
+      _id: "22",
+      profilePicture: {
+        url: "https://res.cloudinary.com/mtosik/image/upload/v1641658063/dev_setups/ciuddp9ztp1jjjjlzam4.jpg",
+        public_id: "dev_setups/ciuddp9ztp1jjjjlzam4",
+      },
+      settings: { dontLogout: false, notificationsOn: true },
+      username: "grupowy",
+      email: "grupowy@gmail.com",
+      password: "$2b$10$OZPIT63ZGH67ZPhAzL0dvO.rpt7dLi.xCbByVpufC8S7Lp3.55kKi",
+      __v: 0,
+    },
+  ];
 
   const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
 
@@ -54,7 +68,7 @@ const GroupProfile = ({ navigation }) => {
           />
           <View style={styles.groupControlsWrapper}>
             <Text style={[styles.groupName, { marginTop: height }]}>
-              {currentGroupName}
+              {currentGroup.name}
             </Text>
             <View style={styles.quickButtonWrapper}>
               <TouchableOpacity style={[styles.iconWrapper, { marginLeft: 0 }]}>
@@ -93,10 +107,13 @@ const GroupProfile = ({ navigation }) => {
               setAddMemberModalVisible(!isAddMemberModalVisible)
             }
             isModalVisible={isAddMemberModalVisible}
+            members={currentGroup.members}
+            navigation={navigation}
+            cards={dummyUser}
           />
         </View>
       </ScrollView>
-      <HomeMenu color={colors.orange}></HomeMenu>
+      <HomeMenu color={colors.orange} navigation={navigation}></HomeMenu>
     </View>
   );
 };

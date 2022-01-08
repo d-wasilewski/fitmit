@@ -7,7 +7,7 @@ import colors from "../../../styles/colors";
 import MemberAddModal from "./MemberAddModal";
 
 const MemberCardHolder = (props) => {
-  const { setModalVisible, isModalVisible } = props;
+  const { setModalVisible, isModalVisible, navigation, cards } = props;
 
   return (
     <View style={{ width: "100%", alignItems: "flex-end" }}>
@@ -15,7 +15,8 @@ const MemberCardHolder = (props) => {
         style={{ marginBottom: -30 }}
         title="Members"
         colors={["rgba(255, 153, 0, 0.2) ", "rgba(38, 38, 38, 0.1)"]}
-        cards={[{ name: "Dronszki s pyponszem", creator: "Damian: JD" }]}
+        cards={cards}
+        navigation={navigation}
       ></GenericCardHolder>
       <Pressable style={styles.addButton} onPress={setModalVisible}>
         <FontAwesomeIcon icon={faPlus} style={styles.icon} size={44} />

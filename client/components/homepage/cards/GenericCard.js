@@ -4,13 +4,13 @@ import colors from "../../../styles/colors";
 import avatar from "../../../assets/papaj.jpg";
 
 const GenericCard = (props) => {
-  const { style, data = { title: "", text: "", _id } } = props;
+  const { style, data = { title: "", text: "", _id, username } } = props;
 
   return (
     <View style={[styles.container, style]}>
       <View style={styles.textWrapper}>
         <Text style={styles.title}>{data.name}</Text>
-        <Text style={styles.text}>{data.creator}</Text>
+        <Text style={styles.text}>{data._id}</Text>
       </View>
       <View style={styles.img}>
         <Image

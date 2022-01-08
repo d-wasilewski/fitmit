@@ -10,10 +10,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import GenericCard from "./GenericCard";
 import colors from "../../../styles/colors";
 import { useDispatch } from "react-redux";
-import { SET_CURRENT_GROUP_NAME } from "../../../redux/types";
+import { useRoute } from "@react-navigation/native";
+import { SET_CURRENT_GROUP } from "../../../redux/types";
 
 const GenericCardHolder = (props) => {
   const dispatch = useDispatch();
+  const route = useRoute();
   const {
     title,
     cards,
@@ -22,9 +24,16 @@ const GenericCardHolder = (props) => {
     navigation,
   } = props;
 
-  const handleClick = (name) => {
-    navigation.navigate("GroupProfile");
-    dispatch({ type: SET_CURRENT_GROUP_NAME, payload: name });
+  const handleClick = (val) => {
+    console.log(val);
+    if (route.name == "Home") {
+      navigation.navigate("GroupProfile");
+      dispatch({ type: SET_CURRENT_GROUP, payload: val });
+    }
+    if (route.name == "GroupProfile") {
+      navigation.navigate("User");
+      // dispatch({ type: SET_CURRENT_GROUP_NAME, payload: val });
+    }
   };
 
   return (
@@ -40,7 +49,7 @@ const GenericCardHolder = (props) => {
           return (
             <Pressable
               key={val._id + index + val.name}
-              onPress={() => handleClick(val.name)}
+              onPress={() => handleClick(val)}
             >
               <GenericCard data={val}></GenericCard>
             </Pressable>

@@ -1,8 +1,8 @@
-import { SET_GROUPS, CREATE_GROUP, SET_CURRENT_GROUP_NAME } from "../types";
+import { SET_GROUPS, CREATE_GROUP, SET_CURRENT_GROUP } from "../types";
 
 const initialState = {
   groupList: [],
-  currentGroupName: "",
+  currentGroup: "",
 };
 
 export default function (state = initialState, action) {
@@ -17,10 +17,10 @@ export default function (state = initialState, action) {
         ...state,
         groupList: action.payload,
       };
-    case SET_CURRENT_GROUP_NAME:
+    case SET_CURRENT_GROUP:
       return {
         ...state,
-        currentGroupName: action.payload,
+        currentGroup: action.payload,
       };
 
     default:

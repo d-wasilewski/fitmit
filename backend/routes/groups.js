@@ -25,10 +25,10 @@ router.get("/groupsByUserId/:userId", async (req, res) => {
   }
 });
 
-router.get("/usersOfTheGroup", async (req, res) => {
+router.put("/usersOfTheGroup", async (req, res) => {
   groups = req.body.members;
-  console.log(groups);
   populatedUsers = await UserSchema.find({ _id: { $in: groups } });
+  // TODO: usunac zbedne pola
   res.json(populatedUsers);
 });
 
