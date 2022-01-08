@@ -14,10 +14,12 @@ import Home from "./pages/home";
 import User from "./pages/userProfile";
 import store from "./redux/store";
 import { loginUser, logoutUser } from "./redux/actions/userActions";
+import CameraLauncher from "./components/CameraLauncher";
+import ImagePicker from "./components/ImagePicker";
 
 const Stack = createNativeStackNavigator();
 
-axios.defaults.baseURL = "http://192.168.100.147:5000/api/";
+axios.defaults.baseURL = "http://192.168.55.107:5000/api/";
 
 export default function App() {
   const [tok, setTok] = useState("");
@@ -83,6 +85,7 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="User" component={User} />
+            <Stack.Screen name="CameraLauncher" component={CameraLauncher} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (

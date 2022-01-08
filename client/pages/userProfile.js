@@ -16,8 +16,10 @@ import { useSelector } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
+import CameraLauncher from "../components/CameraLauncher";
 
-const User = ({ navigation }) => {
+
+const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
   const { username, desc } = useSelector(
     (state) => state?.user?.user
@@ -30,7 +32,7 @@ const User = ({ navigation }) => {
         resizeMode="cover"
         style={[styles.image, { height: height * 0.3 }]}
       >
-        <ImagePicker />
+        <ImagePicker navigation={navigation} pictureFromCamera={route.params}/>
         <TouchableOpacity
           style={styles.backArrow}
           onPress={() => navigation.navigate("Home")}
@@ -53,7 +55,7 @@ const User = ({ navigation }) => {
 
       <Text style={styles.desc}>{desc ? desc : "No personal info"}</Text>
 
-      <HomeMenu />
+      <HomeMenu navigation={navigation}/>
     </View>
   );
 };

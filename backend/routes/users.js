@@ -6,6 +6,7 @@ const { cloudinary } = require('../utils/cloudinary');
 module.exports = router;
 
 router.post("/uploadImage", async (req, res) => {
+  
   const user = await UserSchema.findById(req.body.userId)
  
   if(user.profilePicture.url != "") {
