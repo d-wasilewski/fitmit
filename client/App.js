@@ -23,7 +23,7 @@ import { getGroups } from "./redux/actions/groupActions";
 
 const Stack = createNativeStackNavigator();
 
-axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
+axios.defaults.baseURL = "http://192.168.1.17:5000/api/";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
