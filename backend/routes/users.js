@@ -1,6 +1,9 @@
 const UserSchema = require("../models/UserSchema");
 const router = require("express").Router();
+const auth = require("../middleware/auth");
+const { cloudinary } = require('../utils/cloudinary');
 const jwt = require("jsonwebtoken");
+
 
 router.put("/refreshToken/:userId", async (req, res) => {
   try {
@@ -24,6 +27,38 @@ router.put("/refreshToken/:userId", async (req, res) => {
     return res.status(500).json(err);
   }
 });
+
+router.post("/uploadImage", async (req, res) => {
+  
+  const user = await UserSchema.findById(req.body.userId)
+ 
+  if(user.profilePicture.url != "") {
+    try {
+      await cloudinary.uploader.destroy(user.profilePicture.public_id)
+    } catch (e) {
+    }
+  }
+
+  try {
+    const uploadedResponse = await cloudinary.uploader.upload(req.body.profilePicture, {
+      upload_preset: 'dev_setups'
+    });
+
+    const userAfterUpdate = await UserSchema.findByIdAndUpdate(req.body.userId, {    
+      profilePicture: {
+        url : uploadedResponse.secure_url,
+        public_id : uploadedResponse.public_id
+      }
+    }, {new: true})
+
+    return res.status(201).json(userAfterUpdate)
+    
+  } catch (e) {
+    return res.status(500).json(e)
+  }
+})
+
+
 
 //update user
 router.put("/:id", async (req, res) => {

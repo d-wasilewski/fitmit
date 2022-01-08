@@ -13,7 +13,9 @@ const RegisterForm = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
+
     dispatch(registerUser(values));
+
 
     navigation.navigate("Home");
   };

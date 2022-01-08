@@ -1,4 +1,5 @@
-import { SET_USER, SET_UNAUTHENTICATED, SET_AUTHENTICATED } from "../types";
+import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE, SET_AUTHENTICATED } from "../types";
+
 
 const initialState = {
   authenticated: false,
@@ -12,7 +13,6 @@ export default function (state = initialState, action) {
         ...state,
         authenticated: true,
       };
-
     case SET_USER:
       return {
         authenticated: true,
@@ -21,6 +21,17 @@ export default function (state = initialState, action) {
 
     case SET_UNAUTHENTICATED:
       return initialState;
+
+    case CHANGE_PICTURE:
+      return {
+        ...state,
+        user: {
+          ...state.user, profilePicture: {
+            ...state.user.profilePicture, url: action.payload
+          }
+        }
+      }
+
 
     default:
       return state;

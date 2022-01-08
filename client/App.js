@@ -13,6 +13,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import User from "./pages/userProfile";
 import store from "./redux/store";
+import CameraLauncher from "./components/CameraLauncher";
 import CardList from "./pages/cardList";
 import GroupProfile from "./pages/groupProfile";
 import Settings from "./pages/settings";
@@ -24,6 +25,7 @@ import { getGroups } from "./redux/actions/groupActions";
 const Stack = createNativeStackNavigator();
 
 axios.defaults.baseURL = "http://192.168.1.17:5000/api/";
+
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -89,6 +91,7 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="User" component={User} />
+            <Stack.Screen name="CameraLauncher" component={CameraLauncher} />
             {/* tymczasowo */}
             <Stack.Screen name="CardList" component={CardList} />
             <Stack.Screen name="GroupProfile" component={GroupProfile} />
