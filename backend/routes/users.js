@@ -1,6 +1,7 @@
 const UserSchema = require("../models/UserSchema");
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
+const ActivitySchema = require("../models/ActivitySchema");
 
 router.put("/refreshToken/:userId", async (req, res) => {
   try {
@@ -52,6 +53,18 @@ router.get("/:id", async (req, res) => {
     res.status(200).json(other);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// zwraca aktywnosci dla usera o danym id
+router.get("/:id/activities", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const activities = await ActivitySchema.find({ user: userId });
+    res.status(200).json(activities);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
   }
 });
 
