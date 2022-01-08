@@ -11,18 +11,30 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../styles/colors";
 
-const HomeMenu = ({ navigation }) => {
+const HomeMenu = ({ navigation, color = colors.greenSecondary }) => {
   const { height } = useWindowDimensions();
   return (
     <View style={[styles.container, { height: height * 0.1 }]}>
       <TouchableOpacity>
-        <FontAwesomeIcon icon={faMapMarked} style={[styles.icon]} size={30} />
+        <FontAwesomeIcon
+          icon={faMapMarked}
+          style={[styles.icon, { color }]}
+          size={30}
+        />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <FontAwesomeIcon icon={faHome} style={[styles.icon]} size={30} />
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <FontAwesomeIcon
+          icon={faHome}
+          style={[styles.icon, { color }]}
+          size={30}
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("User")}>
-        <FontAwesomeIcon icon={faUserCircle} style={[styles.icon]} size={30} />
+        <FontAwesomeIcon
+          icon={faUserCircle}
+          style={[styles.icon, { color }]}
+          size={30}
+        />
       </TouchableOpacity>
     </View>
   );

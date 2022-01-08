@@ -40,7 +40,9 @@ router.post("/register", async (req, res) => {
     );
     user.token = token;
 
-    return res.status(201).json(user);
+    const { password: passwordNotToReturn, date, __v, ...other } = user._doc;
+
+    return res.status(201).json(other);
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -58,12 +60,14 @@ router.post("/login", async (req, res) => {
     );
     if (!validPassword) return res.status(400).json("Wrong password");
 
+    const expirationTime = user.settings.dontLogout ? "1000d" : "2h";
+
     // TODO: logowanie mailem
     const token = jwt.sign(
       { user_id: user._id, username: req.body.username },
       process.env.TOKEN_KEY,
       {
-        expiresIn: "2h",
+        expiresIn: expirationTime,
       }
     );
 

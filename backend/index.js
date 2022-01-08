@@ -9,6 +9,9 @@ const bodyParser = require('body-parser');
 
 const routersUrls = require("./routes/routes");
 const routerUserUrls = require("./routes/users.js");
+const groupsUrls = require("./routes/groups.js");
+const eventUrls = require("./routes/events.js");
+const activityUrls = require("./routes/activity.js");
 
 dotenv.config();
 
@@ -22,6 +25,11 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(helmet());
 
+app.use("/api/group", groupsUrls);
+// nw czy git
+app.use("/api/event", eventUrls);
+app.use("/api/activity", activityUrls);
+//
 app.use("/api", routersUrls);
 app.use("/api", routerUserUrls);
 

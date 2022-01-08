@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const group = require("./GroupSchema");
+// var group = null;
+// process.nextTick(() => (group = require("./GroupSchema"))); //Circular reference!
+const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -30,6 +34,17 @@ const UserSchema = new mongoose.Schema({
   },
   token: {
     type: String,
+  },
+  groups: [{ type: Schema.Types.ObjectId, ref: group }],
+  settings: {
+    dontLogout: {
+      type: Boolean,
+      default: false,
+    },
+    notificationsOn: {
+      type: Boolean,
+      default: true,
+    },
   },
   date: {
     type: Date,

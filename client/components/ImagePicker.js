@@ -143,6 +143,7 @@ const ImagePicker = ({ pictureFromCamera, navigation }) => {
               )}
               
       </Pressable>
+
   );
 };
 

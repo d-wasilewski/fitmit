@@ -1,4 +1,5 @@
-import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE } from "../types";
+import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE, SET_AUTHENTICATED } from "../types";
+
 
 const initialState = {
   authenticated: false,
@@ -7,11 +8,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    //    case SET_AUTHENTICATED:
-    //       return {
-    //          ...state,
-    //          authenticated: true,
-    //       }
+    case SET_AUTHENTICATED:
+      return {
+        ...state,
+        authenticated: true,
+      };
     case SET_USER:
       return {
         authenticated: true,

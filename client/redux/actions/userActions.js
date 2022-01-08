@@ -2,12 +2,31 @@ import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE } from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const loginUser = (userData, history) => (dispatch) => {
+export const loginUser = (userData) => (dispatch) => {
   //   dispatch({ type: LOADING_UI });
   const { login: username, password } = userData;
 
   axios
     .post("/login", { username, password })
+    .then((res) => {
+      setAuthorizationHeader(res.data.token);
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const registerUser = (userData) => (dispatch) => {
+  const { login, email, password } = userData;
+
+  axios
+    .post("/register", {
+      username: login,
+      email,
+      password,
+    })
     .then((res) => {
       console.log(res.data);
       setAuthorizationHeader(res.data.token);
@@ -15,7 +34,6 @@ export const loginUser = (userData, history) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
-      //   dodac nawigacje po logowaniu
     })
     .catch((err) => console.log(err));
 };
@@ -30,18 +48,29 @@ export const logoutUser = () => async (dispatch) => {
   dispatch({ type: SET_UNAUTHENTICATED });
 };
 
-// export const getUserData = () => (dispatch) => {
-//   //   dispatch({ type: LOADING_USER });
-//   axios
-//     .get("/user")
-//     .then((res) => {
-//       dispatch({
-//         type: SET_USER,
-//         payload: res.data,
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
+export const getUserData = (userId) => (dispatch) => {
+  //   dispatch({ type: LOADING_USER });
+  axios
+    .get(`${userId}`)
+    .then((res) => {
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const updateUserData = (userId, newData) => (dispatch) => {
+  axios
+    .put(`/${userId}`, {
+      newData,
+    })
+    .then((res) => console.log("User po pucie: ", res.data))
+    .catch((err) => console.log(err));
+};
+
+export const refreshToken = (userId) => (dispatch) => {};
 
 const setAuthorizationHeader = async (token) => {
   const authToken = `Bearer ${token}`;
@@ -50,7 +79,7 @@ const setAuthorizationHeader = async (token) => {
   } catch (err) {
     console.log(err);
   }
-  axios.defaults.headers.common["Authorization"] = authToken;
+  // axios.defaults.headers.common["Authorization"] = authToken;
 };
 
 export const changeProfilePicture = (userId, profilePicture) => (dispatch) => {

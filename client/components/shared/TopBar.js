@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   useWindowDimensions,
+  Text,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Logo from "../../assets/logo.png";
@@ -12,26 +13,43 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../styles/colors";
 
 const TopBar = (props) => {
-  const { leftIcon, rightIcon, color, onPressLeft, onPressRight } = props;
+  const {
+    leftIcon,
+    rightIcon,
+    color = colors.greenSecondary,
+    onPressLeft,
+    onPressRight,
+    title,
+    style,
+  } = props;
   const { height } = useWindowDimensions();
 
   const leftStyleIcon = leftIcon === undefined ? styles.invisible : undefined;
   const rightStyleIcon = rightIcon === undefined ? styles.invisible : undefined;
 
+  let gap;
+  gap = title ? 0 : 30;
+
   return (
-    <View style={[styles.container, { height: height * 0.08 }]}>
+    <View style={[styles.container, { height: height * 0.05 }, style]}>
       <TouchableOpacity onPress={onPressLeft}>
         <FontAwesomeIcon
           icon={leftIcon ? leftIcon : faArrowLeft}
-          style={[styles.icon, { color }, leftStyleIcon]}
+          style={[styles.icon, { color }, { marginTop: gap }, leftStyleIcon]}
           size={25}
         />
       </TouchableOpacity>
-      <Image source={Logo} style={styles.image} />
+      {title ? (
+        <Text style={[styles.title, { color }, { marginTop: gap }]}>
+          {title}
+        </Text>
+      ) : (
+        <Image source={Logo} style={styles.image} />
+      )}
       <TouchableOpacity onPress={onPressRight}>
         <FontAwesomeIcon
           icon={rightIcon ? rightIcon : faArrowLeft}
-          style={[styles.icon, { color }, rightStyleIcon]}
+          style={[styles.icon, { color }, { marginTop: gap }, rightStyleIcon]}
           size={25}
         />
       </TouchableOpacity>
@@ -52,6 +70,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     zIndex: 10,
     backgroundColor: "transparent",
+    minHeight: 80,
   },
   icon: {
     justifyContent: "center",
@@ -66,6 +85,11 @@ const styles = StyleSheet.create({
   image: {
     width: "65%",
     height: "60%",
+    marginTop: 30,
+  },
+  title: {
+    fontFamily: "ComfortaaBold",
+    fontSize: 24,
     marginTop: 30,
   },
 });
