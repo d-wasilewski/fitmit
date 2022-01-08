@@ -29,21 +29,15 @@ import { useSelector } from "react-redux";
 const GroupProfile = ({ navigation }) => {
   const height = Dimensions.get("window").height * 0.03;
   const { currentGroup } = useSelector((state) => state.groups);
+  const [membersData, setMembersData] = useState([]);
 
-  const dummyUser = [
-    {
-      _id: "22",
-      profilePicture: {
-        url: "https://res.cloudinary.com/mtosik/image/upload/v1641658063/dev_setups/ciuddp9ztp1jjjjlzam4.jpg",
-        public_id: "dev_setups/ciuddp9ztp1jjjjlzam4",
-      },
-      settings: { dontLogout: false, notificationsOn: true },
-      username: "grupowy",
-      email: "grupowy@gmail.com",
-      password: "$2b$10$OZPIT63ZGH67ZPhAzL0dvO.rpt7dLi.xCbByVpufC8S7Lp3.55kKi",
-      __v: 0,
-    },
-  ];
+  useEffect(() => {
+    axios
+      .put("/group/usersOfTheGroup", {
+        members: currentGroup.members,
+      })
+      .then((res) => setMembersData(res.data));
+  }, []);
 
   const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
 
@@ -107,9 +101,8 @@ const GroupProfile = ({ navigation }) => {
               setAddMemberModalVisible(!isAddMemberModalVisible)
             }
             isModalVisible={isAddMemberModalVisible}
-            members={currentGroup.members}
             navigation={navigation}
-            cards={dummyUser}
+            cards={membersData}
           />
         </View>
       </ScrollView>
