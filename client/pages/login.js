@@ -22,9 +22,9 @@ const Login = ({ navigation }) => {
       <ImageBackground
         source={bgPhoto}
         resizeMode="cover"
-        style={[styles.image]}
+        style={[styles.image, { width, height }]}
       >
-        <View style={[styles.child]}>
+        <View style={[styles.child, { width, height }]}>
           <TopBar color={"#F0F0F0"} />
           <View style={styles.form}>
             <LoginForm navigation={navigation} />

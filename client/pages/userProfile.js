@@ -13,15 +13,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faGrinTears } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
+import CameraLauncher from "../components/CameraLauncher";
 import TopBar from "../components/shared/TopBar";
+import { SET_CURRENT_USER } from "../redux/types";
 
-const User = ({ navigation }) => {
+const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
-  const { username, desc } = useSelector((state) => state?.user?.user);
+  // logged in user
+  const { username, desc, _id } = useSelector((state) => state?.user?.user);
+  // profile of the user whose page is being viewed
+  const { currentUser } = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    navigation.addListener("beforeRemove", () => {
+      dispatch({ type: SET_CURRENT_USER, payload: null });
+    });
+  }, [currentUser]);
 
   return (
     <View style={styles.container}>
@@ -32,6 +44,8 @@ const User = ({ navigation }) => {
       >
         <ImagePicker
           style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
+          navigation={navigation}
+          pictureFromCamera={route.params}
         />
       </ImageBackground>
       <TopBar
@@ -41,15 +55,25 @@ const User = ({ navigation }) => {
         color={colors.blackPrimary}
         onPressRight={() => navigation.navigate("Settings")}
       />
-      <Text style={styles.name}>{username}</Text>
+      <Text style={styles.name}>
+        {currentUser ? currentUser.username : username}
+      </Text>
       <View style={styles.aboutMe}>
         <Text style={styles.aboutMeText}>About me</Text>
-        <TouchableOpacity>
-          <FontAwesomeIcon icon={faPen} style={styles.icon} />
-        </TouchableOpacity>
+        {currentUser && currentUser._id != _id ? null : (
+          <TouchableOpacity>
+            <FontAwesomeIcon icon={faPen} style={styles.icon} />
+          </TouchableOpacity>
+        )}
       </View>
 
-      <Text style={styles.desc}>{desc ? desc : "No personal info"}</Text>
+      <Text style={styles.desc}>
+        {currentUser && currentUser.desc
+          ? currentUser.desc
+          : desc
+          ? desc
+          : "No personal info"}
+      </Text>
 
       <HomeMenu navigation={navigation} />
     </View>

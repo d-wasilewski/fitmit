@@ -15,7 +15,7 @@ const HomeMenu = ({ navigation, color = colors.greenSecondary }) => {
   const { height } = useWindowDimensions();
   return (
     <View style={[styles.container, { height: height * 0.1 }]}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Map")}>
         <FontAwesomeIcon
           icon={faMapMarked}
           style={[styles.icon, { color }]}

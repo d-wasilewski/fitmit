@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
     );
     if (!validPassword) return res.status(400).json("Wrong password");
 
-    const expirationTime = user.settings.dontLogout ? "1000d" : "2h";
+    const expirationTime = req.body.checkboxState ? "1000d" : "2h";
 
     // TODO: logowanie mailem
     const token = jwt.sign(

@@ -14,6 +14,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import User from "./pages/userProfile";
 import store from "./redux/store";
+import CameraLauncher from "./components/CameraLauncher";
 import CardList from "./pages/cardList";
 import GroupProfile from "./pages/groupProfile";
 import Settings from "./pages/settings";
@@ -21,6 +22,7 @@ import Settings from "./pages/settings";
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { getGroups } from "./redux/actions/groupActions";
+import Map from "./pages/map";
 
 const Stack = createNativeStackNavigator();
 
@@ -91,10 +93,12 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="User" component={User} />
+            <Stack.Screen name="CameraLauncher" component={CameraLauncher} />
             {/* tymczasowo */}
             <Stack.Screen name="CardList" component={CardList} />
             <Stack.Screen name="GroupProfile" component={GroupProfile} />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Map" component={Map} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (

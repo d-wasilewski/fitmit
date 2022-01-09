@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   View,
@@ -16,7 +16,7 @@ import HomeMenu from "../components/shared/HomeMenu";
 import ImagePicker from "../components/ImagePicker";
 import EventSection from "../components/homepage/EventSection";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { useState } from "react";
+import axios from "axios";
 
 import {
   faCommentDots,
@@ -28,8 +28,16 @@ import { useSelector } from "react-redux";
 
 const GroupProfile = ({ navigation }) => {
   const height = Dimensions.get("window").height * 0.03;
+  const { currentGroup } = useSelector((state) => state.groups);
+  const [membersData, setMembersData] = useState([]);
 
-  const { currentGroupName } = useSelector((state) => state.groups);
+  useEffect(() => {
+    axios
+      .put("/group/usersOfTheGroup", {
+        members: currentGroup.members,
+      })
+      .then((res) => setMembersData(res.data));
+  }, []);
 
   const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
 
@@ -54,7 +62,7 @@ const GroupProfile = ({ navigation }) => {
           />
           <View style={styles.groupControlsWrapper}>
             <Text style={[styles.groupName, { marginTop: height }]}>
-              {currentGroupName}
+              {currentGroup.name}
             </Text>
             <View style={styles.quickButtonWrapper}>
               <TouchableOpacity style={[styles.iconWrapper, { marginLeft: 0 }]}>
@@ -93,10 +101,12 @@ const GroupProfile = ({ navigation }) => {
               setAddMemberModalVisible(!isAddMemberModalVisible)
             }
             isModalVisible={isAddMemberModalVisible}
+            navigation={navigation}
+            cards={membersData}
           />
         </View>
       </ScrollView>
-      <HomeMenu color={colors.orange}></HomeMenu>
+      <HomeMenu color={colors.orange} navigation={navigation}></HomeMenu>
     </View>
   );
 };

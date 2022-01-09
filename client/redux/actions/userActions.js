@@ -1,19 +1,22 @@
-import { SET_USER, SET_UNAUTHENTICATED } from "../types";
+import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE } from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getGroups } from "./groupActions";
 
 export const loginUser = (userData) => (dispatch) => {
   //   dispatch({ type: LOADING_UI });
-  const { login: username, password } = userData;
+  console.log(userData);
+  const { login: username, password, checkboxState } = userData;
 
   axios
-    .post("/login", { username, password })
+    .post("/login", { username, password, checkboxState })
     .then((res) => {
       setAuthorizationHeader(res.data.token);
       dispatch({
         type: SET_USER,
         payload: res.data,
       });
+      dispatch(getGroups(res.data._id));
     })
     .catch((err) => console.log(err));
 };
@@ -34,6 +37,7 @@ export const registerUser = (userData) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
+      dispatch(getGroups(res.data._id));
     })
     .catch((err) => console.log(err));
 };
@@ -62,15 +66,20 @@ export const getUserData = (userId) => (dispatch) => {
 };
 
 export const updateUserData = (userId, newData) => (dispatch) => {
+  console.log("NEW DATA: ", newData.settings.dontLogout);
   axios
     .put(`/${userId}`, {
       newData,
     })
     .then((res) => console.log("User po pucie: ", res.data))
     .catch((err) => console.log(err));
+
+  if (newData.settings.dontLogout) {
+    axios.put(`/refreshToken/${userId}`).catch((err) => console.log(err));
+  }
 };
 
-export const refreshToken = (userId) => (dispatch) => {};
+// export const refreshToken = (userId) => (dispatch) => {};
 
 const setAuthorizationHeader = async (token) => {
   const authToken = `Bearer ${token}`;
@@ -80,4 +89,17 @@ const setAuthorizationHeader = async (token) => {
     console.log(err);
   }
   // axios.defaults.headers.common["Authorization"] = authToken;
+};
+
+export const changeProfilePicture = (userId, profilePicture) => (dispatch) => {
+  axios
+    .post("/uploadImage", { userId, profilePicture })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: CHANGE_PICTURE,
+        payload: res.data.profilePicture.url,
+      });
+    })
+    .catch((err) => console.log(err));
 };
