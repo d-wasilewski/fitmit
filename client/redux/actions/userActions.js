@@ -1,6 +1,7 @@
 import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE } from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getGroups } from "./groupActions";
 
 export const loginUser = (userData) => (dispatch) => {
   //   dispatch({ type: LOADING_UI });
@@ -14,6 +15,7 @@ export const loginUser = (userData) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
+      dispatch(getGroups(res.data._id));
     })
     .catch((err) => console.log(err));
 };
@@ -83,16 +85,14 @@ const setAuthorizationHeader = async (token) => {
 };
 
 export const changeProfilePicture = (userId, profilePicture) => (dispatch) => {
-
   axios
-  .post("/uploadImage", { userId , profilePicture})
-  .then((res) => {
-    console.log(res.data);
-    dispatch({
-      type: CHANGE_PICTURE,
-      payload: res.data.profilePicture.url
+    .post("/uploadImage", { userId, profilePicture })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: CHANGE_PICTURE,
+        payload: res.data.profilePicture.url,
+      });
     })
-  })
-  .catch((err) => console.log(err));
-}
-
+    .catch((err) => console.log(err));
+};
