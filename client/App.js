@@ -21,6 +21,7 @@ import Settings from "./pages/settings";
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { getGroups } from "./redux/actions/groupActions";
+import Map from "./pages/map";
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,7 @@ export default function App() {
             <Stack.Screen name="CardList" component={CardList} />
             <Stack.Screen name="GroupProfile" component={GroupProfile} />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Map" component={Map} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
