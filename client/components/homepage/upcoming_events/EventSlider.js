@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Dimensions } from "react-native";
 import EventAddCard from "./EventAddCard";
 import EventCard from "./EventCard";
+import ModalAddEvent from "../cards/modal/add-event/ModalAddEvent";
 
 const EventSlider = (props) => {
+  const [isAddEventModalVisible, setAddEventModalVisible] = useState(false);
+
   const windowWidth = Dimensions.get("window").width;
   const styles = StyleSheet.create({
     element: {
@@ -24,6 +27,7 @@ const EventSlider = (props) => {
     style,
     altBg,
     expandable,
+    addFunction,
   } = props;
 
   if (expandable) cards.push({});
@@ -43,10 +47,18 @@ const EventSlider = (props) => {
         );
       })}
       {expandable ? (
-        <EventAddCard
-          altBg={altBg}
-          style={[styles.element, styles.lastElement]}
-        />
+        <>
+          <EventAddCard
+            altBg={altBg}
+            style={[styles.element, styles.lastElement]}
+            onPress={() => setAddEventModalVisible(!isAddEventModalVisible)}
+          />
+          <ModalAddEvent
+            visible={isAddEventModalVisible}
+            title="Add Event"
+            onQuit={() => setAddEventModalVisible(!isAddEventModalVisible)}
+          ></ModalAddEvent>
+        </>
       ) : null}
     </ScrollView>
   );

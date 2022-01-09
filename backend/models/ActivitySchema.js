@@ -7,9 +7,11 @@ const ActivitySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
+  createdAt: {
     type: Date,
     default: Date.now,
+    expires: "7d",
+    required: true,
   },
   steps: {
     type: Schema.Types.Number,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, StyleSheet, Dimensions, Text, Pressable } from "react-native";
 import colors from "../../../styles/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -7,7 +7,7 @@ import { faCalendarPlus as plusIcon } from "@fortawesome/free-solid-svg-icons";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const EventAddCard = (props) => {
-  const { style, altBg } = props;
+  const { style, altBg, onPress } = props;
 
   const iconColor = altBg ? "#A96500" : colors.greenSecondary;
   const gradientColors = altBg
@@ -17,7 +17,11 @@ const EventAddCard = (props) => {
   const windowWidth = Dimensions.get("screen").width;
 
   return (
-    <View style={[styles.container, { width: windowWidth * 0.88 }, style]}>
+    <Pressable
+      style={[styles.container, { width: windowWidth * 0.88 }, style]}
+      onPress={onPress}
+    >
+      {/* <Pressable> */}
       {/* Obrazek */}
       <View
         style={{
@@ -41,7 +45,8 @@ const EventAddCard = (props) => {
           <Text style={styles.font}>Add event</Text>
         </View>
       </LinearGradient>
-    </View>
+      {/* </Pressable> */}
+    </Pressable>
   );
 };
 
