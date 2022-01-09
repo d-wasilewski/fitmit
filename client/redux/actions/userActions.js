@@ -36,6 +36,7 @@ export const registerUser = (userData) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
+      dispatch(getGroups(res.data._id));
     })
     .catch((err) => console.log(err));
 };

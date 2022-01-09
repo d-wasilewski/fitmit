@@ -12,6 +12,7 @@ import colors from "../../../styles/colors";
 import { useDispatch } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 import { SET_CURRENT_GROUP } from "../../../redux/types";
+import { SET_CURRENT_USER } from "../../../redux/types";
 
 const GenericCardHolder = (props) => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const GenericCardHolder = (props) => {
     }
     if (route.name == "GroupProfile") {
       navigation.navigate("User");
-      // dispatch({ type: SET_CURRENT_GROUP_NAME, payload: val });
+      dispatch({ type: SET_CURRENT_USER, payload: val });
     }
   };
 

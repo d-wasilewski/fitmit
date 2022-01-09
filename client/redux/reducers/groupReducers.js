@@ -2,7 +2,7 @@ import { SET_GROUPS, CREATE_GROUP, SET_CURRENT_GROUP } from "../types";
 
 const initialState = {
   groupList: [],
-  currentGroup: "",
+  currentGroup: {},
 };
 
 export default function (state = initialState, action) {
