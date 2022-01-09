@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState } from "react";
 import {
   Modal,
@@ -13,6 +14,7 @@ import ModalDatePicker from "../ModalDatePicker";
 import ModalDropdownItem from "../ModalDropdownItem";
 import ModalDropdownMenu from "../ModalDropdownMenu";
 import ModalInput from "../ModalInput";
+import ModalTimePicker from "../ModalTimePicker";
 
 const ModalAddEvent = (props) => {
   const { visible, title, onQuit } = props;
@@ -20,7 +22,7 @@ const ModalAddEvent = (props) => {
   const buttonTopMargin = marginSize * 0.3;
 
   const [eventType, setEventType] = useState(null);
-  const [eventDate, setEventDate] = useState(null);
+  const [eventDate, setEventDate] = useState(new Date());
   const [eventTime, setEventTime] = useState(null);
 
   return (
@@ -54,10 +56,11 @@ const ModalAddEvent = (props) => {
               <View style={[styles.pickerWrapper, styles.elementMargin]}>
                 <ModalDatePicker
                   title="Date"
-                  style={{ width: "47%" }}
+                  style={{ width: "55%" }}
                   onChange={setEventDate}
+                  value={moment(eventDate).format("l")}
                 />
-                <ModalDatePicker title="Date" style={{ width: "47%" }} />
+                <ModalTimePicker title="Date" style={{ width: "40%" }} />
               </View>
             </ScrollView>
           </View>

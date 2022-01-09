@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
+import moment from "moment";
 
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -24,6 +25,7 @@ import { getGroups } from "./redux/actions/groupActions";
 const Stack = createNativeStackNavigator();
 
 axios.defaults.baseURL = "http://192.168.1.17:5000/api/";
+moment().locale("en-gb");
 
 export default function App() {
   const [loading, setLoading] = useState(true);

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
-import moment from "moment";
-import DatePicker from "react-native-neat-date-picker";
 
-const ModalDatePicker = (props) => {
+const ModalTimePicker = (props) => {
   const { title, value, style, onChange } = props;
 
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -23,12 +21,12 @@ const ModalDatePicker = (props) => {
       >
         <Text style={styles.pickerText}>{value}</Text>
         <FontAwesomeIcon
-          icon={faCalendarDay}
+          icon={faClock}
           color={colors.orange}
           style={{ marginBottom: 2 }}
         />
       </Pressable>
-      <DatePicker
+      {/* <DatePicker
         isVisible={showDatePicker}
         mode={"single"}
         onCancel={() => setShowDatePicker(false)}
@@ -37,18 +35,7 @@ const ModalDatePicker = (props) => {
           setShowDatePicker(false);
         }}
         minDate={minDate}
-        colorOptions={{
-          headerColor: colors.orange,
-          headerTextColor: colors.blackPrimary,
-          backgroundColor: colors.blackSecondary,
-          dateTextColor: colors.grey100,
-          selectedDateTextColor: colors.blackPrimary,
-          selectedDateBackgroundColor: colors.orange,
-          changeYearModalColor: colors.orange,
-          confirmButtonColor: colors.orange,
-          weekDaysColor: colors.orange,
-        }}
-      />
+      ></DatePicker> */}
     </View>
   );
 };
@@ -82,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalDatePicker;
+export default ModalTimePicker;
