@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
@@ -11,8 +11,10 @@ import { loginUser } from "../redux/actions/userActions";
 
 const LoginForm = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [checkboxState, setCheckboxState] = useState(false);
 
   const handleSubmit = (values) => {
+    values.checkboxState = checkboxState;
     dispatch(loginUser(values));
 
     navigation.navigate("Home");
@@ -71,7 +73,10 @@ const LoginForm = ({ navigation }) => {
               fillColor="#6BF300"
               textStyle={styles.text}
               text="Don't logout"
-              // onPress={(isChecked) => {}}
+              isChecked={checkboxState}
+              onPress={() => {
+                setCheckboxState(!checkboxState);
+              }}
             />
           </View>
         </View>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Switch, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Switch, StyleSheet, Text, Alert } from "react-native";
 import TopBar from "../components/shared/TopBar";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
@@ -22,13 +22,42 @@ const Settings = ({ navigation }) => {
 
   const toggleLogoutSwitch = () => {
     setIsLogoutEnabled((previousState) => !previousState);
-    setShowButton(true);
   };
 
   const toggleNotificationsSwitch = () => {
     setIsNotificationsEnabled((previousState) => !previousState);
-    setShowButton(true);
   };
+
+  useEffect(() => {
+    setShowButton(
+      isNotificationsEnabled != notificationsOn || isLogoutEnabled != dontLogout
+    );
+  }, [isNotificationsEnabled, notificationsOn, isLogoutEnabled, dontLogout]);
+
+  useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      if (!showButton) {
+        return;
+      }
+      // Prevent default behavior of leaving the screen
+      e.preventDefault();
+
+      Alert.alert(
+        "Discard changes?",
+        "You have unsaved changes. Are you sure to discard them and leave the screen?",
+        [
+          { text: "Don't leave", style: "cancel", onPress: () => {} },
+          {
+            text: "Discard",
+            style: "destructive",
+            // If the user confirmed, then we dispatch the action we blocked earlier
+            // This will continue the action that had triggered the removal of the screen
+            onPress: () => navigation.dispatch(e.data.action),
+          },
+        ]
+      );
+    });
+  }, [navigation, showButton]);
 
   const handleSave = () => {
     setShowButton(false);

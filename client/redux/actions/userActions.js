@@ -5,10 +5,11 @@ import { getGroups } from "./groupActions";
 
 export const loginUser = (userData) => (dispatch) => {
   //   dispatch({ type: LOADING_UI });
-  const { login: username, password } = userData;
+  console.log(userData);
+  const { login: username, password, checkboxState } = userData;
 
   axios
-    .post("/login", { username, password })
+    .post("/login", { username, password, checkboxState })
     .then((res) => {
       setAuthorizationHeader(res.data.token);
       dispatch({
@@ -65,15 +66,20 @@ export const getUserData = (userId) => (dispatch) => {
 };
 
 export const updateUserData = (userId, newData) => (dispatch) => {
+  console.log("NEW DATA: ", newData.settings.dontLogout);
   axios
     .put(`/${userId}`, {
       newData,
     })
     .then((res) => console.log("User po pucie: ", res.data))
     .catch((err) => console.log(err));
+
+  if (newData.settings.dontLogout) {
+    axios.put(`/refreshToken/${userId}`).catch((err) => console.log(err));
+  }
 };
 
-export const refreshToken = (userId) => (dispatch) => {};
+// export const refreshToken = (userId) => (dispatch) => {};
 
 const setAuthorizationHeader = async (token) => {
   const authToken = `Bearer ${token}`;
