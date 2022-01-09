@@ -23,7 +23,12 @@ const ModalAddEvent = (props) => {
 
   const [eventType, setEventType] = useState(null);
   const [eventDate, setEventDate] = useState(new Date());
-  const [eventTime, setEventTime] = useState(null);
+  const [eventTime, setEventTime] = useState(new Date());
+
+  console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
+  const actualDate = new Date(eventDate);
+  actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
+  // console.log("Transformed date:", actualDate.toLocaleString());
 
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
@@ -47,7 +52,10 @@ const ModalAddEvent = (props) => {
                 <ModalDropdownItem label="🏀 Basketball" value="BASKETBALL" />
                 <ModalDropdownItem label="🏐 Volleyball" value="VOLLEYBALL" />
                 <ModalDropdownItem label="🏓 Pipong" value="PIPONG" />
-                <ModalDropdownItem label="⚽ PEDALSKI SPORT" value="FOOTBALL" />
+                <ModalDropdownItem
+                  label="⚽ JARANIE SIĘ PIŁKĄ NOŻNĄ TO"
+                  value="FOOTBALL"
+                />
                 <ModalDropdownItem
                   label="🦍 Calisthenics"
                   value="CALISTHENICS"
@@ -56,11 +64,18 @@ const ModalAddEvent = (props) => {
               <View style={[styles.pickerWrapper, styles.elementMargin]}>
                 <ModalDatePicker
                   title="Date"
-                  style={{ width: "55%" }}
+                  style={{ width: "50%" }}
                   onChange={setEventDate}
                   value={moment(eventDate).format("l")}
                 />
-                <ModalTimePicker title="Date" style={{ width: "40%" }} />
+                <ModalTimePicker
+                  title="Time"
+                  style={{ width: "45%" }}
+                  onChange={(event, time) => {
+                    setEventTime(time);
+                  }}
+                  value={eventTime}
+                />
               </View>
             </ScrollView>
           </View>

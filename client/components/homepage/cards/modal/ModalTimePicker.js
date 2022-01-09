@@ -3,14 +3,12 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const ModalTimePicker = (props) => {
   const { title, value, style, onChange } = props;
 
   const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const minDate = new Date();
-  minDate.setDate(minDate.getDate() - 1);
 
   return (
     <View style={[styles.wrapper, style]}>
@@ -19,23 +17,25 @@ const ModalTimePicker = (props) => {
         style={[styles.dateWrapper]}
         onPress={() => setShowDatePicker(true)}
       >
-        <Text style={styles.pickerText}>{value}</Text>
+        {/* <Text style={styles.pickerText}>{value}</Text> */}
+
+        <DateTimePicker
+          display="default"
+          mode="time"
+          testID="dateTimePicker"
+          value={value}
+          is24Hour={true}
+          onChange={onChange}
+          textColor="red"
+          locale="en-gb"
+          style={styles.picker}
+        />
         <FontAwesomeIcon
           icon={faClock}
           color={colors.orange}
           style={{ marginBottom: 2 }}
         />
       </Pressable>
-      {/* <DatePicker
-        isVisible={showDatePicker}
-        mode={"single"}
-        onCancel={() => setShowDatePicker(false)}
-        onConfirm={(date) => {
-          onChange(date);
-          setShowDatePicker(false);
-        }}
-        minDate={minDate}
-      ></DatePicker> */}
     </View>
   );
 };
@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     fontFamily: "RobotoRegular",
+  },
+  picker: {
+    flex: 1,
   },
 });
 
