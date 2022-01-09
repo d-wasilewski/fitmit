@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   image: {
-    width: "65%",
-    height: "60%",
+    width: 240,
+    height: 35,
     marginTop: 30,
   },
   title: {
