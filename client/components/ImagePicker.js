@@ -8,7 +8,7 @@ import {
   Button,
   View,
   Touchable,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import Modal from "react-native-modal";
 import {
@@ -17,18 +17,18 @@ import {
   MediaTypeOptions,
 } from "expo-image-picker";
 import noImg from "../assets/no-img.png";
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from "expo-file-system";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfilePicture } from "../redux/actions/userActions";
 import colors from "../styles/colors";
-import {Camera} from 'expo-camera'
+import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 
-const ImagePicker = ({ pictureFromCamera, navigation }) => {
+const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
   const isFocused = useIsFocused();
   const { height } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { profilePicture, _id } = useSelector(state => state?.user?.user)
+  const { profilePicture, _id } = useSelector((state) => state?.user?.user);
   const [isModalVisible, setModalVisible] = useState(false);
   // const [isCameraOn, setCameraOn] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
@@ -36,14 +36,13 @@ const ImagePicker = ({ pictureFromCamera, navigation }) => {
   const [prevCameraPicture, setPrevCameraPicture] = useState("");
 
   const startCamera = () => {
-      setCallUseEffect(!callUseEffect);
-      if(hasPermission) {
-        // setCameraOn(true);
-        navigation.navigate("CameraLauncher");
-
-      } else {
-        Alert.alert("Premission to camera denied");
-      }
+    setCallUseEffect(!callUseEffect);
+    if (hasPermission) {
+      // setCameraOn(true);
+      navigation.navigate("CameraLauncher");
+    } else {
+      Alert.alert("Premission to camera denied");
+    }
   };
 
   const toggleModal = () => {
@@ -64,18 +63,21 @@ const ImagePicker = ({ pictureFromCamera, navigation }) => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, [callUseEffect]);
 
   useEffect(() => {
     if (isFocused) {
-      if (pictureFromCamera !== prevCameraPicture && pictureFromCamera !== undefined) {
+      if (
+        pictureFromCamera !== prevCameraPicture &&
+        pictureFromCamera !== undefined
+      ) {
         setPrevCameraPicture(pictureFromCamera);
         uploadImage(pictureFromCamera.uri);
       }
     }
-    }, [isFocused]);
+  }, [isFocused]);
 
   const pickImage = async () => {
     let result = await launchImageLibraryAsync({
@@ -85,65 +87,70 @@ const ImagePicker = ({ pictureFromCamera, navigation }) => {
       quality: 1,
     });
     if (!result.cancelled) {
-        uploadImage(result.uri);
+      uploadImage(result.uri);
     }
   };
 
   const uploadImage = async (photoUri) => {
     try {
-
-      const base64Convert = await FileSystem.readAsStringAsync(photoUri, { encoding: 'base64' });
+      const base64Convert = await FileSystem.readAsStringAsync(photoUri, {
+        encoding: "base64",
+      });
       const base64Image = "data:image/png;base64," + base64Convert;
 
-  //TODO: zmienic id kto wysyla w zaleznosci czy zmieniamy zdj grupy czy usera
+      //TODO: zmienic id kto wysyla w zaleznosci czy zmieniamy zdj grupy czy usera
 
-      dispatch(changeProfilePicture(_id, base64Image))
-    } catch(e) {
+      dispatch(changeProfilePicture(_id, base64Image));
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   return (
     <Pressable
-              onPressIn={toggleModal}
-              style={{
-                marginTop: height * 0.12,
-                borderRadius: 9999,
-              }}
-            >
-              <Modal
-                  animationIn="zoomIn"
-                  animationOut="zoomOut"
-                  isVisible={isModalVisible}
-                  hideModalContentWhileAnimating={true}
-                  onBackButtonPress={() => setModalVisible(false)}
-                  onBackdropPress={() => setModalVisible(false)}
-                  avoidKeyboard={true}
-                  style={styles.modal}
-                  >
-                  <View style={styles.viewInModal}>
-                    <TouchableOpacity 
-                      onPress={startCamera}
-                      style={[styles.buttonTop, styles.buttons]}
-                    >
-                      <Text style={{color: colors.white}}>Camera</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                      onPress={pickImage}
-                      style={[styles.buttonBottom, styles.buttons]}
-                    >
-                      <Text style={{color: colors.white}}>Gallery</Text>
-                    </TouchableOpacity>
-                  </View>
-                </Modal>
-              {profilePicture.url ? (
-                <Image style={[styles.profilePicture]} source={{ uri: profilePicture.url }} />
-              ) : (
-                <Image style={[styles.profilePicture]} source={noImg} />
-              )}
-              
-      </Pressable>
-
+      onPressIn={toggleModal}
+      style={[
+        {
+          marginTop: height * 0.12,
+          borderRadius: 9999,
+        },
+        style,
+      ]}
+    >
+      <Modal
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+        isVisible={isModalVisible}
+        hideModalContentWhileAnimating={true}
+        onBackButtonPress={() => setModalVisible(false)}
+        onBackdropPress={() => setModalVisible(false)}
+        avoidKeyboard={true}
+        style={styles.modal}
+      >
+        <View style={styles.viewInModal}>
+          <TouchableOpacity
+            onPress={startCamera}
+            style={[styles.buttonTop, styles.buttons]}
+          >
+            <Text style={{ color: colors.white }}>Camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={pickImage}
+            style={[styles.buttonBottom, styles.buttons]}
+          >
+            <Text style={{ color: colors.white }}>Gallery</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      {profilePicture.url ? (
+        <Image
+          style={[styles.profilePicture]}
+          source={{ uri: profilePicture.url }}
+        />
+      ) : (
+        <Image style={[styles.profilePicture]} source={noImg} />
+      )}
+    </Pressable>
   );
 };
 
@@ -184,9 +191,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    marginLeft: "100%"
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    marginLeft: "100%",
   },
 });
 
