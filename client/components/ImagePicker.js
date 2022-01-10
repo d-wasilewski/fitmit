@@ -25,7 +25,7 @@ import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 
 
-const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
+const ImagePicker = ({ pictureFromCamera, navigation, style, currentPicture }) => {
   const isFocused = useIsFocused();
   const { height } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -147,10 +147,11 @@ const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-      {profilePicture.url ? (
+
+      {currentPicture? (
         <Image
           style={[styles.profilePicture]}
-          source={{ uri: profilePicture.url }}
+          source={{ uri: currentPicture }}
         />
       ) : (
         <Image style={[styles.profilePicture]} source={noImg} />
