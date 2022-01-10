@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react
 import colors from "../styles/colors";
 
 
+
 const CameraPreview = ({photo, retakePicture, savePicture}) => {
   return (
     <View

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -17,17 +17,19 @@ import { useSelector, useDispatch } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
-import CameraLauncher from "../components/CameraLauncher";
 import TopBar from "../components/shared/TopBar";
 import { SET_CURRENT_USER } from "../redux/types";
+
 
 const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
   // logged in user
-  const { username, desc, _id } = useSelector((state) => state?.user?.user);
+  const { username, desc, _id, profilePicture } = useSelector((state) => state?.user?.user);
   // profile of the user whose page is being viewed
   const { currentUser } = useSelector((state) => state?.user);
   const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     navigation.addListener("beforeRemove", () => {
@@ -42,17 +44,29 @@ const User = ({ navigation, route }) => {
         resizeMode="cover"
         style={[styles.image, { height: height * 0.3 }]}
       >
-        <ImagePicker
+        {currentUser ? (
+          <ImagePicker
           style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
           navigation={navigation}
           pictureFromCamera={route.params}
-        />
+          currentPicture={currentUser.profilePicture.url}
+        />  
+        ) : (
+          <ImagePicker
+          style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
+          navigation={navigation}
+          pictureFromCamera={route.params}
+          currentPicture={profilePicture.url}
+        />  
+        )}
+          
       </ImageBackground>
       <TopBar
         title
         leftIcon={faArrowLeft}
         rightIcon={faGrinTears}
         color={colors.blackPrimary}
+        onPressLeft={() => navigation.goBack()}
         onPressRight={() => navigation.navigate("Settings")}
       />
       <Text style={styles.name}>
