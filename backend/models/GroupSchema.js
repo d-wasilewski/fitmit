@@ -14,9 +14,15 @@ const GroupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  groupPicture: {
-    type: String,
-    default: "",
+  profilePicture: {
+    url: {
+      type: String,
+      default: "",
+    },
+    public_id: {
+      type: String,
+      default: "",
+    },
   },
   members: [{ type: Schema.Types.ObjectId }],
   date: {

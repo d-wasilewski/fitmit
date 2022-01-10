@@ -1,6 +1,7 @@
 const GroupSchema = require("../models/GroupSchema");
 const UserSchema = require("../models/UserSchema");
 const router = require("express").Router();
+const { cloudinary } = require("../utils/cloudinary");
 
 router.get("/groups", async (req, res) => {
   try {
@@ -96,6 +97,41 @@ router.post("/:groupId/:userId", async (req, res) => {
   });
   console.log(exists);
   res.json(exists);
+});
+
+router.post("/uploadImage", async (req, res) => {
+  const group = await GroupSchema.findById(req.body.groupId);
+  console.log(group);
+  if (group.profilePicture.url != "") {
+    try {
+      await cloudinary.uploader.destroy(group.profilePicture.public_id);
+    } catch (e) {}
+  }
+
+  try {
+    const uploadedResponse = await cloudinary.uploader.upload(
+      req.body.profilePicture,
+      {
+        upload_preset: "dev_setups",
+      }
+    );
+
+    const groupAfterUpdate = await GroupSchema.findByIdAndUpdate(
+      req.body.groupId,
+      {
+        profilePicture: {
+          url: uploadedResponse.secure_url,
+          public_id: uploadedResponse.public_id,
+        },
+      },
+      { new: true }
+    );
+
+    return res.status(201).json(groupAfterUpdate);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
 });
 
 module.exports = router;
