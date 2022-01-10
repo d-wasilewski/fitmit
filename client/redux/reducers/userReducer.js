@@ -4,12 +4,14 @@ import {
   CHANGE_PICTURE,
   SET_AUTHENTICATED,
   SET_CURRENT_USER,
+  SET_LOADING_PICTURE,
 } from "../types";
 
 const initialState = {
   authenticated: false,
   user: {},
   currentUser: null,
+  loading: false,
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +23,7 @@ export default function (state = initialState, action) {
       };
     case SET_USER:
       return {
+        ...state,
         authenticated: true,
         user: action.payload,
       };
@@ -44,6 +47,12 @@ export default function (state = initialState, action) {
             url: action.payload,
           },
         },
+      };
+
+    case SET_LOADING_PICTURE:
+      return {
+        ...state,
+        loading: action.payload,
       };
 
     default:

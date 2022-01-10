@@ -9,6 +9,7 @@ import {
   View,
   Touchable,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import Modal from "react-native-modal";
 import {
@@ -20,29 +21,35 @@ import noImg from "../assets/no-img.png";
 import * as FileSystem from "expo-file-system";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfilePicture } from "../redux/actions/userActions";
+import { changeGroupProfilePicture } from "../redux/actions/groupActions";
 import colors from "../styles/colors";
 import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 
-
-const ImagePicker = ({ pictureFromCamera, navigation, style, currentPicture }) => {
+const ImagePicker = ({
+  pictureFromCamera,
+  navigation,
+  style,
+  currentPicture,
+  _id,
+  group,
+}) => {
   const isFocused = useIsFocused();
   const { height } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { profilePicture, _id } = useSelector((state) => state?.user?.user);
   const [isModalVisible, setModalVisible] = useState(false);
   // const [isCameraOn, setCameraOn] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [callUseEffect, setCallUseEffect] = useState(false);
   const [prevCameraPicture, setPrevCameraPicture] = useState("");
-
-
+  // const [loading, setLoading] = useState(true);
+  const { loading } = useSelector((state) => state.user);
 
   const startCamera = () => {
     setCallUseEffect(!callUseEffect);
     if (hasPermission) {
       // setCameraOn(true);
-      navigation.navigate("CameraLauncher");
+      navigation.navigate("CameraLauncher", group);
     } else {
       Alert.alert("Premission to camera denied");
     }
@@ -101,17 +108,15 @@ const ImagePicker = ({ pictureFromCamera, navigation, style, currentPicture }) =
       });
       const base64Image = "data:image/png;base64," + base64Convert;
 
-      //TODO: zmienic id kto wysyla w zaleznosci czy zmieniamy zdj grupy czy usera
-
-      dispatch(changeProfilePicture(_id, base64Image));
-
+      group
+        ? dispatch(changeGroupProfilePicture(_id, base64Image))
+        : dispatch(changeProfilePicture(_id, base64Image));
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-
     <Pressable
       onPressIn={toggleModal}
       style={[
@@ -148,7 +153,15 @@ const ImagePicker = ({ pictureFromCamera, navigation, style, currentPicture }) =
         </View>
       </Modal>
 
-      {currentPicture? (
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator
+            animating={true}
+            color={colors.greenSecondary}
+            size={69}
+          />
+        </View>
+      ) : currentPicture ? (
         <Image
           style={[styles.profilePicture]}
           source={{ uri: currentPicture }}
@@ -157,7 +170,6 @@ const ImagePicker = ({ pictureFromCamera, navigation, style, currentPicture }) =
         <Image style={[styles.profilePicture]} source={noImg} />
       )}
     </Pressable>
-
   );
 };
 
@@ -201,6 +213,15 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flexDirection: "row",
     marginLeft: "100%",
+  },
+  loading: {
+    backgroundColor: colors.grey200,
+    width: 180,
+    height: 180,
+    borderRadius: 9999,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

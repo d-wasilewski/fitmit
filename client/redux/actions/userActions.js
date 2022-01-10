@@ -1,4 +1,9 @@
-import { SET_USER, SET_UNAUTHENTICATED, CHANGE_PICTURE } from "../types";
+import {
+  SET_USER,
+  SET_UNAUTHENTICATED,
+  SET_LOADING_PICTURE,
+  CHANGE_PICTURE,
+} from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getGroups } from "./groupActions";
@@ -92,10 +97,11 @@ const setAuthorizationHeader = async (token) => {
 };
 
 export const changeProfilePicture = (userId, profilePicture) => (dispatch) => {
+  dispatch({ type: SET_LOADING_PICTURE, payload: true });
   axios
     .post("/uploadImage", { userId, profilePicture })
     .then((res) => {
-      console.log(res.data);
+      dispatch({ type: SET_LOADING_PICTURE, payload: false });
       dispatch({
         type: CHANGE_PICTURE,
         payload: res.data.profilePicture.url,

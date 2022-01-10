@@ -26,7 +26,7 @@ import {
 import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
 import { useSelector } from "react-redux";
 
-const GroupProfile = ({ navigation }) => {
+const GroupProfile = ({ navigation, route }) => {
   const height = Dimensions.get("window").height * 0.03;
   const { currentGroup } = useSelector((state) => state.groups);
   const [membersData, setMembersData] = useState([]);
@@ -59,6 +59,11 @@ const GroupProfile = ({ navigation }) => {
           />
           <ImagePicker
             style={{ marginTop: 0, borderWidth: 2, borderColor: colors.orange }}
+            currentPicture={currentGroup.profilePicture.url}
+            navigation={navigation}
+            _id={currentGroup._id}
+            pictureFromCamera={route.params}
+            group
           />
           <View style={styles.groupControlsWrapper}>
             <Text style={[styles.groupName, { marginTop: height }]}>

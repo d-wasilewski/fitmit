@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
@@ -20,16 +21,16 @@ import HomeMenu from "../components/shared/HomeMenu";
 import TopBar from "../components/shared/TopBar";
 import { SET_CURRENT_USER } from "../redux/types";
 
-
 const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
   // logged in user
-  const { username, desc, _id, profilePicture } = useSelector((state) => state?.user?.user);
+  const { username, desc, _id, profilePicture } = useSelector(
+    (state) => state?.user?.user
+  );
   // profile of the user whose page is being viewed
   const { currentUser } = useSelector((state) => state?.user);
   const dispatch = useDispatch();
-
-
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     navigation.addListener("beforeRemove", () => {
@@ -46,20 +47,21 @@ const User = ({ navigation, route }) => {
       >
         {currentUser ? (
           <ImagePicker
-          style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
-          navigation={navigation}
-          pictureFromCamera={route.params}
-          currentPicture={currentUser.profilePicture.url}
-        />  
+            style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
+            navigation={navigation}
+            pictureFromCamera={route.params}
+            currentPicture={currentUser.profilePicture.url}
+            _id={currentUser._id}
+          />
         ) : (
           <ImagePicker
-          style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
-          navigation={navigation}
-          pictureFromCamera={route.params}
-          currentPicture={profilePicture.url}
-        />  
+            style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
+            navigation={navigation}
+            pictureFromCamera={route.params}
+            currentPicture={profilePicture.url}
+            _id={_id}
+          />
         )}
-          
       </ImageBackground>
       <TopBar
         title
@@ -145,6 +147,11 @@ const styles = StyleSheet.create({
     color: colors.greenSecondary,
     height: 20,
     width: 20,
+  },
+  loading: {
+    height: 300,
+    width: 300,
+    top: 200,
   },
 });
 

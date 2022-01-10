@@ -1,4 +1,9 @@
-import { SET_GROUPS, CREATE_GROUP, SET_CURRENT_GROUP } from "../types";
+import {
+  SET_GROUPS,
+  CREATE_GROUP,
+  SET_CURRENT_GROUP,
+  CHANGE_GROUP_PICTURE,
+} from "../types";
 
 const initialState = {
   groupList: [],
@@ -21,6 +26,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentGroup: action.payload,
+      };
+
+    case CHANGE_GROUP_PICTURE:
+      return {
+        ...state,
+        currentGroup: {
+          ...state.currentGroup,
+          profilePicture: {
+            ...state.currentGroup.profilePicture,
+            url: action.payload,
+          },
+        },
       };
 
     default:
