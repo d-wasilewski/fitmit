@@ -2,8 +2,13 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Platform, Text, View, StyleSheet, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import HomeMenu from "../components/shared/HomeMenu";
+import TopBar from "../components/shared/TopBar";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import colors from '../styles/colors';
 
-const Map = ({ pickLocation }) => {
+
+const Map = ({ pickLocation, navigation }) => {
     const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
     const [errorMsg, setErrorMsg] = useState(null);
     const [marker, setMarker] = useState(null); 
@@ -60,6 +65,12 @@ const Map = ({ pickLocation }) => {
 
       return (
         <View style={styles.container}>
+          <TopBar
+            title
+            leftIcon={faArrowLeft}
+            color={colors.blackPrimary}
+            onPressLeft={() => navigation.goBack()}
+          />
           <MapView provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={region}
@@ -104,6 +115,7 @@ const Map = ({ pickLocation }) => {
                         />
             </>
            </MapView>
+           <HomeMenu navigation={navigation}/>
         </View>
       );
     };

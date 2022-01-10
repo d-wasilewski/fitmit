@@ -24,6 +24,7 @@ import colors from "../styles/colors";
 import { Camera } from "expo-camera";
 import { useIsFocused } from "@react-navigation/native";
 
+
 const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
   const isFocused = useIsFocused();
   const { height } = useWindowDimensions();
@@ -34,6 +35,8 @@ const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [callUseEffect, setCallUseEffect] = useState(false);
   const [prevCameraPicture, setPrevCameraPicture] = useState("");
+
+
 
   const startCamera = () => {
     setCallUseEffect(!callUseEffect);
@@ -101,12 +104,14 @@ const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
       //TODO: zmienic id kto wysyla w zaleznosci czy zmieniamy zdj grupy czy usera
 
       dispatch(changeProfilePicture(_id, base64Image));
+
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
+
     <Pressable
       onPressIn={toggleModal}
       style={[
@@ -151,6 +156,7 @@ const ImagePicker = ({ pictureFromCamera, navigation, style }) => {
         <Image style={[styles.profilePicture]} source={noImg} />
       )}
     </Pressable>
+
   );
 };
 

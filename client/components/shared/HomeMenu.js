@@ -12,9 +12,9 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../styles/colors";
 
 const HomeMenu = ({ navigation, color = colors.greenSecondary }) => {
-  const { height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   return (
-    <View style={[styles.container, { height: height * 0.1 }]}>
+    <View style={[styles.container, { height: height * 0.1, width }]}>
       <TouchableOpacity onPress={() => navigation.navigate("Map")}>
         <FontAwesomeIcon
           icon={faMapMarked}

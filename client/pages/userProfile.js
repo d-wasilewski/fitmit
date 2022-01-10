@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -17,9 +17,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
-import CameraLauncher from "../components/CameraLauncher";
 import TopBar from "../components/shared/TopBar";
 import { SET_CURRENT_USER } from "../redux/types";
+
 
 const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
@@ -28,6 +28,8 @@ const User = ({ navigation, route }) => {
   // profile of the user whose page is being viewed
   const { currentUser } = useSelector((state) => state?.user);
   const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     navigation.addListener("beforeRemove", () => {
@@ -46,7 +48,8 @@ const User = ({ navigation, route }) => {
           style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
           navigation={navigation}
           pictureFromCamera={route.params}
-        />
+        />  
+          
       </ImageBackground>
       <TopBar
         title
