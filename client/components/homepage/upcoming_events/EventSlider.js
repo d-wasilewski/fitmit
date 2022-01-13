@@ -28,6 +28,7 @@ const EventSlider = (props) => {
     altBg,
     expandable,
     addFunction,
+    navigation
   } = props;
 
   if (expandable) cards.push({});
@@ -57,6 +58,7 @@ const EventSlider = (props) => {
             visible={isAddEventModalVisible}
             title="Add Event"
             onQuit={() => setAddEventModalVisible(!isAddEventModalVisible)}
+            navigation={ navigation }
           ></ModalAddEvent>
         </>
       ) : null}

@@ -2,13 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Platform, Text, View, StyleSheet, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import HomeMenu from "../components/shared/HomeMenu";
-import TopBar from "../components/shared/TopBar";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import colors from '../styles/colors';
 
 
-const Map = ({ pickLocation, navigation, route }) => {
+const MapPicker = ({ pickLocation, navigation }) => {
     const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
     const [errorMsg, setErrorMsg] = useState(null);
     const [marker, setMarker] = useState(null); 
@@ -65,63 +61,14 @@ const Map = ({ pickLocation, navigation, route }) => {
 
       return (
         <View style={styles.container}>
-          <TopBar
-            title
-            leftIcon={faArrowLeft}
-            color={colors.blackPrimary}
-            onPressLeft={() => {
-              console.log(marker)
-              // navigation.state.params.onGoBack(marker)
-              navigation.goBack(marker)
-            }}
-          />
           <MapView provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={region}
           onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
-            <>
-            {console.log(route)}
-
-            {
-                route.params ? (
-                    <>
-                    {
-                        marker ? (
-                            <>
-                                <Marker 
-                                    draggable 
-                                    coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                                    pinColor="green"
-                                />
-                                <Marker 
-                                    coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
-                                />
-                            </> 
-                        ) : (
-                            <></>
-                        )
-                    }
-                    </>
-                ) : (
-                    markersArray ? (
-                        markersArray.map((marker, i) => (
-                                <Marker 
-                                    key={i+1}
-                                    coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                                    pinColor="green"
-                                />                  
-                                ))                               
-                    ) : (
-                        <></>
-                    )
-                )
-            }
             <Marker 
                             coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
                         />
-            </>
-           </MapView>
-           <HomeMenu navigation={navigation}/>
+          </MapView>
         </View>
       );
     };
@@ -131,16 +78,21 @@ const Map = ({ pickLocation, navigation, route }) => {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          padding: 20,
+          borderRadius: 10,
+          overflow: "hidden"
+
         },
         paragraph: {
           fontSize: 18,
           textAlign: 'center',
         },
         map: {
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
+        //   width: Dimensions.get('window').width,
+        //   height: Dimensions.get('window').height,
+        height: 150,
+        width: "100%",
+
         },
       });
 
-export default Map;
+export default MapPicker;

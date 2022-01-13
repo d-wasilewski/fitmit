@@ -8,7 +8,10 @@ import {
   Dimensions,
   Pressable,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import MapPicker from "./MapPicker";
 import colors from "../../../../../styles/colors";
 import ModalDatePicker from "../ModalDatePicker";
 import ModalDropdownItem from "../ModalDropdownItem";
@@ -17,21 +20,26 @@ import ModalInput from "../ModalInput";
 import ModalTimePicker from "../ModalTimePicker";
 
 const ModalAddEvent = (props) => {
-  const { visible, title, onQuit } = props;
+  const { visible, title, onQuit, navigation } = props;
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
 
   const [eventType, setEventType] = useState(null);
   const [eventDate, setEventDate] = useState(new Date());
   const [eventTime, setEventTime] = useState(new Date());
+  const [location, setLocation] = useState(true)
 
   console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
   const actualDate = new Date(eventDate);
   actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
   // console.log("Transformed date:", actualDate.toLocaleString());
 
+  const refresh = (data) => {
+    setLocation(data);
+  }
+
   return (
-    <Modal visible={visible} transparent={true} animationType="slide">
+    <Modal visible={true} transparent={true} animationType="slide">
       <View style={styles.modal}>
         <View style={[styles.content, { marginTop: marginSize }]}>
           <View style={styles.headerWrapper}>
@@ -76,6 +84,20 @@ const ModalAddEvent = (props) => {
                   }}
                   value={eventTime}
                 />
+              </View>
+              <View style={[styles.eventLocation]}>
+                <Pressable 
+                  style={[styles.eventLocationPicker]}
+                  onPress={() => {
+                    navigation.navigate("Map", location, {
+                      goBack: setLocation,
+                    });
+                  }}
+                  >
+                {console.log(location)}
+
+                  <MapPicker />
+                </Pressable>
               </View>
             </ScrollView>
           </View>
@@ -178,6 +200,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
+  eventLocation: {
+    marginTop: "5%",
+    height: 150, 
+    width: "100%",
+  },
+  eventLocationPicker: {
+    height: "100%", 
+    width: "100%",
+  }
 });
 
 export default ModalAddEvent;
