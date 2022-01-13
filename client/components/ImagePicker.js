@@ -49,6 +49,7 @@ const ImagePicker = ({
     setCallUseEffect(!callUseEffect);
     if (hasPermission) {
       // setCameraOn(true);
+      setModalVisible(false);
       navigation.navigate("CameraLauncher", group);
     } else {
       Alert.alert("Premission to camera denied");
@@ -91,11 +92,12 @@ const ImagePicker = ({
 
   const pickImage = async () => {
     let result = await launchImageLibraryAsync({
-      mediaTypes: MediaTypeOptions.All,
+      mediaTypes: MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [3, 3],
       quality: 1,
     });
+    setModalVisible(false);
     if (!result.cancelled) {
       uploadImage(result.uri);
     }
