@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import ModalTime from "./time/ModalTime";
 
 const ModalTimePicker = (props) => {
   const { title, value, style, onChange } = props;
@@ -17,9 +18,8 @@ const ModalTimePicker = (props) => {
         style={[styles.dateWrapper]}
         onPress={() => setShowDatePicker(true)}
       >
-        {/* <Text style={styles.pickerText}>{value}</Text> */}
-
-        <DateTimePicker
+        <Text style={styles.pickerText}>15:11</Text>
+        {/* <DateTimePicker
           display="default"
           mode="time"
           testID="dateTimePicker"
@@ -29,6 +29,13 @@ const ModalTimePicker = (props) => {
           textColor="red"
           locale="en-gb"
           style={styles.picker}
+        /> */}
+        <ModalTime
+          visible={showDatePicker}
+          close={() => {
+            console.log("witam");
+            setShowDatePicker(false);
+          }}
         />
         <FontAwesomeIcon
           icon={faClock}

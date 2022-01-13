@@ -26,7 +26,8 @@ import Map from "./pages/map";
 
 const Stack = createNativeStackNavigator();
 
-axios.defaults.baseURL = "http://192.168.100.147:5000/api/";
+// axios.defaults.baseURL = "http://192.168.100.147:5000/api/";
+axios.defaults.baseURL = "http://192.168.100.8:5000/api/";
 moment().locale("en-gb");
 
 export default function App() {
