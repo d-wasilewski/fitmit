@@ -4,6 +4,8 @@ const auth = require("../middleware/auth");
 const { cloudinary } = require("../utils/cloudinary");
 const jwt = require("jsonwebtoken");
 const ActivitySchema = require("../models/ActivitySchema");
+const EventSchema = require("../models/EventSchema");
+const GroupSchema = require("../models/GroupSchema");
 
 router.put("/refreshToken/:userId", async (req, res) => {
   try {
@@ -101,6 +103,28 @@ router.get("/:id/activities", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
+  }
+});
+
+router.get("/:id/events", async (req, res) => {
+  const groupId = req.params.id;
+
+  try {
+    // const events = await EventSchema.find({ group: groupId });
+    const groups = await GroupSchema.find({
+      members: { $in: [groupId] },
+    });
+
+    const groupIds = groups.map((val) => val._id);
+
+    const events = await EventSchema.find({
+      group: { $in: groupIds },
+    });
+
+    return res.status(200).json(events);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
   }
 });
 

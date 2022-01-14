@@ -1,5 +1,6 @@
 const GroupSchema = require("../models/GroupSchema");
 const UserSchema = require("../models/UserSchema");
+const EventSchema = require("../models/EventSchema");
 const router = require("express").Router();
 const { cloudinary } = require("../utils/cloudinary");
 
@@ -131,6 +132,18 @@ router.post("/uploadImage", async (req, res) => {
   } catch (e) {
     console.log(e);
     return res.status(500).json(e);
+  }
+});
+
+router.get("/:id/events", async (req, res) => {
+  const groupId = req.params.id;
+
+  try {
+    const events = await EventSchema.find({ group: groupId });
+    return res.status(200).json(events);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
   }
 });
 
