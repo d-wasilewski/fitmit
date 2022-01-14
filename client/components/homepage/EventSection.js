@@ -42,6 +42,7 @@ const EventSection = (props) => {
         style={styles.slider}
         altBg={props.altBg}
         expandable={props.expandable}
+        cards={props.data}
       ></EventSlider>
     </View>
   );

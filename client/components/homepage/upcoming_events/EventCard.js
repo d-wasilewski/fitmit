@@ -13,9 +13,26 @@ import colors from "../../../styles/colors";
 import { faCalendar, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import avatar from "../../../assets/papaj.jpg";
+import moment from "moment";
 
 const EventCard = (props) => {
   const windowWidth = Dimensions.get("window").width;
+
+  function getWeekDay(date) {
+    today = new Date();
+    eventDate = date;
+    difference = Math.round((eventDate - today) / (1000 * 60 * 60 * 24));
+    switch (difference) {
+      case -1:
+        return "Yesterday";
+      case 0:
+        return "Today";
+      case 1:
+        return "Tomorrow";
+      default:
+        return `In ${difference} days`;
+    }
+  }
 
   // dodac obiekt eventu z danymi
   const {
@@ -28,7 +45,12 @@ const EventCard = (props) => {
     ],
     style,
     altBg,
+    data,
   } = props;
+
+  const { name = "", date = new Date() } = data;
+  const eventTime = new Date(date);
+  const weekDay = getWeekDay(eventTime);
 
   const additionalStyle = altBg ? styles.altBgColor : {};
   const gradientColors = altBg
@@ -74,7 +96,7 @@ const EventCard = (props) => {
                 { fontSize: 16, fontFamily: "ComfortaaRegular" },
               ]}
             >
-              Drążkowe Świry
+              {name}
             </Text>
           </View>
           <View style={{ alignItems: "flex-end" }}>
@@ -86,8 +108,12 @@ const EventCard = (props) => {
                 size={22}
               />
               <View style={{ marginLeft: 10 }}>
-                <Text style={[styles.fontBold]}>Today</Text>
-                <Text style={[styles.fontBold]}>14:00</Text>
+                <Text style={[styles.fontBold]}>{weekDay}</Text>
+                <Text style={[styles.fontBold]}>
+                  {eventTime != undefined
+                    ? `${eventTime.getHours()}:${eventTime.getMinutes()}`
+                    : ""}
+                </Text>
               </View>
             </View>
             {/* Odleglosc */}
