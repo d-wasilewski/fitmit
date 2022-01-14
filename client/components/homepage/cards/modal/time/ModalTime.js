@@ -22,8 +22,6 @@ const ModalTime = (props) => {
   const [hours, setHours] = useState(defaultHours);
   const [minutes, setMinutes] = useState(defaultMinutes);
 
-  console.log("modaltime:", hours, minutes);
-
   const onCancel = () => {
     setHours(defaultHours);
     setMinutes(defaultMinutes);

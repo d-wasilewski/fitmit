@@ -1,3 +1,4 @@
+import axios from "axios";
 import moment from "moment";
 import React, { useState } from "react";
 import {
@@ -9,6 +10,8 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
+import { useSelector } from "react-redux";
+
 import colors from "../../../../../styles/colors";
 import ModalDatePicker from "../ModalDatePicker";
 import ModalDropdownItem from "../ModalDropdownItem";
@@ -27,12 +30,28 @@ const ModalAddEvent = (props) => {
   const [hours, setHours] = useState(dateNow.getHours());
   const [minutes, setMinutes] = useState(dateNow.getMinutes());
 
-  console.log(hours, ":", minutes);
+  const { currentGroup } = useSelector((state) => state.groups);
+  const currentUser = useSelector((state) => state.user.user);
 
-  // console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
-  // const actualDate = new Date(eventDate);
-  // actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
-  // console.log("Transformed date:", actualDate.toLocaleString());
+  async function createEvent(obj) {
+    console.log({ event: obj });
+    if (obj.date < new Date().getTime()) return;
+    await axios.put("/event/add", { event: obj });
+  }
+
+  function getData() {
+    const name = currentGroup.name;
+    const groupId = currentGroup._id;
+    const userId = currentUser._id;
+
+    return {
+      name: name,
+      creator: userId,
+      eventType: eventType,
+      group: groupId,
+      date: eventDate.setHours(hours, minutes),
+    };
+  }
 
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
@@ -100,7 +119,11 @@ const ModalAddEvent = (props) => {
             </Pressable>
             <Pressable
               on
-              onPress={onQuit}
+              onPress={() => {
+                const data = getData();
+                createEvent(data);
+                onQuit();
+              }}
               style={[
                 styles.button,
                 {
