@@ -1,7 +1,7 @@
 import React from "react";
-import { TextInput, View, StyleSheet } from "react-native";
+import { TextInput, StyleSheet } from "react-native";
 import colors from "../styles/colors";
-import fonts from "../styles/fonts";
+
 import inputs from "../styles/inputs";
 
 const Input = (props) => {

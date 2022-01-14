@@ -1,11 +1,5 @@
-import React, { Children, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import React from "react";
+import { Text, StyleSheet, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import GenericCard from "./GenericCard";
 import colors from "../../../styles/colors";
@@ -26,7 +20,6 @@ const GenericCardHolder = (props) => {
   } = props;
 
   const handleClick = (val) => {
-    console.log(val);
     if (route.name == "Home") {
       navigation.navigate("GroupProfile");
       dispatch({ type: SET_CURRENT_GROUP, payload: val });

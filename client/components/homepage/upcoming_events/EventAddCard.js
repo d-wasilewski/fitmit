@@ -4,7 +4,6 @@ import colors from "../../../styles/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCalendarPlus as plusIcon } from "@fortawesome/free-solid-svg-icons";
-import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const EventAddCard = (props) => {
   const { style, altBg, onPress } = props;

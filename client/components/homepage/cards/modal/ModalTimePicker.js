@@ -3,7 +3,6 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalTime from "./time/ModalTime";
 
 const ModalTimePicker = (props) => {

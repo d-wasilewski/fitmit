@@ -13,7 +13,6 @@ import colors from "../../../styles/colors";
 import { faCalendar, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import avatar from "../../../assets/papaj.jpg";
-import moment from "moment";
 
 const EventCard = (props) => {
   const windowWidth = Dimensions.get("window").width;

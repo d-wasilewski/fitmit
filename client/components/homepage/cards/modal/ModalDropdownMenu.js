@@ -1,20 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React, { Children } from "react";
 import { useState, useEffect } from "react";
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  Picker,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import colors from "../../../../styles/colors";
 import {
   faChevronRight,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import ModalDropdownItem from "./ModalDropdownItem";
 
 const ModalDropdownMenu = (props) => {
   const {

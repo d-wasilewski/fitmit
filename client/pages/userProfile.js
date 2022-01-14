@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
-  ActivityIndicator,
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";

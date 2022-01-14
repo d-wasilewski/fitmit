@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
 import GenericCardHolder from "./GenericCardHolder";
 import GroupAddModal from "./GroupAddModal";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { getGroups } from "../../../redux/actions/groupActions";
 
 const GroupsCard = ({ navigation }) => {

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Button = (props) => {
   const { title, onPress } = props;
@@ -25,10 +25,6 @@ const styles = StyleSheet.create({
   btn_primary: {
     color: "black",
     backgroundColor: "#6BF300",
-    // to trzeba bedzie zmienic jak sie doda inputy
-    // marginTop: "70%",
-    // fontFamily: "Roboto", XD
-    // TODO: znalezc nowego fonta
   },
   btn_secondary: {
     color: "#6BF300",
