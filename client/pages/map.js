@@ -70,17 +70,16 @@ const Map = ({ pickLocation, navigation, route }) => {
             leftIcon={faArrowLeft}
             color={colors.blackPrimary}
             onPressLeft={() => {
-              console.log(marker)
+              // console.log(marker)
               // navigation.state.params.onGoBack(marker)
-              navigation.goBack(marker)
+              navigation.goBack();
             }}
           />
           <MapView provider={PROVIDER_GOOGLE}
           style={styles.map}
-          region={region}
+          initialRegion={region}
           onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
             <>
-            {console.log(route)}
 
             {
                 route.params ? (

@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   View,
@@ -18,28 +18,63 @@ import ModalDropdownItem from "../ModalDropdownItem";
 import ModalDropdownMenu from "../ModalDropdownMenu";
 import ModalInput from "../ModalInput";
 import ModalTimePicker from "../ModalTimePicker";
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+
+
 
 const ModalAddEvent = (props) => {
-  const { visible, title, onQuit, navigation } = props;
+  const { visible, title, onQuit, navigation, route } = props;
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
 
   const [eventType, setEventType] = useState(null);
   const [eventDate, setEventDate] = useState(new Date());
   const [eventTime, setEventTime] = useState(new Date());
-  const [location, setLocation] = useState(true)
+  const [marker, setMarker] = useState(null); 
+  const [maximize, setMaximize] = useState(false);
+
+  const heightFromDimensions = Dimensions.get('window').height * 0.4;
+  console.log(heightFromDimensions)
+
+  // const [location, setLocation] = useState(true)
+
+  const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
+
 
   console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
   const actualDate = new Date(eventDate);
   actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
   // console.log("Transformed date:", actualDate.toLocaleString());
 
-  const refresh = (data) => {
-    setLocation(data);
-  }
+  const region = {
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+    latitudeDelta: 0.0115,
+    longitudeDelta: 0.0015
+  };
+
+  const setMarkerPin = (coords) => {
+    setMarker(coords)
+    //TODO: Wywolanie metody wybierania lokalizacji
+}
+
+useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
+      setLocation(location);
+    })();
+  }, []);
+
 
   return (
-    <Modal visible={true} transparent={true} animationType="slide">
+    <Modal visible={visible}  animationType="slide">
       <View style={styles.modal}>
         <View style={[styles.content, { marginTop: marginSize }]}>
           <View style={styles.headerWrapper}>
@@ -85,20 +120,50 @@ const ModalAddEvent = (props) => {
                   value={eventTime}
                 />
               </View>
-              <View style={[styles.eventLocation]}>
-                <Pressable 
-                  style={[styles.eventLocationPicker]}
-                  onPress={() => {
-                    navigation.navigate("Map", location, {
-                      goBack: setLocation,
-                    });
-                  }}
-                  >
-                {console.log(location)}
-
-                  <MapPicker />
-                </Pressable>
-              </View>
+              <Pressable>
+                {true ? (
+                  <View style={[styles.eventLocation, {height: heightFromDimensions}]}>
+                    <MapView provider={PROVIDER_GOOGLE}
+                      style={{height: heightFromDimensions, width: "100%"}}
+                      initialRegion={region}
+                      onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
+                      <Marker 
+                        coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
+                      />
+                      {marker ? (
+                        <Marker 
+                          draggable 
+                          coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
+                          pinColor="green"
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </MapView>
+                  </View>
+                ) : (
+                  <View style={[styles.eventLocationM, {height: heightFromDimensions}]}>
+                  <MapView provider={PROVIDER_GOOGLE}
+                    style={styles.mapM}
+                    initialRegion={region}
+                    onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
+                    <Marker 
+                      coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
+                    />
+                    {marker ? (
+                      <Marker 
+                        draggable 
+                        coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
+                        pinColor="green"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </MapView>
+                </View>
+                )}
+              </Pressable>
+              
             </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
@@ -202,13 +267,32 @@ const styles = StyleSheet.create({
   },
   eventLocation: {
     marginTop: "5%",
-    height: 150, 
+    // height: "40%", 
     width: "100%",
+    overflow: 'hidden',
+    borderRadius: 10
   },
-  eventLocationPicker: {
-    height: "100%", 
+  eventLocationM: {
+
+    height: Dimensions.get('screen').height, 
+    width: Dimensions.get('screen').width, 
+    // overflow: 'hidden',
+    // borderRadius: 10
+  },
+  map: {
+      // height: Dimensions.get('window').height,
+
+    height: 300,
     width: "100%",
-  }
+      // zIndex: 10
+    },
+  mapM: {
+    // height: Dimensions.get('window').height,
+    height: Dimensions.get('screen').height, 
+    width: Dimensions.get('screen').width, 
+
+    // zIndex: 10
+  },
 });
 
 export default ModalAddEvent;
