@@ -18,16 +18,20 @@ import ModalTimePicker from "../ModalTimePicker";
 
 const ModalAddEvent = (props) => {
   const { visible, title, onQuit } = props;
+  const dateNow = new Date();
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
 
   const [eventType, setEventType] = useState(null);
-  const [eventDate, setEventDate] = useState(new Date());
-  const [eventTime, setEventTime] = useState(new Date());
+  const [eventDate, setEventDate] = useState(dateNow);
+  const [hours, setHours] = useState(dateNow.getHours());
+  const [minutes, setMinutes] = useState(dateNow.getMinutes());
 
-  console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
-  const actualDate = new Date(eventDate);
-  actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
+  console.log(hours, ":", minutes);
+
+  // console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
+  // const actualDate = new Date(eventDate);
+  // actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
   // console.log("Transformed date:", actualDate.toLocaleString());
 
   return (
@@ -71,10 +75,12 @@ const ModalAddEvent = (props) => {
                 <ModalTimePicker
                   title="Time"
                   style={{ width: "45%" }}
-                  onChange={(event, time) => {
-                    setEventTime(time);
+                  onChange={(hours, minutes) => {
+                    setHours(hours);
+                    setMinutes(minutes);
                   }}
-                  value={eventTime}
+                  hours={hours}
+                  minutes={minutes}
                 />
               </View>
             </ScrollView>

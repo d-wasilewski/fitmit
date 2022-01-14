@@ -7,7 +7,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalTime from "./time/ModalTime";
 
 const ModalTimePicker = (props) => {
-  const { title, value, style, onChange } = props;
+  const { title, style, hours, minutes, onChange } = props;
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -18,22 +18,14 @@ const ModalTimePicker = (props) => {
         style={[styles.dateWrapper]}
         onPress={() => setShowDatePicker(true)}
       >
-        <Text style={styles.pickerText}>15:11</Text>
-        {/* <DateTimePicker
-          display="default"
-          mode="time"
-          testID="dateTimePicker"
-          value={value}
-          is24Hour={true}
-          onChange={onChange}
-          textColor="red"
-          locale="en-gb"
-          style={styles.picker}
-        /> */}
+        <Text style={styles.pickerText}>{`${hours}:${minutes}`}</Text>
         <ModalTime
+          hours={hours}
+          minutes={minutes}
           visible={showDatePicker}
-          close={() => {
-            console.log("witam");
+          onCancel={() => setShowDatePicker(false)}
+          onConfirm={(hours, minutes) => {
+            onChange(hours, minutes);
             setShowDatePicker(false);
           }}
         />
