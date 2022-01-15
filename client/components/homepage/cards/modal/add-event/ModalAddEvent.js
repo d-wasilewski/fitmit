@@ -118,11 +118,8 @@ const ModalAddEvent = (props) => {
               >
                 <ModalDropdownItem label="🏀 Basketball" value="BASKETBALL" />
                 <ModalDropdownItem label="🏐 Volleyball" value="VOLLEYBALL" />
-                <ModalDropdownItem label="🏓 Pipong" value="PIPONG" />
-                <ModalDropdownItem
-                  label="⚽ JARANIE SIĘ PIŁKĄ NOŻNĄ TO"
-                  value="FOOTBALL"
-                />
+                <ModalDropdownItem label="🏓 Pingpong" value="PINGPONG" />
+                <ModalDropdownItem label="⚽ Football" value="FOOTBALL" />
                 <ModalDropdownItem
                   label="🦍 Calisthenics"
                   value="CALISTHENICS"

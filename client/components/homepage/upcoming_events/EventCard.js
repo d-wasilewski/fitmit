@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
   ImageBackground,
-  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import backgroundImage from "../../../assets/eventbg.png";
 import colors from "../../../styles/colors";
 import { faCalendar, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import avatar from "../../../assets/papaj.jpg";
+import backgroundImages from "./backgroungImages";
 
 const EventCard = (props) => {
   const windowWidth = Dimensions.get("window").width;
@@ -33,21 +31,9 @@ const EventCard = (props) => {
     }
   }
 
-  // dodac obiekt eventu z danymi
-  const {
-    users = [
-      { name: "papaj" },
-      { name: "papaj" },
-      { name: "papaj" },
-      { name: "papaj" },
-      { name: "papaj" },
-    ],
-    style,
-    altBg,
-    data,
-  } = props;
+  const { style, altBg, data } = props;
 
-  const { name = "", date = new Date() } = data;
+  const { name = "", date = new Date(), eventType } = data;
   const eventTime = new Date(date);
   const weekDay = getWeekDay(eventTime);
 
@@ -56,16 +42,16 @@ const EventCard = (props) => {
     ? ["#FF9900", "#503000"]
     : ["#00B26A", "#002818"];
 
+  console.log(eventType.toLowerCase());
   return (
     <View style={[styles.container, { width: windowWidth * 0.88 }, style]}>
       {/* Obrazek */}
       <ImageBackground
-        source={backgroundImage}
+        source={backgroundImages[eventType.toLowerCase()].uri}
         resizeMode="cover"
         style={{ flex: 1 }}
       />
       {/* Panel na dole */}
-
       <LinearGradient
         colors={gradientColors}
         style={styles.gradient}
@@ -74,28 +60,22 @@ const EventCard = (props) => {
       >
         <View style={styles.bottomWrapper}>
           <View>
-            {/* Avatary uczestnikow */}
-            <View style={styles.avatarWrapper}>
-              {/* Dodac obrazek przy max ilosci mozliwych do wyswietlenia uzytkownikow */}
-              {users.map((user, index) => {
-                return (
-                  <Image
-                    // do poprawy key
-                    key={user.name + index}
-                    source={avatar}
-                    style={[styles.userAvatar, { left: -7 * index }]}
-                  />
-                );
-              })}
+            {/* Nazwa grupy wydarzenia */}
+            <View style={styles.groupNameWrapper}>
+              <Text style={styles.groupName}>{name}</Text>
             </View>
             {/* Nazwa wydarzenia */}
             <Text
               style={[
                 styles.fontBold,
-                { fontSize: 16, fontFamily: "ComfortaaRegular" },
+                {
+                  fontSize: 10,
+                  fontFamily: "ComfortaaRegular",
+                  color: colors.grey100,
+                },
               ]}
             >
-              {name}
+              {eventType}
             </Text>
           </View>
           <View style={{ alignItems: "flex-end" }}>
@@ -163,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     paddingBottom: "3%",
-    paddingHorizontal: "6.25%",
+    paddingHorizontal: "5.25%",
   },
   calendarWrapper: {
     backgroundColor: colors.greenSecondary,
@@ -183,23 +163,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  userAvatar: {
-    width: 20,
-    height: 20,
-    borderRadius: 999,
-    position: "relative",
-    // czy ten shadow dziala to chuj wie xD
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
+  groupName: {
+    color: colors.white,
+    fontFamily: "ComfortaaRegular",
+    fontSize: 18,
   },
-  avatarWrapper: {
+  groupNameWrapper: {
     flexDirection: "row",
-    marginBottom: 8,
+    marginBottom: 2,
   },
 });
 

@@ -32,7 +32,7 @@ const EventSection = (props) => {
       <ImageBackground
         source={backgroundImage}
         resizeMode="cover"
-        style={{ width: "100%", minHeight: 150 }}
+        style={{ width: "100%", minHeight: 180 }}
       >
         <View style={styles.headerWrapper}>
           <Text style={styles.headerText}>Upcoming Events</Text>
@@ -42,8 +42,8 @@ const EventSection = (props) => {
         style={styles.slider}
         altBg={props.altBg}
         expandable={props.expandable}
-         navigation={props.navigation}
-         cards={props.data}
+        navigation={props.navigation}
+        cards={props.data}
       ></EventSlider>
     </View>
   );
