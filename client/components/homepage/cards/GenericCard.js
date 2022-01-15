@@ -1,10 +1,13 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import colors from "../../../styles/colors";
-import avatar from "../../../assets/papaj.jpg";
+import avatar from "../../../assets/no-img.png";
 
 const GenericCard = (props) => {
-  const { style, data = { title: "", text: "", _id, username } } = props;
+  const {
+    style,
+    data = { title: "", text: "", _id, username, profilePicture },
+  } = props;
 
   return (
     <View style={[styles.container, style]}>
@@ -13,11 +16,19 @@ const GenericCard = (props) => {
         <Text style={styles.text}>{data._id}</Text>
       </View>
       <View style={styles.img}>
-        <Image
-          source={avatar}
-          style={{ height: "100%", aspectRatio: 1, borderRadius: 10 }}
-          resizeMode="cover"
-        ></Image>
+        {data.profilePicture.url ? (
+          <Image
+            source={{ uri: data.profilePicture.url }}
+            style={{ height: "100%", aspectRatio: 1, borderRadius: 10 }}
+            resizeMode="cover"
+          ></Image>
+        ) : (
+          <Image
+            source={avatar}
+            style={{ height: "100%", aspectRatio: 1, borderRadius: 10 }}
+            resizeMode="cover"
+          ></Image>
+        )}
       </View>
     </View>
   );

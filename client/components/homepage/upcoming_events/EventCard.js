@@ -42,7 +42,6 @@ const EventCard = (props) => {
     ? ["#FF9900", "#503000"]
     : ["#00B26A", "#002818"];
 
-  console.log(eventType.toLowerCase());
   return (
     <View style={[styles.container, { width: windowWidth * 0.88 }, style]}>
       {/* Obrazek */}
