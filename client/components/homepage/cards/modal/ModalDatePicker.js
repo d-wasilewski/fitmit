@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
-import moment from "moment";
 import DatePicker from "react-native-neat-date-picker";
 
 const ModalDatePicker = (props) => {

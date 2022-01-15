@@ -24,10 +24,12 @@ import {
   faBellSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { SET_CURRENT_EVENTS } from "../redux/types";
 
 const GroupProfile = ({ navigation, route }) => {
   const height = Dimensions.get("window").height * 0.03;
+  const dispatch = useDispatch();
   const { currentGroup } = useSelector((state) => state.groups);
   const [membersData, setMembersData] = useState([]);
   const [eventsData, setEventsData] = useState([]);
@@ -38,16 +40,21 @@ const GroupProfile = ({ navigation, route }) => {
         members: currentGroup.members,
       })
       .then((res) => setMembersData(res.data));
-
+    console.log("GROUPID", currentGroup._id);
     axios
       .get(`/group/${currentGroup._id}/events`)
-      .then((res) => setEventsData(res.data))
+      .then((res) => dispatch({ type: SET_CURRENT_EVENTS, payload: res.data }))
       .catch((err) => console.log(err));
+    setEventsData([]);
   }, []);
 
-  const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
+  useEffect(() => {
+    navigation.addListener("beforeRemove", () => {
+      dispatch({ type: SET_CURRENT_EVENTS, payload: [] });
+    });
+  }, [currentGroup]);
 
-  console.log(eventsData);
+  const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
 
   return (
     <View style={[styles.container]}>
@@ -108,7 +115,12 @@ const GroupProfile = ({ navigation, route }) => {
           </View>
         </ImageBackground>
         <View style={styles.contentWrapper}>
-          <EventSection altBg expandable data={eventsData} navigation={ navigation }/>
+          <EventSection
+            altBg
+            expandable
+            data={eventsData}
+            navigation={navigation}
+          />
           <MemberCardHolder
             setModalVisible={() =>
               setAddMemberModalVisible(!isAddMemberModalVisible)

@@ -26,7 +26,6 @@ import Map from "./pages/map";
 
 const Stack = createNativeStackNavigator();
 
-// axios.defaults.baseURL = "http://192.168.100.147:5000/api/";
 axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
 moment().locale("en-gb");
 
@@ -44,8 +43,6 @@ export default function App() {
         store.dispatch(logoutUser());
         setRouteName("Login");
       } else {
-        console.log("Token: ", decodedToken);
-        // axios.defaults.headers.common["Authorization"] = tok;
         store.dispatch({ type: SET_AUTHENTICATED });
         store.dispatch(getUserData(decodedToken.user_id));
         store.dispatch(getGroups(decodedToken.user_id));
@@ -84,7 +81,6 @@ export default function App() {
           <StatusBar hidden={false} animated={true} translucent={false} />
           <Stack.Navigator
             initialRouteName={routeName}
-            // initialRouteName="GroupProfile"
             screenOptions={{
               headerShown: false,
               animation: "slide_from_right",
@@ -95,7 +91,6 @@ export default function App() {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="CameraLauncher" component={CameraLauncher} />
-            {/* tymczasowo */}
             <Stack.Screen name="CardList" component={CardList} />
             <Stack.Screen name="GroupProfile" component={GroupProfile} />
             <Stack.Screen name="Settings" component={Settings} />

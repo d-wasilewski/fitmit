@@ -17,10 +17,10 @@ const GroupsCard = ({ navigation }) => {
     setLoaded(true);
   }, [loaded]);
 
-  useEffect(() => {
-    // rerender component every time groupList changes (user creates a group)
-    setLoaded(true);
-  }, [groupList]);
+  // useEffect(() => {
+  //   // rerender component every time groupList changes (user creates a group)
+  //   setLoaded(true);
+  // }, [groupList]);
 
   return (
     <GenericCardHolder title="Groups" cards={groupList} navigation={navigation}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, Text, Pressable, View } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import colors from "../../../styles/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

@@ -8,24 +8,35 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 
 const Map = ({ navigation, route }) => {
-    const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [marker, setMarker] = useState(null); 
-    const [markersArray, setMarkersArray] = useState([ 
-        {
-            "latitude": 51.58854899559891,
-            "longitude": 18.937285803258415,
-        },
-        {
-            "latitude": 51.58914308764534,
-            "longitude": 18.936975337564945,
-        },
-        {
-            "latitude": 51.58981070285168,
-            "longitude": 18.939508348703384
-          }
-    ]); 
-
+  const [location, setLocation] = useState({
+    timestamp: 0,
+    mocked: false,
+    coords: {
+      altitude: 0,
+      heading: 0,
+      altitudeAccuracy: 0,
+      latitude: 0,
+      speed: 0,
+      longitude: 0,
+      accuracy: 0,
+    },
+  });
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [marker, setMarker] = useState(null);
+  const [markersArray, setMarkersArray] = useState([
+    {
+      latitude: 51.58854899559891,
+      longitude: 18.937285803258415,
+    },
+    {
+      latitude: 51.58914308764534,
+      longitude: 18.936975337564945,
+    },
+    {
+      latitude: 51.58981070285168,
+      longitude: 18.939508348703384,
+    },
+  ]);
 
   const setMarkerPin = (coords) => {
     setMarker(coords);
@@ -54,68 +65,54 @@ const Map = ({ navigation, route }) => {
     text = JSON.stringify(location);
   }
 
-const region = {
+  const region = {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
     latitudeDelta: 0.0115,
     longitudeDelta: 0.0015,
   };
-  
-      return (
-        <View style={styles.container}>
-          <TopBar
-            title
-            leftIcon={faArrowLeft}
-            color={colors.blackPrimary}
-            onPressLeft={() => {
-              // console.log(marker)
-              // navigation.state.params.onGoBack(marker)
-              navigation.goBack();
-            }}
-          />
-          <MapView provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          initialRegion={region}
-          onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
-            <>
 
-            {
-                route.params ? (
-                    <>
-                    {
-                        marker ? (
-                            <>
-                                <Marker 
-                                    draggable 
-                                    coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                                    pinColor="green"
-                                />
-                                <Marker 
-                                    coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
-                                />
-                            </> 
-                        ) : (
-                            <></>
-                        )
-                    }
-                    </>
-                ) : (
-                    markersArray ? (
-                        markersArray.map((marker, i) => (
-                                <Marker 
-                                    key={i+1}
-                                    coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                                    pinColor="green"
-                                />                  
-                                ))                               
-                    ) : (
-                        <></>
-                    )
-                )
-            }
-            <Marker 
-                            coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
-                        />
+  return (
+    <View style={styles.container}>
+      <TopBar
+        title
+        leftIcon={faArrowLeft}
+        color={colors.blackPrimary}
+        onPressLeft={() => {
+          // console.log(marker)
+          // navigation.state.params.onGoBack(marker)
+          navigation.goBack();
+        }}
+      />
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        initialRegion={region}
+        onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
+      >
+        <>
+          {route.params ? (
+            <>
+              {marker ? (
+                <>
+                  <Marker
+                    draggable
+                    coordinate={{
+                      latitude: marker.latitude,
+                      longitude: marker.longitude,
+                    }}
+                    pinColor="green"
+                  />
+                  <Marker
+                    coordinate={{
+                      latitude: location.coords.latitude,
+                      longitude: location.coords.longitude,
+                    }}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
             </>
           ) : markersArray ? (
             markersArray.map((marker, i) => (

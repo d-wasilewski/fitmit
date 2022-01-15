@@ -4,12 +4,14 @@ import thunk from "redux-thunk";
 
 import userReducer from "./reducers/userReducer";
 import groupReducer from "./reducers/groupReducers";
+import eventReducer from "./reducers/eventReducers";
 
 const middleware = [thunk];
 
 const rootReducer = combineReducers({
   user: userReducer,
   groups: groupReducer,
+  event: eventReducer,
 });
 
 const store = createStore(

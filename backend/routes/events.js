@@ -42,7 +42,7 @@ router.put("/add", async (req, res) => {
       ...eventObject,
       date: new Date(eventObject.date),
     });
-    res.status(200).json({ message: "jebać disa kurwe zwisa" });
+    res.status(200).json(eventObject);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);

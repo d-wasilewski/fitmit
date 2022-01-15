@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -17,11 +17,16 @@ import ActivitySlider from "../components/homepage/activities/ActivitySlider";
 import EventSection from "../components/homepage/EventSection";
 import GroupsCard from "../components/homepage/cards/GroupsCard";
 import { logoutUser } from "../redux/actions/userActions";
+import { getEvents } from "../redux/actions/eventActions";
 
 const Home = ({ navigation }) => {
-  const { username } = useSelector((state) => state?.user?.user);
+  const { username, _id } = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
+
+  useEffect(() => {
+    dispatch(getEvents(_id));
+  }, [username]);
 
   const leftIconPress = () => {
     dispatch(logoutUser());
