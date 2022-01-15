@@ -108,7 +108,7 @@ const GroupProfile = ({ navigation, route }) => {
           </View>
         </ImageBackground>
         <View style={styles.contentWrapper}>
-          <EventSection altBg expandable data={eventsData} />
+          <EventSection altBg expandable data={eventsData} navigation={ navigation }/>
           <MemberCardHolder
             setModalVisible={() =>
               setAddMemberModalVisible(!isAddMemberModalVisible)
