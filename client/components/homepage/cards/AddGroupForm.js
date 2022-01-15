@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import ModalInput from "../../shared/ModalInput";
 import { Formik as PoteznyForm } from "formik";
 import * as Yup from "yup";
 import Button from "../../shared/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { createGroup, getGroups } from "../../../redux/actions/groupActions";
+import { createGroup } from "../../../redux/actions/groupActions";
 
 const AddGroupForm = ({ setModal }) => {
   const { _id: userId } = useSelector((state) => state.user.user);

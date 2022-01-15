@@ -10,9 +10,6 @@ import {
 import bgPhoto from "../assets/startScreenBackground.jpg";
 
 import LoginForm from "../components/LoginForm";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
-import Button from "../components/shared/Button";
 import TopBar from "../components/shared/TopBar";
 
 const Login = ({ navigation }) => {

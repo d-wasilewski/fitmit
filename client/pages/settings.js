@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Switch, StyleSheet, Text, Alert } from "react-native";
 import TopBar from "../components/shared/TopBar";
 import colors from "../styles/colors";
-import fonts from "../styles/fonts";
 import { faArrowLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Button from "../components/shared/Button";

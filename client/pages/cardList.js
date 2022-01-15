@@ -4,7 +4,6 @@ import {
   View,
   Text,
   ImageBackground,
-  Dimensions,
   TextInput,
   Image,
   ScrollView,
@@ -22,7 +21,6 @@ const CardList = (props) => {
   const [inputValue, setInputValue] = useState("");
 
   const {
-    navigation,
     cards = [
       {
         // wczytywanie obrazkow nw jak
@@ -63,7 +61,6 @@ const CardList = (props) => {
   } = props;
 
   const onInputChange = (value) => {
-    console.log(inputValue);
     setInputValue(value);
   };
 

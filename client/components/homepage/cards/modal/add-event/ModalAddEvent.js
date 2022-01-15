@@ -1,3 +1,4 @@
+import axios from "axios";
 import moment from "moment";
 import React, { useState, useEffect } from "react";
 import {
@@ -10,8 +11,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
-import MapPicker from "./MapPicker";
+import { useSelector } from "react-redux";
+
 import colors from "../../../../../styles/colors";
 import ModalDatePicker from "../ModalDatePicker";
 import ModalDropdownItem from "../ModalDropdownItem";
@@ -25,21 +26,39 @@ import * as Location from 'expo-location';
 
 const ModalAddEvent = (props) => {
   const { visible, title, onQuit, navigation, route } = props;
+  const dateNow = new Date();
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
-
   const [eventType, setEventType] = useState(null);
-  const [eventDate, setEventDate] = useState(new Date());
   const [eventTime, setEventTime] = useState(new Date());
   const [marker, setMarker] = useState(null); 
-
   const heightFromDimensions = Dimensions.get('window').height * 0.4;
   const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
+  const [eventDate, setEventDate] = useState(dateNow);
+  const [hours, setHours] = useState(dateNow.getHours());
+  const [minutes, setMinutes] = useState(dateNow.getMinutes());
+  const { currentGroup } = useSelector((state) => state.groups);
+  const currentUser = useSelector((state) => state.user.user);
 
-  console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
-  const actualDate = new Date(eventDate);
-  actualDate.setHours(eventTime.getHours(), eventTime.getMinutes(), 0);
-  // console.log("Transformed date:", actualDate.toLocaleString());
+  async function createEvent(obj) {
+    console.log({ event: obj });
+    if (obj.date < new Date().getTime()) return;
+    await axios.put("/event/add", { event: obj });
+  }
+
+  function getData() {
+    const name = currentGroup.name;
+    const groupId = currentGroup._id;
+    const userId = currentUser._id;
+
+    return {
+      name: name,
+      creator: userId,
+      eventType: eventType,
+      group: groupId,
+      date: eventDate.setHours(hours, minutes),
+    };
+  }
 
   const region = {
     latitude: location.coords.latitude,
@@ -108,10 +127,12 @@ useEffect(() => {
                 <ModalTimePicker
                   title="Time"
                   style={{ width: "45%" }}
-                  onChange={(event, time) => {
-                    setEventTime(time);
+                  onChange={(hours, minutes) => {
+                    setHours(hours);
+                    setMinutes(minutes);
                   }}
-                  value={eventTime}
+                  hours={hours}
+                  minutes={minutes}
                 />
               </View>
                 <View style={[styles.eventLocation, {height: heightFromDimensions}]}>
@@ -150,7 +171,11 @@ useEffect(() => {
             </Pressable>
             <Pressable
               on
-              onPress={onQuit}
+              onPress={() => {
+                const data = getData();
+                createEvent(data);
+                onQuit();
+              }}
               style={[
                 styles.button,
                 {

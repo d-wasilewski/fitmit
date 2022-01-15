@@ -5,9 +5,7 @@ import {
   useWindowDimensions,
   StyleSheet,
   Text,
-  Button,
   View,
-  Touchable,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
@@ -38,17 +36,14 @@ const ImagePicker = ({
   const { height } = useWindowDimensions();
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState(false);
-  // const [isCameraOn, setCameraOn] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [callUseEffect, setCallUseEffect] = useState(false);
   const [prevCameraPicture, setPrevCameraPicture] = useState("");
-  // const [loading, setLoading] = useState(true);
   const { loading } = useSelector((state) => state.user);
 
   const startCamera = () => {
     setCallUseEffect(!callUseEffect);
     if (hasPermission) {
-      // setCameraOn(true);
       setModalVisible(false);
       navigation.navigate("CameraLauncher", group);
     } else {

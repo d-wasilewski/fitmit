@@ -10,18 +10,60 @@ import {
 import colors from "../../../../../styles/colors";
 
 const ModalTime = (props) => {
-  const { visible, onChangeHours, onChangeMinutes, style, close } = props;
+  const {
+    visible,
+    style,
+    onCancel: cancel,
+    onConfirm: confirm,
+    minutes: defaultMinutes,
+    hours: defaultHours,
+  } = props;
 
-  // ! temp
-  const [hours, setHours] = useState(15);
-  const [minutes, setMinutes] = useState(11);
+  const [hours, setHours] = useState(defaultHours);
+  const [minutes, setMinutes] = useState(defaultMinutes);
+
+  const onCancel = () => {
+    setHours(defaultHours);
+    setMinutes(defaultMinutes);
+    cancel();
+  };
+
+  const onConfirm = () => {
+    confirm(hours, minutes);
+  };
+
+  function validateHours(hour) {
+    if (hour < 0 || hour >= 24) return false;
+    return true;
+  }
+
+  function validateMinutes(minutes) {
+    if (minutes < 0 || minutes >= 60) return false;
+    return true;
+  }
+
+  function checkInput(value) {
+    return value.replace(/[^0-9]/g, "");
+  }
+
+  function onChangeHours(value) {
+    const processedValue = checkInput(value);
+    if (validateHours(processedValue)) setHours(processedValue);
+    else setHours(hours);
+  }
+
+  function onChangeMinutes(value) {
+    const processedValue = checkInput(value);
+    if (validateMinutes(processedValue)) setMinutes(processedValue);
+    else setMinutes(minutes);
+  }
 
   return (
     <Modal visible={visible} transparent={true} animationType="fade">
       <View style={[styles.container, style]}>
         <View style={styles.inputWrapper}>
           <TextInput
-            value={hours}
+            value={hours.toString()}
             selectTextOnFocus
             onChangeText={onChangeHours}
             style={[styles.modalText, styles.input]}
@@ -29,12 +71,12 @@ const ModalTime = (props) => {
             keyboardType="numeric"
           />
           <Text
-            style={[styles.modalText, { color: colors.grey200, padding: 5 }]}
+            style={[styles.modalText, { color: colors.grey200, padding: 12 }]}
           >
             :
           </Text>
           <TextInput
-            value={minutes}
+            value={minutes.toString()}
             selectTextOnFocus
             onChangeText={onChangeMinutes}
             style={[styles.modalText, styles.input]}
@@ -43,10 +85,10 @@ const ModalTime = (props) => {
           />
         </View>
         <View style={styles.buttonWrapper}>
-          <Pressable onPress={close}>
+          <Pressable onPress={onCancel}>
             <Text style={[styles.buttonText]}>Cancel</Text>
           </Pressable>
-          <Pressable onPress={close}>
+          <Pressable onPress={onConfirm}>
             <Text style={[styles.buttonText]}>Ok</Text>
           </Pressable>
         </View>

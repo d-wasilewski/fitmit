@@ -30,6 +30,7 @@ const GroupProfile = ({ navigation, route }) => {
   const height = Dimensions.get("window").height * 0.03;
   const { currentGroup } = useSelector((state) => state.groups);
   const [membersData, setMembersData] = useState([]);
+  const [eventsData, setEventsData] = useState([]);
 
   useEffect(() => {
     axios
@@ -37,9 +38,16 @@ const GroupProfile = ({ navigation, route }) => {
         members: currentGroup.members,
       })
       .then((res) => setMembersData(res.data));
+
+    axios
+      .get(`/group/${currentGroup._id}/events`)
+      .then((res) => setEventsData(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
   const [isAddMemberModalVisible, setAddMemberModalVisible] = useState(false);
+
+  console.log(eventsData);
 
   return (
     <View style={[styles.container]}>
@@ -100,7 +108,7 @@ const GroupProfile = ({ navigation, route }) => {
           </View>
         </ImageBackground>
         <View style={styles.contentWrapper}>
-          <EventSection altBg expandable navigation={ navigation }/>
+          <EventSection altBg expandable data={eventsData} navigation={ navigation }/>
           <MemberCardHolder
             setModalVisible={() =>
               setAddMemberModalVisible(!isAddMemberModalVisible)

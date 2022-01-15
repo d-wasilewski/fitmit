@@ -4,9 +4,8 @@ import {
   View,
   TouchableOpacity,
   useWindowDimensions,
-  ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Camera } from "expo-camera";
 import CameraPreview from "./CameraPreview";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
