@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import React, { useState, useEffect, Fragment } from "react";
+import { Platform, Text, View, StyleSheet, Dimensions } from "react-native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import HomeMenu from "../components/shared/HomeMenu";
@@ -7,7 +7,7 @@ import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 
-const Map = ({ navigation, route }) => {
+const Map = ({ pickLocation, navigation, route }) => {
   const [location, setLocation] = useState({
     timestamp: 0,
     mocked: false,
@@ -72,6 +72,8 @@ const Map = ({ navigation, route }) => {
     longitudeDelta: 0.0015,
   };
 
+  const pinColor = "#474744";
+
   return (
     <View style={styles.container}>
       <TopBar
@@ -84,58 +86,67 @@ const Map = ({ navigation, route }) => {
           navigation.goBack();
         }}
       />
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        initialRegion={region}
-        onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
-      >
-        <>
-          {route.params ? (
-            <>
-              {marker ? (
-                <>
-                  <Marker
-                    draggable
-                    coordinate={{
-                      latitude: marker.latitude,
-                      longitude: marker.longitude,
-                    }}
-                    pinColor="green"
-                  />
-                  <Marker
-                    coordinate={{
-                      latitude: location.coords.latitude,
-                      longitude: location.coords.longitude,
-                    }}
-                  />
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          ) : markersArray ? (
-            markersArray.map((marker, i) => (
-              <Marker
-                key={i + 1}
-                coordinate={{
-                  latitude: marker.latitude,
-                  longitude: marker.longitude,
-                }}
-                pinColor="green"
-              />
-            ))
-          ) : (
-            <></>
-          )}
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-          />
-        </>
-      </MapView>
+      {location.coords.latitude == 0 ? (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          region={region}
+          onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
+        >
+          <>
+            {markersArray ? (
+              markersArray.map((marker, i) => (
+                <Marker
+                  key={i + 1}
+                  coordinate={{
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                  }}
+                  pinColor="green"
+                />
+              ))
+            ) : (
+              <></>
+            )}
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+            />
+          </>
+        </MapView>
+      ) : (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          initialRegion={region}
+          onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
+        >
+          <>
+            {markersArray ? (
+              markersArray.map((marker, i) => (
+                <Marker
+                  key={i + 1}
+                  coordinate={{
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                  }}
+                  pinColor="green"
+                />
+              ))
+            ) : (
+              <></>
+            )}
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+            />
+          </>
+        </MapView>
+      )}
       <HomeMenu navigation={navigation} />
     </View>
   );

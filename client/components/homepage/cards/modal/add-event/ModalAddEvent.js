@@ -19,10 +19,8 @@ import ModalDropdownItem from "../ModalDropdownItem";
 import ModalDropdownMenu from "../ModalDropdownMenu";
 import ModalInput from "../ModalInput";
 import ModalTimePicker from "../ModalTimePicker";
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-
-
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import * as Location from "expo-location";
 
 const ModalAddEvent = (props) => {
   const { visible, title, onQuit, navigation, route } = props;
@@ -31,9 +29,21 @@ const ModalAddEvent = (props) => {
   const buttonTopMargin = marginSize * 0.3;
   const [eventType, setEventType] = useState(null);
   const [eventTime, setEventTime] = useState(new Date());
-  const [marker, setMarker] = useState(null); 
-  const heightFromDimensions = Dimensions.get('window').height * 0.4;
-  const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
+  const [marker, setMarker] = useState(null);
+  const heightFromDimensions = Dimensions.get("window").height * 0.4;
+  const [location, setLocation] = useState({
+    timestamp: 0,
+    mocked: false,
+    coords: {
+      altitude: 0,
+      heading: 0,
+      altitudeAccuracy: 0,
+      latitude: 0,
+      speed: 0,
+      longitude: 0,
+      accuracy: 0,
+    },
+  });
   const [eventDate, setEventDate] = useState(dateNow);
   const [hours, setHours] = useState(dateNow.getHours());
   const [minutes, setMinutes] = useState(dateNow.getMinutes());
@@ -64,30 +74,31 @@ const ModalAddEvent = (props) => {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
     latitudeDelta: 0.0115,
-    longitudeDelta: 0.0015
+    longitudeDelta: 0.0015,
   };
 
   const setMarkerPin = (coords) => {
-    setMarker(coords)
+    setMarker(coords);
     //TODO: Wywolanie metody wybierania lokalizacji
-}
+  };
 
-useEffect(() => {
+  useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
+      let location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
       setLocation(location);
     })();
   }, []);
 
-
   return (
-    <Modal visible={visible}  animationType="slide">
+    <Modal visible={visible} animationType="slide">
       <View style={styles.modal}>
         <View style={[styles.content, { marginTop: marginSize }]}>
           <View style={styles.headerWrapper}>
@@ -135,25 +146,35 @@ useEffect(() => {
                   minutes={minutes}
                 />
               </View>
-                <View style={[styles.eventLocation, {height: heightFromDimensions}]}>
-                  <MapView provider={PROVIDER_GOOGLE}
-                    style={{height: heightFromDimensions, width: "100%"}}
-                    initialRegion={region}
-                    onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
-                    <Marker 
-                      coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
+              <View
+                style={[styles.eventLocation, { height: heightFromDimensions }]}
+              >
+                <MapView
+                  provider={PROVIDER_GOOGLE}
+                  style={{ height: heightFromDimensions, width: "100%" }}
+                  initialRegion={region}
+                  onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
+                >
+                  <Marker
+                    coordinate={{
+                      latitude: location.coords.latitude,
+                      longitude: location.coords.longitude,
+                    }}
+                  />
+                  {marker ? (
+                    <Marker
+                      draggable
+                      coordinate={{
+                        latitude: marker.latitude,
+                        longitude: marker.longitude,
+                      }}
+                      pinColor="green"
                     />
-                    {marker ? (
-                      <Marker 
-                        draggable 
-                        coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                        pinColor="green"
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </MapView>
-                </View>
+                  ) : (
+                    <></>
+                  )}
+                </MapView>
+              </View>
             </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
@@ -261,27 +282,27 @@ const styles = StyleSheet.create({
   },
   eventLocation: {
     marginTop: "5%",
-    height: 300, 
+    height: 300,
     width: "100%",
-    overflow: 'hidden',
-    borderRadius: 10
+    overflow: "hidden",
+    borderRadius: 10,
   },
   eventLocationM: {
-    height: Dimensions.get('screen').height, 
-    width: Dimensions.get('screen').width, 
+    height: Dimensions.get("screen").height,
+    width: Dimensions.get("screen").width,
     // overflow: 'hidden',
     // borderRadius: 10
   },
   map: {
-      // height: Dimensions.get('window').height,
+    // height: Dimensions.get('window').height,
     height: 300,
     width: "100%",
-      // zIndex: 10
-    },
+    // zIndex: 10
+  },
   mapM: {
     // height: Dimensions.get('window').height,
-    height: Dimensions.get('screen').height, 
-    width: Dimensions.get('screen').width, 
+    height: Dimensions.get("screen").height,
+    width: Dimensions.get("screen").width,
 
     // zIndex: 10
   },
