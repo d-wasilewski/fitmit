@@ -32,15 +32,9 @@ const ModalAddEvent = (props) => {
   const [eventDate, setEventDate] = useState(new Date());
   const [eventTime, setEventTime] = useState(new Date());
   const [marker, setMarker] = useState(null); 
-  const [maximize, setMaximize] = useState(false);
 
   const heightFromDimensions = Dimensions.get('window').height * 0.4;
-  console.log(heightFromDimensions)
-
-  // const [location, setLocation] = useState(true)
-
   const [location, setLocation] = useState({"timestamp":0,"mocked":false,"coords":{"altitude":0,"heading":0,"altitudeAccuracy":0,"latitude":0,"speed":0,"longitude":0,"accuracy":0}});
-
 
   console.log(eventDate.toLocaleDateString(), eventTime.toLocaleTimeString());
   const actualDate = new Date(eventDate);
@@ -120,31 +114,9 @@ useEffect(() => {
                   value={eventTime}
                 />
               </View>
-              <Pressable>
-                {true ? (
-                  <View style={[styles.eventLocation, {height: heightFromDimensions}]}>
-                    <MapView provider={PROVIDER_GOOGLE}
-                      style={{height: heightFromDimensions, width: "100%"}}
-                      initialRegion={region}
-                      onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
-                      <Marker 
-                        coordinate={{ latitude: location.coords.latitude, longitude: location.coords.longitude }}
-                      />
-                      {marker ? (
-                        <Marker 
-                          draggable 
-                          coordinate={{latitude: marker.latitude, longitude: marker.longitude}} 
-                          pinColor="green"
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </MapView>
-                  </View>
-                ) : (
-                  <View style={[styles.eventLocationM, {height: heightFromDimensions}]}>
+                <View style={[styles.eventLocation, {height: heightFromDimensions}]}>
                   <MapView provider={PROVIDER_GOOGLE}
-                    style={styles.mapM}
+                    style={{height: heightFromDimensions, width: "100%"}}
                     initialRegion={region}
                     onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}>
                     <Marker 
@@ -161,9 +133,6 @@ useEffect(() => {
                     )}
                   </MapView>
                 </View>
-                )}
-              </Pressable>
-              
             </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
@@ -267,13 +236,12 @@ const styles = StyleSheet.create({
   },
   eventLocation: {
     marginTop: "5%",
-    // height: "40%", 
+    height: 300, 
     width: "100%",
     overflow: 'hidden',
     borderRadius: 10
   },
   eventLocationM: {
-
     height: Dimensions.get('screen').height, 
     width: Dimensions.get('screen').width, 
     // overflow: 'hidden',
@@ -281,7 +249,6 @@ const styles = StyleSheet.create({
   },
   map: {
       // height: Dimensions.get('window').height,
-
     height: 300,
     width: "100%",
       // zIndex: 10
