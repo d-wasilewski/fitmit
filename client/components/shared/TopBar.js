@@ -28,7 +28,7 @@ const TopBar = (props) => {
   const rightStyleIcon = rightIcon === undefined ? styles.invisible : undefined;
 
   let gap;
-  gap = title ? 0 : 30;
+  gap = title ? 10 : 0;
 
   return (
     <View style={[styles.container, { height: height * 0.05 }, style]}>
@@ -44,7 +44,7 @@ const TopBar = (props) => {
           {title}
         </Text>
       ) : (
-        <Image source={Logo} style={styles.image} />
+        <Image source={Logo} style={[styles.image, { marginTop: gap }]} />
       )}
       <TouchableOpacity onPress={onPressRight}>
         <FontAwesomeIcon
