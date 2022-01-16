@@ -23,10 +23,12 @@ const EventSchema = new mongoose.Schema({
     longitude: {
       type: String,
       default: "",
+      required: true,
     },
     latitude: {
       type: String,
       default: "",
+      required: true,
     },
   },
   date: {

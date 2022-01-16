@@ -40,7 +40,6 @@ const GroupProfile = ({ navigation, route }) => {
         members: currentGroup.members,
       })
       .then((res) => setMembersData(res.data));
-    console.log("GROUPID", currentGroup._id);
     axios
       .get(`/group/${currentGroup._id}/events`)
       .then((res) => dispatch({ type: SET_CURRENT_EVENTS, payload: res.data }))

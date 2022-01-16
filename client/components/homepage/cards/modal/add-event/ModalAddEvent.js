@@ -11,7 +11,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import colors from "../../../../../styles/colors";
 import ModalDatePicker from "../ModalDatePicker";
@@ -21,6 +21,7 @@ import ModalInput from "../ModalInput";
 import ModalTimePicker from "../ModalTimePicker";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import { createEvent } from "../../../../../redux/actions/eventActions";
 
 const ModalAddEvent = (props) => {
   const { visible, title, onQuit, navigation, route } = props;
@@ -28,7 +29,7 @@ const ModalAddEvent = (props) => {
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
   const [eventType, setEventType] = useState(null);
-  const [eventTime, setEventTime] = useState(new Date());
+  const dispatch = useDispatch();
   const [marker, setMarker] = useState(null);
   const heightFromDimensions = Dimensions.get("window").height * 0.4;
   const [location, setLocation] = useState({
@@ -50,22 +51,22 @@ const ModalAddEvent = (props) => {
   const { currentGroup } = useSelector((state) => state.groups);
   const currentUser = useSelector((state) => state.user.user);
 
-  async function createEvent(obj) {
-    console.log({ event: obj });
-    if (obj.date < new Date().getTime()) return;
-    await axios.put("/event/add", { event: obj });
+  async function createNewEvent(obj) {
+    dispatch(createEvent(obj));
   }
 
   function getData() {
     const name = currentGroup.name;
     const groupId = currentGroup._id;
     const userId = currentUser._id;
+    console.log(marker);
 
     return {
       name: name,
       creator: userId,
       eventType: eventType,
       group: groupId,
+      location: marker,
       date: eventDate.setHours(hours, minutes),
     };
   }
@@ -191,7 +192,7 @@ const ModalAddEvent = (props) => {
               on
               onPress={() => {
                 const data = getData();
-                createEvent(data);
+                createNewEvent(data);
                 onQuit();
               }}
               style={[

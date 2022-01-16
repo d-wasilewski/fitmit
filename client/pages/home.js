@@ -4,6 +4,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import colors from "../styles/colors";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,12 +22,13 @@ import { getEvents } from "../redux/actions/eventActions";
 
 const Home = ({ navigation }) => {
   const { username, _id } = useSelector((state) => state?.user?.user);
+  const { currentEvents } = useSelector((state) => state?.event);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
 
   useEffect(() => {
     dispatch(getEvents(_id));
-  }, [username]);
+  }, [currentEvents]);
 
   const leftIconPress = () => {
     dispatch(logoutUser());
@@ -38,6 +40,7 @@ const Home = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl />}
       >
         <Greeting username={username}></Greeting>
         <ActivitySlider />

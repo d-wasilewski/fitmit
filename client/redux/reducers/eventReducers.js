@@ -1,4 +1,4 @@
-import { SET_CURRENT_EVENTS, SET_EVENTS } from "../types";
+import { SET_CURRENT_EVENTS, SET_EVENTS, CREATE_EVENT } from "../types";
 
 const initialState = {
   eventList: [],
@@ -7,11 +7,12 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    //   case CREATE_GROUP:
-    //     return {
-    //       ...state,
-    //       groupList: [...state.groupList, action.payload],
-    //     };
+    case CREATE_EVENT:
+      return {
+        ...state,
+        eventList: [...state.eventList, action.payload],
+        currentEvents: [...state.currentEvents, action.payload],
+      };
     case SET_EVENTS:
       return {
         ...state,

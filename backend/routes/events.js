@@ -35,7 +35,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.put("/add", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const eventObject = req.body.event;
     await EventSchema.create({

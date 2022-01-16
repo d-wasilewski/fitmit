@@ -53,7 +53,7 @@ const EventSlider = (props) => {
             if (val.name == undefined) return null;
             return index != cards.length - 1 ? (
               <EventCard
-                key={val._id}
+                key={val + index}
                 style={styles.element}
                 altBg={altBg}
                 data={val}
