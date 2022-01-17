@@ -66,7 +66,6 @@ router.post("/uploadImage", async (req, res) => {
 
 //update user
 router.put("/:id", async (req, res) => {
-  console.log(req.body.newData, req.params.id);
   if (req.body.newData.userId === req.params.id) {
     try {
       await UserSchema.findByIdAndUpdate(req.params.id, {
