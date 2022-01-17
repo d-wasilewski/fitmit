@@ -153,33 +153,33 @@ const Map = ({ pickLocation, navigation, route }) => {
           </>
         </MapView>
       )}
-      <Animated.ScrollView
-        // horizontal
-        // scrollEventThrottle={1}
-        // showsHorizontalScrollIndicator={false}
-        // style={styles.scrollView}
+      {/* <Animated.ScrollView
+        horizontal
+        scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
+        style={styles.scrollView}
         >
 
               {
                 console.log(eventList[0].name),
                 console.log(eventList[1].name),
                 console.log(eventList[2].name)
-                // eventList.map((marker, i) => (
-                //   <View style={styles.card} key={i}>
-                //     <Image 
-                //       source={backgroundImage}
-                //       style={styles.cardImage}
-                //       resizeMode="cover"
-                //     />
-                //     <View style={styles.textContent}>
-                //       <Text numberOfLines={1} style={styles.cardtitle}>{marker.name}</Text>
-                //       <Text numberOfLines={1} style={styles.cardDescription}>{marker.name}</Text>
-                //     </View>
+                eventList.map((marker, i) => (
+                  <View style={styles.card} key={i}>
+                    <Image 
+                      source={backgroundImage}
+                      style={styles.cardImage}
+                      resizeMode="cover"
+                    />
+                    <View style={styles.textContent}>
+                      <Text numberOfLines={1} style={styles.cardtitle}>{marker.name}</Text>
+                      <Text numberOfLines={1} style={styles.cardDescription}>{marker.name}</Text>
+                    </View>
 
-                //   </View>
-                // ))
+                  </View>
+                ))
               }
-      </Animated.ScrollView>
+      </Animated.ScrollView> */}
       <HomeMenu navigation={navigation} />
     </View>
   );
