@@ -8,6 +8,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
+import * as Notifications from "expo-notifications";
 
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -28,6 +29,14 @@ const Stack = createNativeStackNavigator();
 
 axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
 moment().locale("en-gb");
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function App() {
   const [loading, setLoading] = useState(true);

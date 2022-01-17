@@ -17,7 +17,7 @@ import Greeting from "../components/homepage/Greeting";
 import ActivitySlider from "../components/homepage/activities/ActivitySlider";
 import EventSection from "../components/homepage/EventSection";
 import GroupsCard from "../components/homepage/cards/GroupsCard";
-import { logoutUser } from "../redux/actions/userActions";
+import { logoutUser, updateUserData } from "../redux/actions/userActions";
 import { getEvents } from "../redux/actions/eventActions";
 
 const Home = ({ navigation }) => {

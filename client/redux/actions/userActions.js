@@ -7,10 +7,11 @@ import {
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getGroups } from "./groupActions";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 export const loginUser = (userData) => (dispatch) => {
   //   dispatch({ type: LOADING_UI });
-  console.log(userData);
   const { login: username, password, checkboxState } = userData;
 
   axios
@@ -22,6 +23,11 @@ export const loginUser = (userData) => (dispatch) => {
         payload: res.data,
       });
       dispatch(getGroups(res.data._id));
+      registerForPushNotificationsAsync().then((pushToken) =>
+        dispatch(
+          updateUserData(res.data._id, { userId: res.data._id, pushToken })
+        )
+      );
     })
     .catch((err) => console.log(err));
 };
@@ -36,13 +42,17 @@ export const registerUser = (userData) => (dispatch) => {
       password,
     })
     .then((res) => {
-      console.log(res.data);
       setAuthorizationHeader(res.data.token);
       dispatch({
         type: SET_USER,
         payload: res.data,
       });
       dispatch(getGroups(res.data._id));
+      registerForPushNotificationsAsync().then((pushToken) =>
+        dispatch(
+          updateUserData(res.data._id, { userId: res.data._id, pushToken })
+        )
+      );
     })
     .catch((err) => console.log(err));
 };
@@ -71,7 +81,7 @@ export const getUserData = (userId) => (dispatch) => {
 };
 
 export const updateUserData = (userId, newData) => (dispatch) => {
-  console.log("NEW DATA: ", newData.settings.dontLogout);
+  console.log("NEW DATA: ", newData);
   axios
     .put(`/${userId}`, {
       newData,
@@ -79,12 +89,10 @@ export const updateUserData = (userId, newData) => (dispatch) => {
     .then((res) => console.log("User po pucie: ", res.data))
     .catch((err) => console.log(err));
 
-  if (newData.settings.dontLogout) {
+  if (newData?.settings?.dontLogout) {
     axios.put(`/refreshToken/${userId}`).catch((err) => console.log(err));
   }
 };
-
-// export const refreshToken = (userId) => (dispatch) => {};
 
 const setAuthorizationHeader = async (token) => {
   const authToken = `Bearer ${token}`;
@@ -109,3 +117,35 @@ export const changeProfilePicture = (userId, profilePicture) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert("Must use physical device for Push Notifications");
+  }
+
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  return token;
+}
