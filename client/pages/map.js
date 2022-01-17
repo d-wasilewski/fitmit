@@ -165,7 +165,7 @@ const Map = ({ pickLocation, navigation, route }) => {
                 console.log(eventList[1].name),
                 console.log(eventList[2].name)
                 eventList.map((marker, i) => (
-                  <View style={styles.card} key={i}>
+                  <View style={styles.card} key={i}> 
                     <Image 
                       source={backgroundImage}
                       style={styles.cardImage}
