@@ -1,11 +1,14 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Platform, Text, View, StyleSheet, Dimensions } from "react-native";
+import { useSelector } from "react-redux";
+import { Platform, Text, View, StyleSheet, Dimensions, ScrollView, Image } from "react-native";
 import * as Location from "expo-location";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Animated } from "react-native-maps";
 import HomeMenu from "../components/shared/HomeMenu";
 import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
+import backgroundImage from "../assets/eventbg.png";
+
 
 const Map = ({ pickLocation, navigation, route }) => {
   const [location, setLocation] = useState({
@@ -37,6 +40,8 @@ const Map = ({ pickLocation, navigation, route }) => {
       longitude: 18.939508348703384,
     },
   ]);
+  const { eventList } = useSelector((state) => state.event);
+
 
   const setMarkerPin = (coords) => {
     setMarker(coords);
@@ -76,6 +81,7 @@ const Map = ({ pickLocation, navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      {/* {console.log(eventList)} */}
       <TopBar
         title
         leftIcon={faArrowLeft}
@@ -94,13 +100,13 @@ const Map = ({ pickLocation, navigation, route }) => {
           onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
         >
           <>
-            {markersArray ? (
-              markersArray.map((marker, i) => (
+            {eventList ? (
+              eventList.map((marker, i) => (
                 <Marker
                   key={i + 1}
                   coordinate={{
-                    latitude: marker.latitude,
-                    longitude: marker.longitude,
+                    latitude: parseFloat(marker.location.latitude),
+                    longitude: parseFloat(marker.location.longitude),
                   }}
                   pinColor="green"
                 />
@@ -124,13 +130,13 @@ const Map = ({ pickLocation, navigation, route }) => {
           onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
         >
           <>
-            {markersArray ? (
-              markersArray.map((marker, i) => (
+          {eventList ? (
+              eventList.map((marker, i) => (
                 <Marker
                   key={i + 1}
                   coordinate={{
-                    latitude: marker.latitude,
-                    longitude: marker.longitude,
+                    latitude: parseFloat(marker.location.latitude),
+                    longitude: parseFloat(marker.location.longitude),
                   }}
                   pinColor="green"
                 />
@@ -147,6 +153,33 @@ const Map = ({ pickLocation, navigation, route }) => {
           </>
         </MapView>
       )}
+      <Animated.ScrollView
+        // horizontal
+        // scrollEventThrottle={1}
+        // showsHorizontalScrollIndicator={false}
+        // style={styles.scrollView}
+        >
+
+              {
+                console.log(eventList[0].name),
+                console.log(eventList[1].name),
+                console.log(eventList[2].name)
+                // eventList.map((marker, i) => (
+                //   <View style={styles.card} key={i}>
+                //     <Image 
+                //       source={backgroundImage}
+                //       style={styles.cardImage}
+                //       resizeMode="cover"
+                //     />
+                //     <View style={styles.textContent}>
+                //       <Text numberOfLines={1} style={styles.cardtitle}>{marker.name}</Text>
+                //       <Text numberOfLines={1} style={styles.cardDescription}>{marker.name}</Text>
+                //     </View>
+
+                //   </View>
+                // ))
+              }
+      </Animated.ScrollView>
       <HomeMenu navigation={navigation} />
     </View>
   );
@@ -166,6 +199,47 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  scrollView: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingVertical: 10,
+  },
+  card: {
+    // padding: 10,
+    elevation: 2,
+    backgroundColor: "#FFF",
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    marginHorizontal: 10,
+    shadowColor: "#000",
+    shadowRadius: 5,
+    shadowOpacity: 0.3,
+    shadowOffset: { x: 2, y: -2 },
+    height: 250,
+    width: "70%",
+    overflow: "hidden",
+  },
+  cardImage: {
+    flex: 3,
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+  },
+  textContent: {
+    flex: 2,
+    padding: 10,
+  },
+  cardtitle: {
+    fontSize: 12,
+    // marginTop: 5,
+    fontWeight: "bold",
+  },
+  cardDescription: {
+    fontSize: 12,
+    color: "#444",
   },
 });
 
