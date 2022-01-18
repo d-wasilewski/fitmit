@@ -52,7 +52,6 @@ const ModalAddEvent = (props) => {
   const [minutes, setMinutes] = useState(dateNow.getMinutes());
   const [notification, setNotification] = useState(false);
   const { currentGroup } = useSelector((state) => state.groups);
-  // TODO: check if its valid
   const currentUser = useSelector((state) => state.user.user);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -98,14 +97,12 @@ const ModalAddEvent = (props) => {
       }
     });
 
-    console.log(tokensToNotify);
-
     const message = {
       to: tokensToNotify,
       sound: "default",
-      title: "Original Title",
-      body: "And here is the body!",
-      data: { someData: "goes here" },
+      title: "New event",
+      body: `${currentUser.username} created new event in ${currentGroup.name}!`,
+      data: { someData: currentGroup._id },
     };
 
     await fetch("https://exp.host/--/api/v2/push/send", {
@@ -131,7 +128,7 @@ const ModalAddEvent = (props) => {
     //  (works when app is foregrounded, backgrounded, or killed)
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        // console.log(response);
       });
 
     return () => {
