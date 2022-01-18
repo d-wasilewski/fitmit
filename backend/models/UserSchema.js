@@ -37,7 +37,6 @@ const UserSchema = new mongoose.Schema({
   },
   pushToken: {
     type: String,
-    default: "",
   },
   groups: [{ type: Schema.Types.ObjectId, ref: group }],
   settings: {

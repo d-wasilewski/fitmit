@@ -54,7 +54,6 @@ const ModalAddEvent = (props) => {
   const { currentGroup } = useSelector((state) => state.groups);
   // TODO: check if its valid
   const currentUser = useSelector((state) => state.user.user);
-  const { pushToken } = useSelector((state) => state.user.user);
   const notificationListener = useRef();
   const responseListener = useRef();
   const isMounted = useIsMounted();
@@ -91,8 +90,18 @@ const ModalAddEvent = (props) => {
   };
 
   async function sendPushNotification() {
+    let tokensToNotify = [];
+
+    currentGroup.members.map((member) => {
+      if (member["pushToken"] !== undefined) {
+        tokensToNotify.push(member["pushToken"]);
+      }
+    });
+
+    console.log(tokensToNotify);
+
     const message = {
-      to: [pushToken],
+      to: tokensToNotify,
       sound: "default",
       title: "Original Title",
       body: "And here is the body!",

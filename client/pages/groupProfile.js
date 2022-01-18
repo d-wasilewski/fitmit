@@ -26,24 +26,20 @@ import {
 import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_CURRENT_EVENTS } from "../redux/types";
+import { populateMembers } from "../redux/actions/groupActions";
 
 const GroupProfile = ({ navigation, route }) => {
   const height = Dimensions.get("window").height * 0.03;
   const dispatch = useDispatch();
   const { currentGroup } = useSelector((state) => state.groups);
-  const [membersData, setMembersData] = useState([]);
   const [eventsData, setEventsData] = useState([]);
 
   useEffect(() => {
     axios
-      .put("/group/usersOfTheGroup", {
-        members: currentGroup.members,
-      })
-      .then((res) => setMembersData(res.data));
-    axios
       .get(`/group/${currentGroup._id}/events`)
       .then((res) => dispatch({ type: SET_CURRENT_EVENTS, payload: res.data }))
       .catch((err) => console.log(err));
+    dispatch(populateMembers({ members: currentGroup.members }));
     setEventsData([]);
   }, []);
 
@@ -126,7 +122,7 @@ const GroupProfile = ({ navigation, route }) => {
             }
             isModalVisible={isAddMemberModalVisible}
             navigation={navigation}
-            cards={membersData}
+            cards={currentGroup.members}
           />
         </View>
       </ScrollView>
