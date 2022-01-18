@@ -3,6 +3,7 @@ import {
   SET_GROUPS,
   CHANGE_GROUP_PICTURE,
   SET_LOADING_PICTURE,
+  POPULATE_MEMBERS,
 } from "../types";
 import axios from "axios";
 
@@ -19,6 +20,16 @@ export const createGroup = (userId, name) => (dispatch) => {
   axios.post(`group/create/${userId}`, { name }).then((res) => {
     dispatch({
       type: CREATE_GROUP,
+      payload: res.data,
+    });
+  });
+};
+
+export const populateMembers = (members) => (dispatch) => {
+  console.log("populating", members);
+  axios.put("/group/usersOfTheGroup", members).then((res) => {
+    dispatch({
+      type: POPULATE_MEMBERS,
       payload: res.data,
     });
   });

@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Modal,
   View,
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import * as Notifications from "expo-notifications";
 
 import colors from "../../../../../styles/colors";
 import ModalDatePicker from "../ModalDatePicker";
@@ -22,6 +23,7 @@ import ModalTimePicker from "../ModalTimePicker";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { createEvent } from "../../../../../redux/actions/eventActions";
+import useIsMounted from "../../../../../hooks/useIsMounted";
 
 const ModalAddEvent = (props) => {
   const { visible, title, onQuit, navigation, route } = props;
@@ -48,8 +50,12 @@ const ModalAddEvent = (props) => {
   const [eventDate, setEventDate] = useState(dateNow);
   const [hours, setHours] = useState(dateNow.getHours());
   const [minutes, setMinutes] = useState(dateNow.getMinutes());
+  const [notification, setNotification] = useState(false);
   const { currentGroup } = useSelector((state) => state.groups);
   const currentUser = useSelector((state) => state.user.user);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const isMounted = useIsMounted();
 
   async function createNewEvent(obj) {
     dispatch(createEvent(obj));
@@ -59,7 +65,6 @@ const ModalAddEvent = (props) => {
     const name = currentGroup.name;
     const groupId = currentGroup._id;
     const userId = currentUser._id;
-    console.log(marker);
 
     return {
       name: name,
@@ -82,6 +87,57 @@ const ModalAddEvent = (props) => {
     setMarker(coords);
     //TODO: Wywolanie metody wybierania lokalizacji
   };
+
+  async function sendPushNotification() {
+    let tokensToNotify = [];
+
+    currentGroup.members.map((member) => {
+      if (member["pushToken"] !== undefined) {
+        tokensToNotify.push(member["pushToken"]);
+      }
+    });
+
+    const message = {
+      to: tokensToNotify,
+      sound: "default",
+      title: "New event",
+      body: `${currentUser.username} created new event in ${currentGroup.name}!`,
+      data: { someData: currentGroup._id },
+    };
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
+  }
+
+  useEffect(() => {
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+    // console.log("Notification: ", notification);
+
+    // This listener is fired whenever a user taps on or interacts with a notification
+    //  (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        // console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -177,7 +233,9 @@ const ModalAddEvent = (props) => {
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
             <Pressable
-              onPress={onQuit}
+              onPress={() => {
+                onQuit();
+              }}
               style={[
                 styles.button,
                 {
@@ -190,9 +248,12 @@ const ModalAddEvent = (props) => {
             </Pressable>
             <Pressable
               on
-              onPress={() => {
+              onPress={async () => {
                 const data = getData();
                 createNewEvent(data);
+                if (isMounted.current) {
+                  await sendPushNotification();
+                }
                 onQuit();
               }}
               style={[

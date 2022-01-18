@@ -18,7 +18,7 @@ const GenericCard = (props) => {
         <Text style={styles.text}>{data._id}</Text>
       </View>
       <View style={styles.img}>
-        {data.profilePicture.url ? (
+        {data?.profilePicture?.url ? (
           <Image
             source={{ uri: data.profilePicture.url }}
             style={{ height: "100%", aspectRatio: 1, borderRadius: 10 }}

@@ -3,6 +3,7 @@ import {
   CREATE_GROUP,
   SET_CURRENT_GROUP,
   CHANGE_GROUP_PICTURE,
+  POPULATE_MEMBERS,
 } from "../types";
 
 const initialState = {
@@ -26,6 +27,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentGroup: action.payload,
+      };
+
+    case POPULATE_MEMBERS:
+      return {
+        ...state,
+        currentGroup: {
+          ...state.currentGroup,
+          members: action.payload,
+        },
       };
 
     case CHANGE_GROUP_PICTURE:

@@ -25,14 +25,17 @@ const UserSchema = new mongoose.Schema({
   profilePicture: {
     url: {
       type: String,
-      default: ""
-    }, 
+      default: "",
+    },
     public_id: {
       type: String,
-      default: ""
+      default: "",
     },
   },
   token: {
+    type: String,
+  },
+  pushToken: {
     type: String,
   },
   groups: [{ type: Schema.Types.ObjectId, ref: group }],
