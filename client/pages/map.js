@@ -1,14 +1,15 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Platform, Text, View, StyleSheet, Dimensions, ScrollView, Image, Animated } from "react-native";
+import { Platform, Text, View, StyleSheet, Dimensions, ScrollView, Image, Animated, Pressable } from "react-native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import HomeMenu from "../components/shared/HomeMenu";
 import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 import backgroundImage from "../assets/eventbg.png";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 
 const Map = ({ navigation }) => {
@@ -59,6 +60,13 @@ const Map = ({ navigation }) => {
     longitudeDelta: 0.0015,
   };
 
+  const region2 = {
+    latitude: parseFloat(eventList[0].location.latitude),
+    longitude: parseFloat(eventList[0].location.longitude),
+    latitudeDelta: 0.0115,
+    longitudeDelta: 0.0015,
+  };
+
   let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
 
@@ -78,7 +86,6 @@ const Map = ({ navigation }) => {
         if (mapIndex != index ) {
           mapIndex = index;
           const { location } = eventList[index];
-          console.log(location);
           _map.current.animateToRegion(
             {
               latitude: parseFloat(location.latitude),
@@ -87,7 +94,7 @@ const Map = ({ navigation }) => {
               latitudeDelta: region.latitudeDelta,
               longitudeDelta: region.longitudeDelta,
             },
-            500
+            350
           )
         }
       }, 10);
@@ -110,18 +117,31 @@ const Map = ({ navigation }) => {
     return { scale };
   })
 
+  const [locateMe, setLocateMe ] = useState(true);
+  useEffect(() => {
+    if (location.latitude != "" && location.longitude != "") {
+      _map.current.animateToRegion(
+        {
+          latitude: parseFloat(location.coords.latitude),
+          longitude: parseFloat(location.coords.longitude),
+          // ...location,
+          latitudeDelta: region.latitudeDelta,
+          longitudeDelta: region.longitudeDelta,
+        },
+        350
+      )
+    }
+  }, [locateMe]);
+
   const _map = React.useRef(null);
 
   return (
     <View style={styles.container}>
-      {/* {console.log(eventList)} */}
       <TopBar
         title
         leftIcon={faArrowLeft}
         color={colors.blackPrimary}
         onPressLeft={() => {
-          // console.log(marker)
-          // navigation.state.params.onGoBack(marker)
           navigation.goBack();
         }}
       />
@@ -130,47 +150,28 @@ const Map = ({ navigation }) => {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={region}
-          onPress={(e) => setMarkerPin(e.nativeEvent.coordinate)}
           ref={_map}
         >
-          <>
-            {eventList.map((marker, i) => {
-              const scaleStyle = {
-                transform: [
-                  {
-                    scale: interpolations[i].scale,
-                  },
-                ]
-              }
-              return(
-                <Marker
-                  key={i + 1}
-                  coordinate={{
-                    latitude: parseFloat(marker.location.latitude),
-                    longitude: parseFloat(marker.location.longitude),
-                  }}
-                  pinColor="green"
-                />
-            )})
-            }
-            <Marker
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-            />
-          </>
+          
         </MapView>
       ) : (
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          initialRegion={region}
+          initialRegion={region2}
           ref={_map}
         >
           <>
           {eventList ? (
-              eventList.map((marker, i) => (
+              eventList.map((marker, i) => {
+                const scaleStyle = {
+                  transform: [
+                    {
+                      scale: interpolations[i].scale,
+                    },
+                  ]
+                }
+                return (
                 <Marker
                   key={i + 1}
                   coordinate={{
@@ -182,12 +183,12 @@ const Map = ({ navigation }) => {
                   <Animated.View style={[styles.markerWrap]}>
                     <Animated.Image 
                       source={backgroundImage}
-                      style={[styles.marker]}
+                      style={[styles.marker, scaleStyle]}
                       resizeMode="cover"
                     />
                   </Animated.View>  
                 </Marker>
-              ))
+              )})
             ) : (
               <></>
             )}
@@ -200,6 +201,16 @@ const Map = ({ navigation }) => {
           </>
         </MapView>
       )}
+      <View
+        style={styles.myLocation}>
+        <Pressable style={styles.icon}
+          onPress={() => setLocateMe(!locateMe)}>
+          <FontAwesomeIcon 
+            icon={ faLocationArrow } 
+            size={ 25 }
+            />
+        </Pressable>
+      </View>
       <Animated.ScrollView
         horizontal
         scrollEventThrottle={1}
@@ -215,7 +226,7 @@ const Map = ({ navigation }) => {
           right: width * 0.1 - 10
         }}
         contentContainerStyle={{
-          paddingHorizontal: Platform.OS === 'android' ? width * 0.1 - 10 : 0
+          paddingHorizontal: Platform.OS === 'android' ? width * 0.075 : 0
         }}
         onScroll={Animated.event(
           [
@@ -231,9 +242,6 @@ const Map = ({ navigation }) => {
         )}
         >
               {
-                // console.log(eventList),
-                // console.log(eventList[1].name),
-                // console.log(eventList[2].name)
                 eventList.map((marker, i) => (
                   <View style={[styles.card]} key={i}> 
                     <Image 
@@ -291,7 +299,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
     height: 200,
-    width: 300,
+    width: Dimensions.get("window").width * 0.8,
     overflow: "hidden",
   },
   cardImage: {
@@ -316,8 +324,8 @@ const styles = StyleSheet.create({
   markerWrap: {
     alignItems: "center",
     justifyContent: "center",
-    width:50,
-    height:50,
+    width:80,
+    height:80,
     // backgroundColor:"red"
   },
   marker: {
@@ -327,6 +335,26 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     borderWidth: 1,
     borderColor: "black"
+  },
+  myLocation: {
+    position: "absolute",
+    bottom: 350,
+    right: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 45,
+    height: 45,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 99,
+    backgroundColor: colors.blackPrimary
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    
   },
 });
 
