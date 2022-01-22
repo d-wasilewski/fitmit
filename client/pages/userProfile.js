@@ -11,7 +11,7 @@ import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { faGrinTears } from "@fortawesome/free-solid-svg-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -65,7 +65,7 @@ const User = ({ navigation, route }) => {
       <TopBar
         title
         leftIcon={faArrowLeft}
-        rightIcon={faGrinTears}
+        rightIcon={<Ionicons name="settings-sharp" size={25} color="black" />}
         color={colors.blackPrimary}
         onPressLeft={() => navigation.goBack()}
         onPressRight={() => navigation.navigate("Settings")}

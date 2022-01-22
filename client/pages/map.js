@@ -18,7 +18,7 @@ import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
-import backgroundImage from "../assets/basketball.png";
+import { MaterialIcons } from "@expo/vector-icons";
 import backgroundImages from "../utils/backgroungImages";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
@@ -214,7 +214,11 @@ const Map = ({ navigation }) => {
       )}
       <View style={styles.myLocation}>
         <Pressable style={styles.icon} onPress={() => setLocateMe(!locateMe)}>
-          <FontAwesomeIcon icon={faLocationArrow} size={25} />
+          <MaterialIcons
+            name="my-location"
+            size={26}
+            color={colors.greenSecondary}
+          />
         </Pressable>
       </View>
       <Animated.ScrollView
@@ -349,13 +353,11 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: colors.grey200,
     borderRadius: 99,
-    backgroundColor: colors.blackPrimary,
+    backgroundColor: colors.white,
   },
   icon: {
-    width: 30,
-    height: 30,
     alignItems: "center",
     justifyContent: "center",
   },

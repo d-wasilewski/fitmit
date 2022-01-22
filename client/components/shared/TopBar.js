@@ -33,11 +33,19 @@ const TopBar = (props) => {
   return (
     <View style={[styles.container, { height: height * 0.05 }, style]}>
       <TouchableOpacity onPress={onPressLeft}>
-        <FontAwesomeIcon
-          icon={leftIcon ? leftIcon : faArrowLeft}
-          style={[styles.icon, { color }, { marginTop: gap }, leftStyleIcon]}
-          size={25}
-        />
+        {leftIcon?.prefix?.startsWith("fa") ? (
+          <FontAwesomeIcon
+            icon={leftIcon ? leftIcon : faArrowLeft}
+            style={[styles.icon, { color }, { marginTop: gap }, leftStyleIcon]}
+            size={25}
+          />
+        ) : (
+          <View
+            style={[styles.icon, { color }, { marginTop: gap }, leftStyleIcon]}
+          >
+            {leftIcon}
+          </View>
+        )}
       </TouchableOpacity>
       {title ? (
         <Text style={[styles.title, { color }, { marginTop: gap }]}>
@@ -47,11 +55,19 @@ const TopBar = (props) => {
         <Image source={Logo} style={[styles.image, { marginTop: gap }]} />
       )}
       <TouchableOpacity onPress={onPressRight}>
-        <FontAwesomeIcon
-          icon={rightIcon ? rightIcon : faArrowLeft}
-          style={[styles.icon, { color }, { marginTop: gap }, rightStyleIcon]}
-          size={25}
-        />
+        {rightIcon?.prefix?.startsWith("fa") ? (
+          <FontAwesomeIcon
+            icon={rightIcon ? rightIcon : faArrowLeft}
+            style={[styles.icon, { color }, { marginTop: gap }, rightStyleIcon]}
+            size={25}
+          />
+        ) : (
+          <View
+            style={[styles.icon, { color }, { marginTop: gap }, rightStyleIcon]}
+          >
+            {rightIcon}
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
