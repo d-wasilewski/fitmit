@@ -19,6 +19,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 import backgroundImage from "../assets/basketball.png";
+import backgroundImages from "../utils/backgroungImages";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const Map = ({ navigation }) => {
@@ -189,7 +190,9 @@ const Map = ({ navigation }) => {
                   >
                     <Animated.View style={[styles.markerWrap]}>
                       <Animated.Image
-                        source={backgroundImage}
+                        source={
+                          backgroundImages[marker.eventType.toLowerCase()].uri
+                        }
                         style={[styles.marker, scaleStyle]}
                         resizeMode="cover"
                       />
@@ -247,7 +250,7 @@ const Map = ({ navigation }) => {
         {eventList.map((marker, i) => (
           <View style={[styles.card]} key={i}>
             <Image
-              source={backgroundImage}
+              source={backgroundImages[marker.eventType.toLowerCase()].uri}
               style={styles.cardImage}
               resizeMode="cover"
             />
@@ -289,7 +292,6 @@ const styles = StyleSheet.create({
     right: 0,
     paddingVertical: 10,
     // width: "100%",
-    // backgroundColor:"red"
   },
   card: {
     // padding: 10,
@@ -330,15 +332,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 80,
     height: 80,
-    // backgroundColor:"red"
   },
   marker: {
-    // backgroundColor:"blue",
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     borderRadius: 99,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: colors.greenTriary,
   },
   myLocation: {
     position: "absolute",
