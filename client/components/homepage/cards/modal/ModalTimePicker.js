@@ -4,11 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
 import ModalTime from "./time/ModalTime";
+import moment from "moment";
 
 const ModalTimePicker = (props) => {
   const { title, style, hours, minutes, onChange } = props;
 
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const date = new Date();
+  date.setHours(hours, minutes);
 
   return (
     <View style={[styles.wrapper, style]}>
@@ -17,7 +21,10 @@ const ModalTimePicker = (props) => {
         style={[styles.dateWrapper]}
         onPress={() => setShowDatePicker(true)}
       >
-        <Text style={styles.pickerText}>{`${hours}:${minutes}`}</Text>
+        <Text style={styles.pickerText}>
+          {moment(date).format("HH") + ":"}
+          {moment(date).format("MM")}
+        </Text>
         <ModalTime
           hours={hours}
           minutes={minutes}

@@ -1,6 +1,16 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useSelector } from "react-redux";
-import { Platform, Text, View, StyleSheet, Dimensions, ScrollView, Image, Animated, Pressable } from "react-native";
+import {
+  Platform,
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Image,
+  Animated,
+  Pressable,
+} from "react-native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import HomeMenu from "../components/shared/HomeMenu";
@@ -8,9 +18,8 @@ import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
-import backgroundImage from "../assets/eventbg.png";
+import backgroundImage from "../assets/basketball.png";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-
 
 const Map = ({ navigation }) => {
   const { width, height } = Dimensions.get("window");
@@ -83,7 +92,7 @@ const Map = ({ navigation }) => {
       clearTimeout(regionTimeout);
 
       const regionTimeout = setTimeout(() => {
-        if (mapIndex != index ) {
+        if (mapIndex != index) {
           mapIndex = index;
           const { location } = eventList[index];
           _map.current.animateToRegion(
@@ -95,29 +104,29 @@ const Map = ({ navigation }) => {
               longitudeDelta: region.longitudeDelta,
             },
             350
-          )
+          );
         }
       }, 10);
-    })
+    });
   });
 
   const interpolations = eventList.map((marker, i) => {
     const inputRange = [
       (i - 1) * CARD_WIDTH,
       i * CARD_WIDTH,
-      ((i + 1) * CARD_WIDTH), 
+      (i + 1) * CARD_WIDTH,
     ];
 
     const scale = mapAnimation.interpolate({
       inputRange,
       outputRange: [1, 1.5, 1],
-      extrapolate: "clamp"
+      extrapolate: "clamp",
     });
 
     return { scale };
-  })
+  });
 
-  const [locateMe, setLocateMe ] = useState(true);
+  const [locateMe, setLocateMe] = useState(true);
   useEffect(() => {
     if (location.latitude != "" && location.longitude != "") {
       _map.current.animateToRegion(
@@ -129,7 +138,7 @@ const Map = ({ navigation }) => {
           longitudeDelta: region.longitudeDelta,
         },
         350
-      )
+      );
     }
   }, [locateMe]);
 
@@ -151,9 +160,7 @@ const Map = ({ navigation }) => {
           style={styles.map}
           region={region}
           ref={_map}
-        >
-          
-        </MapView>
+        ></MapView>
       ) : (
         <MapView
           provider={PROVIDER_GOOGLE}
@@ -162,33 +169,34 @@ const Map = ({ navigation }) => {
           ref={_map}
         >
           <>
-          {eventList ? (
+            {eventList ? (
               eventList.map((marker, i) => {
                 const scaleStyle = {
                   transform: [
                     {
                       scale: interpolations[i].scale,
                     },
-                  ]
-                }
+                  ],
+                };
                 return (
-                <Marker
-                  key={i + 1}
-                  coordinate={{
-                    latitude: parseFloat(marker.location.latitude),
-                    longitude: parseFloat(marker.location.longitude),
-                  }}
-                  // pinColor="green"
-                >
-                  <Animated.View style={[styles.markerWrap]}>
-                    <Animated.Image 
-                      source={backgroundImage}
-                      style={[styles.marker, scaleStyle]}
-                      resizeMode="cover"
-                    />
-                  </Animated.View>  
-                </Marker>
-              )})
+                  <Marker
+                    key={i + 1}
+                    coordinate={{
+                      latitude: parseFloat(marker.location.latitude),
+                      longitude: parseFloat(marker.location.longitude),
+                    }}
+                    // pinColor="green"
+                  >
+                    <Animated.View style={[styles.markerWrap]}>
+                      <Animated.Image
+                        source={backgroundImage}
+                        style={[styles.marker, scaleStyle]}
+                        resizeMode="cover"
+                      />
+                    </Animated.View>
+                  </Marker>
+                );
+              })
             ) : (
               <></>
             )}
@@ -201,14 +209,9 @@ const Map = ({ navigation }) => {
           </>
         </MapView>
       )}
-      <View
-        style={styles.myLocation}>
-        <Pressable style={styles.icon}
-          onPress={() => setLocateMe(!locateMe)}>
-          <FontAwesomeIcon 
-            icon={ faLocationArrow } 
-            size={ 25 }
-            />
+      <View style={styles.myLocation}>
+        <Pressable style={styles.icon} onPress={() => setLocateMe(!locateMe)}>
+          <FontAwesomeIcon icon={faLocationArrow} size={25} />
         </Pressable>
       </View>
       <Animated.ScrollView
@@ -223,10 +226,10 @@ const Map = ({ navigation }) => {
           top: 0,
           left: width * 0.1 - 10,
           bottom: 0,
-          right: width * 0.1 - 10
+          right: width * 0.1 - 10,
         }}
         contentContainerStyle={{
-          paddingHorizontal: Platform.OS === 'android' ? width * 0.075 : 0
+          paddingHorizontal: Platform.OS === "android" ? width * 0.075 : 0,
         }}
         onScroll={Animated.event(
           [
@@ -234,29 +237,30 @@ const Map = ({ navigation }) => {
               nativeEvent: {
                 contentOffset: {
                   x: mapAnimation,
-                }
-              }
-            }
+                },
+              },
+            },
           ],
-          {useNativeDriver: true}
+          { useNativeDriver: true }
         )}
-        >
-              {
-                eventList.map((marker, i) => (
-                  <View style={[styles.card]} key={i}> 
-                    <Image 
-                      source={backgroundImage}
-                      style={styles.cardImage}
-                      resizeMode="cover"
-                    />
-                    <View style={styles.textContent}>
-                      <Text numberOfLines={1} style={styles.cardtitle}>{marker.name}</Text>
-                      <Text numberOfLines={1} style={styles.cardDescription}>{marker.eventType}</Text>
-                    </View>
-
-                  </View>
-                ))
-              }
+      >
+        {eventList.map((marker, i) => (
+          <View style={[styles.card]} key={i}>
+            <Image
+              source={backgroundImage}
+              style={styles.cardImage}
+              resizeMode="cover"
+            />
+            <View style={styles.textContent}>
+              <Text numberOfLines={1} style={styles.cardtitle}>
+                {marker.name}
+              </Text>
+              <Text numberOfLines={1} style={styles.cardDescription}>
+                {marker.eventType}
+              </Text>
+            </View>
+          </View>
+        ))}
       </Animated.ScrollView>
       <HomeMenu navigation={navigation} />
     </View>
@@ -324,17 +328,17 @@ const styles = StyleSheet.create({
   markerWrap: {
     alignItems: "center",
     justifyContent: "center",
-    width:80,
-    height:80,
+    width: 80,
+    height: 80,
     // backgroundColor:"red"
   },
   marker: {
-    // backgroundColor:"blue", 
+    // backgroundColor:"blue",
     width: 50,
     height: 50,
     borderRadius: 99,
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
   },
   myLocation: {
     position: "absolute",
@@ -347,14 +351,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 99,
-    backgroundColor: colors.blackPrimary
+    backgroundColor: colors.blackPrimary,
   },
   icon: {
     width: 30,
     height: 30,
     alignItems: "center",
     justifyContent: "center",
-    
   },
 });
 

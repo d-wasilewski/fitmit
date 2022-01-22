@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import colors from "../styles/colors";
 import { useSelector, useDispatch } from "react-redux";
-import { faQuidditch } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import TopBar from "../components/shared/TopBar";
 import HomeMenu from "../components/shared/HomeMenu";
@@ -49,7 +50,7 @@ const Home = ({ navigation }) => {
       </ScrollView>
       <View style={[styles.boxBehindLogo, { height: height * 0.1 }]}>
         <TopBar
-          leftIcon={faQuidditch}
+          leftIcon={faSignOutAlt}
           rightIcon={faBell}
           color={colors.greenSecondary}
           onPressLeft={leftIconPress}

@@ -11,6 +11,7 @@ import colors from "../../../styles/colors";
 import { faCalendar, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import backgroundImages from "./backgroungImages";
+import moment from "moment";
 
 const EventCard = (props) => {
   const windowWidth = Dimensions.get("window").width;
@@ -88,8 +89,13 @@ const EventCard = (props) => {
               <View style={{ marginLeft: 10 }}>
                 <Text style={[styles.fontBold]}>{weekDay}</Text>
                 <Text style={[styles.fontBold]}>
-                  {eventTime != undefined
+                  {/* {eventTime != undefined
                     ? `${eventTime.getHours()}:${eventTime.getMinutes()}`
+                    : ""} */}
+                  {eventTime != undefined
+                    ? moment(date).format("HH") +
+                      ":" +
+                      moment(date).format("MM")
                     : ""}
                 </Text>
               </View>

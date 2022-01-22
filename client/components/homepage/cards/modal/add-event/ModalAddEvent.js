@@ -91,6 +91,7 @@ const ModalAddEvent = (props) => {
   async function sendPushNotification() {
     let tokensToNotify = [];
 
+    // TODO: usunac powiadomienia dla twórcy
     currentGroup.members.map((member) => {
       if (member["pushToken"] !== undefined) {
         tokensToNotify.push(member["pushToken"]);
@@ -166,7 +167,6 @@ const ModalAddEvent = (props) => {
               style={styles.cardsWrapper}
               showsVerticalScrollIndicator={false}
             >
-              <ModalInput title="Event name" placeholder="name" />
               <ModalDropdownMenu
                 title="Event type"
                 style={styles.elementMargin}
