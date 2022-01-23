@@ -21,9 +21,14 @@ import EventSection from "../components/homepage/EventSection";
 import GroupsCard from "../components/homepage/cards/GroupsCard";
 import { logoutUser, updateUserData } from "../redux/actions/userActions";
 import { getEvents } from "../redux/actions/eventActions";
+import GenericAd from "../components/homepage/GenericAd";
 
 const Home = ({ navigation }) => {
-  const { username, _id } = useSelector((state) => state?.user?.user);
+  const {
+    username,
+    _id,
+    premium = "error",
+  } = useSelector((state) => state?.user?.user);
   const { currentEvents } = useSelector((state) => state?.event);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
@@ -46,7 +51,16 @@ const Home = ({ navigation }) => {
       >
         <Greeting username={username}></Greeting>
         <ActivitySlider />
+        {premium ? null : (
+          <GenericAd url="https://www.youtube.com/user/DisStream/videos" />
+        )}
         <EventSection />
+        {premium ? null : (
+          <GenericAd
+            url="https://www.youtube.com/user/DisStream/videos"
+            style={{ marginTop: -30, marginBottom: 30 }}
+          />
+        )}
         <GroupsCard navigation={navigation} />
       </ScrollView>
       <View style={[styles.boxBehindLogo, { height: height * 0.1 }]}>
