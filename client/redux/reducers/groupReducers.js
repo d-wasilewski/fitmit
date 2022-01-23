@@ -4,6 +4,8 @@ import {
   SET_CURRENT_GROUP,
   CHANGE_GROUP_PICTURE,
   POPULATE_MEMBERS,
+  ADD_USER_TO_GROUP,
+  REMOVE_USER_FROM_GROUP,
 } from "../types";
 
 const initialState = {

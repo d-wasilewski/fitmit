@@ -96,8 +96,26 @@ router.post("/:groupId/:userId", async (req, res) => {
       members: req.params.userId,
     },
   });
-  console.log(exists);
-  res.json(exists);
+  const allMembers = await GroupSchema.findById(req.params.groupId);
+  console.log("ALL: ", allMembers);
+  res.json(allMembers);
+});
+
+router.delete("/:groupId/:userId", async (req, res) => {
+  try {
+    await GroupSchema.findByIdAndUpdate(req.params.groupId, {
+      $pull: {
+        members: req.params.userId,
+      },
+    });
+    const allMembers = await GroupSchema.findById(req.params.groupId);
+    if (allMembers.members.length == 0)
+      await GroupSchema.findByIdAndRemove(req.params.groupId);
+
+    res.status(200).json(allMembers);
+  } catch (error) {
+    res.status(500).json("norbert na skuterku");
+  }
 });
 
 router.post("/uploadImage", async (req, res) => {

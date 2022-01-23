@@ -41,6 +41,7 @@ const GroupProfile = ({ navigation, route }) => {
       .get(`/group/${currentGroup._id}/events`)
       .then((res) => dispatch({ type: SET_CURRENT_EVENTS, payload: res.data }))
       .catch((err) => console.log(err));
+    console.log(currentGroup.members.length);
     dispatch(populateMembers({ members: currentGroup.members }));
     setEventsData([]);
   }, []);
@@ -131,6 +132,7 @@ const GroupProfile = ({ navigation, route }) => {
             isModalVisible={isAddMemberModalVisible}
             navigation={navigation}
             cards={currentGroup.members}
+            navigation={navigation}
           />
         </View>
       </ScrollView>

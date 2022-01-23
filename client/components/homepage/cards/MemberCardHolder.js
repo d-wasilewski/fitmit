@@ -25,6 +25,7 @@ const MemberCardHolder = (props) => {
         onQuit={setModalVisible}
         title="Members"
         visible={isModalVisible}
+        navigation={navigation}
       />
     </View>
   );
