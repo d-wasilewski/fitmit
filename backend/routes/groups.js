@@ -100,6 +100,19 @@ router.post("/:groupId/:userId", async (req, res) => {
   res.json(exists);
 });
 
+router.delete("/:groupId/:userId", async (req, res) => {
+  try {
+    await GroupSchema.findByIdAndUpdate(req.params.groupId, {
+      $pull: {
+        members: req.params.userId,
+      },
+    });
+    res.status(200);
+  } catch (error) {
+    res.status(500).json("norbert na skuterku");
+  }
+});
+
 router.post("/uploadImage", async (req, res) => {
   const group = await GroupSchema.findById(req.body.groupId);
   console.log(group);

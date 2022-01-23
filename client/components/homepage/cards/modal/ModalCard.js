@@ -1,25 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import colors from "../../../../styles/colors";
-import {
-  faCheck,
-  faFrog,
-  faTimes,
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
-
-import cardImg from "../../../../assets/miciu.png";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ModalGenericCard = (props) => {
-  const { status } = props;
+  const { data, onChange } = props;
+  const { status = "bad", username = "" } = data;
   let icon, statusColor, iconSize;
 
-  if (status == "pending") {
-    icon = faPaperPlane;
-    statusColor = colors.orange;
-    iconSize = 18;
-  } else if (status == "good") {
+  if (status == "good") {
     icon = faCheck;
     statusColor = colors.greenSecondary;
     iconSize = 20;
@@ -27,21 +17,27 @@ const ModalGenericCard = (props) => {
     icon = faTimes;
     statusColor = colors.red;
     iconSize = 20;
-  } else {
-    icon = faFrog;
-    statusColor = colors.grey200;
-    iconSize = 20;
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.contentWrapper}>
-        <Image source={cardImg} style={styles.cardImage} />
-        <Text style={styles.cardText}>MiciuPapajciu</Text>
+        {data.profilePicture.url ? (
+          <Image
+            source={{ uri: data.profilePicture.url }}
+            style={styles.cardImage}
+          />
+        ) : (
+          <Image style={styles.cardImage} />
+        )}
+        <Text style={styles.cardText}>{username}</Text>
       </View>
-      <View style={[styles.statusBox, { backgroundColor: statusColor }]}>
+      <Pressable
+        style={[styles.statusBox, { backgroundColor: statusColor }]}
+        onPress={() => onChange(data._id)}
+      >
         {icon ? <FontAwesomeIcon icon={icon} size={iconSize} /> : null}
-      </View>
+      </Pressable>
     </View>
   );
 };
