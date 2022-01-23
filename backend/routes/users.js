@@ -7,6 +7,15 @@ const ActivitySchema = require("../models/ActivitySchema");
 const EventSchema = require("../models/EventSchema");
 const GroupSchema = require("../models/GroupSchema");
 
+router.get("/", async (req, res) => {
+  try {
+    const users = await UserSchema.find();
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 router.put("/refreshToken/:userId", async (req, res) => {
   try {
     const user = await UserSchema.findById(req.params.userId);
