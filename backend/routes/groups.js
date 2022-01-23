@@ -108,7 +108,11 @@ router.delete("/:groupId/:userId", async (req, res) => {
         members: req.params.userId,
       },
     });
-    res.status(200);
+    const allMembers = await GroupSchema.findById(req.params.groupId);
+    if (allMembers.members.length == 0)
+      await GroupSchema.findByIdAndRemove(req.params.groupId);
+
+    res.status(200).json(allMembers);
   } catch (error) {
     res.status(500).json("norbert na skuterku");
   }

@@ -5,6 +5,7 @@ import {
   CHANGE_GROUP_PICTURE,
   POPULATE_MEMBERS,
   ADD_USER_TO_GROUP,
+  REMOVE_USER_FROM_GROUP,
 } from "../types";
 
 const initialState = {
@@ -28,15 +29,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentGroup: action.payload,
-      };
-
-    case ADD_USER_TO_GROUP:
-      return {
-        ...state,
-        currentGroup: {
-          ...state.currentGroup,
-          members: [...state.currentGroup.members, action.payload],
-        },
       };
 
     case POPULATE_MEMBERS:

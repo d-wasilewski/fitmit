@@ -15,7 +15,9 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import {
   addMemberToGroup,
+  getGroups,
   populateMembers,
+  removeMemberFromGroup,
 } from "../../../redux/actions/groupActions";
 
 const MemberAddModal = (props) => {
@@ -25,8 +27,12 @@ const MemberAddModal = (props) => {
   const dispatch = useDispatch();
 
   const { currentGroup } = useSelector((state) => state.groups);
+  const { _id: userId } = useSelector((state) => state.user.user);
   const [users, setUsers] = useState([]);
   const [oldUsers, setOldUsers] = useState([]);
+  const [searchState, setSearchState] = useState("");
+
+  console.log(searchState);
 
   useEffect(async () => {
     const { data: fetched_group_users } = await axios.put(
@@ -70,25 +76,22 @@ const MemberAddModal = (props) => {
       );
     });
 
-    changed_users.map((val) => {
-      console.log("VAL", val.status);
-      if (val.status == "good") {
-        console.log("GOOD");
-        dispatch(addMemberToGroup(currentGroup, val._id));
-      } else {
-        console.log("BAD");
-        axios.delete(`/group/${currentGroup._id}/${val._id}`);
-      }
-    });
-
     try {
-      // console.log(requests.length);
-      // await Promise.all(requests);
+      changed_users.forEach((val) => {
+        if (val.status == "good") {
+          dispatch(addMemberToGroup(currentGroup, val._id));
+        } else {
+          dispatch(removeMemberFromGroup(currentGroup, val._id));
+        }
+      });
+      setOldUsers(JSON.parse(JSON.stringify(users)));
     } catch (error) {
       console.log(error);
       const stringify = JSON.stringify(oldUsers);
       const copy_old_users = JSON.parse(stringify);
       setUsers(copy_old_users);
+    } finally {
+      dispatch(getGroups(userId));
     }
   }
 
@@ -106,18 +109,25 @@ const MemberAddModal = (props) => {
             <Text style={styles.text}>{title}</Text>
           </View>
           <View style={styles.contentWrapper}>
-            <ModalSearch />
+            <ModalSearch
+              onInputChange={(value) => setSearchState(value)}
+              inputValue={searchState}
+            />
             <ScrollView
               style={styles.cardsWrapper}
               showsVerticalScrollIndicator={false}
             >
-              {users.map((val) => (
-                <ModalGenericCard
-                  key={val._id}
-                  data={val}
-                  onChange={(id) => changeStatus(id)}
-                />
-              ))}
+              {users
+                .filter((val) =>
+                  val.username.toLowerCase().includes(searchState.toLowerCase())
+                )
+                .map((val) => (
+                  <ModalGenericCard
+                    key={val._id}
+                    data={val}
+                    onChange={(id) => changeStatus(id)}
+                  />
+                ))}
             </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>

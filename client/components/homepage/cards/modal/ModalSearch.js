@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../../styles/colors";
 
-const ModalSearch = (props) => {
+const ModalSearch = ({ onInputChange, inputValue }) => {
   return (
     <View style={styles.inputWrapper}>
       <FontAwesomeIcon icon={faSearch} color={colors.orange} />
@@ -12,8 +12,8 @@ const ModalSearch = (props) => {
         placeholder="Search"
         placeholderTextColor={colors.grey300}
         style={styles.input}
-        // value={inputValue}
-        // onChangeText={onInputChange}
+        value={inputValue}
+        onChangeText={onInputChange}
       />
     </View>
   );
