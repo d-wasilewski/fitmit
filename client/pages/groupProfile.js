@@ -27,12 +27,14 @@ import MemberCardHolder from "../components/homepage/cards/MemberCardHolder";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_CURRENT_EVENTS } from "../redux/types";
 import { populateMembers } from "../redux/actions/groupActions";
+import GenericAd from "../components/homepage/GenericAd";
 
 const GroupProfile = ({ navigation, route }) => {
   const height = Dimensions.get("window").height * 0.03;
   const dispatch = useDispatch();
   const { currentGroup } = useSelector((state) => state.groups);
   const [eventsData, setEventsData] = useState([]);
+  const { premium = "error" } = useSelector((state) => state?.user?.user);
 
   useEffect(() => {
     axios
@@ -116,6 +118,12 @@ const GroupProfile = ({ navigation, route }) => {
             data={eventsData}
             navigation={navigation}
           />
+          {premium ? null : (
+            <GenericAd
+              url="https://www.youtube.com/user/DisStream/videos"
+              style={{ marginBottom: 50 }}
+            />
+          )}
           <MemberCardHolder
             setModalVisible={() =>
               setAddMemberModalVisible(!isAddMemberModalVisible)

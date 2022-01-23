@@ -30,12 +30,23 @@ const User = ({ navigation, route }) => {
   const { currentUser } = useSelector((state) => state?.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const { premium = "error" } = useSelector((state) => state?.user?.user);
 
   useEffect(() => {
     navigation.addListener("beforeRemove", () => {
       dispatch({ type: SET_CURRENT_USER, payload: null });
     });
   }, [currentUser]);
+
+  function getPremiumStyle() {
+    return premium
+      ? {
+          color: colors.greenSecondary,
+          fontFamily: "ComfortaaBold",
+          marginRight: 30,
+        }
+      : {};
+  }
 
   return (
     <View style={styles.container}>
@@ -70,7 +81,9 @@ const User = ({ navigation, route }) => {
         onPressLeft={() => navigation.goBack()}
         onPressRight={() => navigation.navigate("Settings")}
       />
-      <Text style={styles.name}>
+
+      <Text style={[styles.name, getPremiumStyle()]}>
+        <Text style={{ fontSize: 32 }}>{premium ? "😎" : ""}</Text>
         {currentUser ? currentUser.username : username}
       </Text>
       <View style={styles.aboutMe}>
@@ -124,7 +137,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: colors.white,
     textAlign: "center",
-    marginTop: 40,
+    marginTop: 60,
+    fontFamily: "ComfortaaRegular",
   },
   desc: {
     color: colors.white,
