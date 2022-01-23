@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { isValidElement, useEffect, useState } from "react";
 import {
   Modal,
   View,
@@ -21,7 +21,7 @@ import {
 } from "../../../redux/actions/groupActions";
 
 const MemberAddModal = (props) => {
-  const { visible, title, onQuit } = props;
+  const { visible, title, onQuit, navigation } = props;
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
   const dispatch = useDispatch();
@@ -41,16 +41,23 @@ const MemberAddModal = (props) => {
         members: currentGroup.members,
       }
     );
-    const res = await axios.get("/");
-    const filtered_users = res.data.filter((val) => {
-      return !fetched_group_users.some((user) => user._id == val._id);
-    });
-    const mapped_users = filtered_users.map((val) =>
-      Object.assign({}, val, { status: "bad" })
-    );
+
+    let mapped_users = [];
+
+    if (currentGroup.creator == userId) {
+      const res = await axios.get("/");
+      const filtered_users = res.data.filter((val) => {
+        return !fetched_group_users.some((user) => user._id == val._id);
+      });
+      mapped_users = filtered_users.map((val) =>
+        Object.assign({}, val, { status: "bad" })
+      );
+    }
+
     const group_users = fetched_group_users.map((val) =>
       Object.assign({}, val, { status: "good" })
     );
+
     // console.log(filtered_users);
     const concated = group_users.concat(mapped_users);
     setUsers(concated);
@@ -92,6 +99,10 @@ const MemberAddModal = (props) => {
       setUsers(copy_old_users);
     } finally {
       dispatch(getGroups(userId));
+      const isEmpty = !users.some((val) => val.status == "good");
+      if (isEmpty) {
+        navigation.navigate("Home");
+      }
     }
   }
 
@@ -126,42 +137,62 @@ const MemberAddModal = (props) => {
                     key={val._id}
                     data={val}
                     onChange={(id) => changeStatus(id)}
+                    displayButton={currentGroup.creator == userId}
                   />
                 ))}
             </ScrollView>
           </View>
           <View style={[styles.buttonsWrapper, { marginTop: buttonTopMargin }]}>
-            <Pressable
-              onPress={() => {
-                onQuit();
-                cancel();
-              }}
-              style={[
-                styles.button,
-                {
-                  backgroundColor: colors.red,
-                  borderBottomColor: colors.darkRed,
-                },
-              ]}
-            >
-              <Text style={styles.buttonText}>CANCEL</Text>
-            </Pressable>
-            <Pressable
-              on
-              onPress={() => {
-                onQuit();
-                accept();
-              }}
-              style={[
-                styles.button,
-                {
-                  backgroundColor: colors.greenSecondary,
-                  borderBottomColor: colors.greenTriary,
-                },
-              ]}
-            >
-              <Text style={styles.buttonText}>ACCEPT</Text>
-            </Pressable>
+            {currentGroup.creator == userId ? (
+              <>
+                <Pressable
+                  onPress={() => {
+                    onQuit();
+                    cancel();
+                  }}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: colors.red,
+                      borderBottomColor: colors.darkRed,
+                    },
+                  ]}
+                >
+                  <Text style={styles.buttonText}>CANCEL</Text>
+                </Pressable>
+                <Pressable
+                  on
+                  onPress={() => {
+                    onQuit();
+                    accept();
+                  }}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: colors.greenSecondary,
+                      borderBottomColor: colors.greenTriary,
+                    },
+                  ]}
+                >
+                  <Text style={styles.buttonText}>ACCEPT</Text>
+                </Pressable>
+              </>
+            ) : (
+              <Pressable
+                onPress={() => {
+                  onQuit();
+                }}
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: colors.red,
+                    borderBottomColor: colors.darkRed,
+                  },
+                ]}
+              >
+                <Text style={styles.buttonText}>CLOSE</Text>
+              </Pressable>
+            )}
           </View>
         </View>
       </View>

@@ -5,7 +5,7 @@ import colors from "../../../../styles/colors";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ModalGenericCard = (props) => {
-  const { data, onChange } = props;
+  const { data, onChange, displayButton } = props;
   const { status = "bad", username = "" } = data;
   let icon, statusColor, iconSize;
 
@@ -32,12 +32,14 @@ const ModalGenericCard = (props) => {
         )}
         <Text style={styles.cardText}>{username}</Text>
       </View>
-      <Pressable
-        style={[styles.statusBox, { backgroundColor: statusColor }]}
-        onPress={() => onChange(data._id)}
-      >
-        {icon ? <FontAwesomeIcon icon={icon} size={iconSize} /> : null}
-      </Pressable>
+      {displayButton ? (
+        <Pressable
+          style={[styles.statusBox, { backgroundColor: statusColor }]}
+          onPress={() => onChange(data._id)}
+        >
+          {icon ? <FontAwesomeIcon icon={icon} size={iconSize} /> : null}
+        </Pressable>
+      ) : null}
     </View>
   );
 };
