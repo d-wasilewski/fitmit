@@ -96,8 +96,9 @@ router.post("/:groupId/:userId", async (req, res) => {
       members: req.params.userId,
     },
   });
-  console.log(exists);
-  res.json(exists);
+  const allMembers = await GroupSchema.findById(req.params.groupId);
+  console.log("ALL: ", allMembers);
+  res.json(allMembers);
 });
 
 router.delete("/:groupId/:userId", async (req, res) => {

@@ -11,14 +11,18 @@ import {
 import colors from "../../../styles/colors";
 import ModalGenericCard from "./modal/ModalCard";
 import ModalSearch from "./modal/ModalSearch";
-import { useSelector, dispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { populateMembers } from "../../../redux/actions/groupActions";
+import {
+  addMemberToGroup,
+  populateMembers,
+} from "../../../redux/actions/groupActions";
 
 const MemberAddModal = (props) => {
   const { visible, title, onQuit } = props;
   const marginSize = Dimensions.get("screen").height * 0.08;
   const buttonTopMargin = marginSize * 0.3;
+  const dispatch = useDispatch();
 
   const { currentGroup } = useSelector((state) => state.groups);
   const [users, setUsers] = useState([]);
@@ -65,15 +69,21 @@ const MemberAddModal = (props) => {
         (oldVal) => oldVal._id == val._id && oldVal.status != val.status
       );
     });
-    const requests = changed_users.map((val) =>
-      val.status == "good"
-        ? axios.post(`/group/${currentGroup._id}/${val._id}`)
-        : axios.delete(`/group/${currentGroup._id}/${val._id}`)
-    );
+
+    changed_users.map((val) => {
+      console.log("VAL", val.status);
+      if (val.status == "good") {
+        console.log("GOOD");
+        dispatch(addMemberToGroup(currentGroup, val._id));
+      } else {
+        console.log("BAD");
+        axios.delete(`/group/${currentGroup._id}/${val._id}`);
+      }
+    });
 
     try {
-      console.log(requests.length);
-      await Promise.all(requests);
+      // console.log(requests.length);
+      // await Promise.all(requests);
     } catch (error) {
       console.log(error);
       const stringify = JSON.stringify(oldUsers);
