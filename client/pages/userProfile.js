@@ -31,7 +31,7 @@ const User = ({ navigation, route }) => {
   // profile of the user whose page is being viewed
   const { currentUser } = useSelector((state) => state?.user);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+
   const { premium = "error", interests: userInterests } = useSelector(
     (state) => state?.user?.user
   );
