@@ -7,13 +7,23 @@ const ActivitySchema = require("../models/ActivitySchema");
 const EventSchema = require("../models/EventSchema");
 const GroupSchema = require("../models/GroupSchema");
 
+router.get("/", async (req, res) => {
+  try {
+    const users = await UserSchema.find();
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 router.put("/refreshToken/:userId", async (req, res) => {
   try {
     const user = await UserSchema.findById(req.params.userId);
 
-    if (user && user.settings.dontLogout) {
+    let token;
+    if (user) {
       console.log("Satisfied");
-      const token = jwt.sign(
+      token = jwt.sign(
         { user_id: user._id, username: user.username },
         process.env.TOKEN_KEY,
         {
@@ -22,8 +32,7 @@ router.put("/refreshToken/:userId", async (req, res) => {
       );
       user.token = token;
     }
-
-    return res.status(200).json(user);
+    return res.status(200).json(token);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
@@ -66,7 +75,6 @@ router.post("/uploadImage", async (req, res) => {
 
 //update user
 router.put("/:id", async (req, res) => {
-  if (req.body.newData.userId === req.params.id) {
     try {
       await UserSchema.findByIdAndUpdate(req.params.id, {
         $set: req.body.newData,
@@ -75,9 +83,6 @@ router.put("/:id", async (req, res) => {
     } catch (err) {
       return res.status(500).json(err);
     }
-  } else {
-    return res.status(403).json("You can only update your account");
-  }
 });
 
 // delete user (nie wiadomo czy bedzie)

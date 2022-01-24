@@ -6,9 +6,9 @@ const { cloudinary } = require("../utils/cloudinary");
 
 router.get("/groups", async (req, res) => {
   try {
-    const user = await GroupSchema.find().populate("members", "username");
+    const group = await GroupSchema.find().populate("members", "username");
 
-    res.status(200).json(user);
+    res.status(200).json(group);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -91,24 +91,28 @@ router.post("/create/:userId", async (req, res) => {
 });
 
 router.post("/:groupId/:userId", async (req, res) => {
-  const exists = await GroupSchema.findByIdAndUpdate(req.params.groupId, {
-    $push: {
-      members: req.params.userId,
-    },
-  });
-  console.log(exists);
-  res.json(exists);
+  try {
+    const exists = await GroupSchema.findByIdAndUpdate(req.params.groupId, {
+      $push: {
+        members: req.params.userId,
+      },
+    });
+    const allMembers = await GroupSchema.findById(req.params.groupId);
+    console.log("ALL: ", allMembers);
+    res.json(allMembers);
+    return res.status(200).json(allMembers);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
 router.post("/uploadImage", async (req, res) => {
   const group = await GroupSchema.findById(req.body.groupId);
-  console.log(group);
   if (group.profilePicture.url != "") {
     try {
       await cloudinary.uploader.destroy(group.profilePicture.public_id);
     } catch (e) {}
   }
-
   try {
     const uploadedResponse = await cloudinary.uploader.upload(
       req.body.profilePicture,
