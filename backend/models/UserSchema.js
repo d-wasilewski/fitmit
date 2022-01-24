@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   desc: {
     type: String,
+    default: "",
   },
   profilePicture: {
     url: {
@@ -57,6 +58,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  interests: [{ type: String, default: [] }],
 });
 
 module.exports = mongoose.model("user", UserSchema);
