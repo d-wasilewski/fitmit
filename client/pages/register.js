@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   child: {
-    backgroundColor: "rgba(0,0,0,0.3)",
+    backgroundColor: "rgba(0,0,0,0.35)",
     alignItems: "center",
     justifyContent: "flex-end",
   },
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "70%",
     justifyContent: "flex-end",
-    marginBottom: "45%", // podnosi do gory caly form (przycisk + input)
+    marginBottom: "38%", // podnosi do gory caly form (przycisk + input)
   },
 });
 

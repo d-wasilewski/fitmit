@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Platform,
@@ -6,66 +6,27 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  ScrollView,
   Image,
   Animated,
   Pressable,
 } from "react-native";
-import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import HomeMenu from "../components/shared/HomeMenu";
 import TopBar from "../components/shared/TopBar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import colors from "../styles/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import backgroundImages from "../utils/backgroungImages";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const Map = ({ navigation }) => {
   const { width, height } = Dimensions.get("window");
   const CARD_WIDTH = width * 0.8;
-  const [location, setLocation] = useState({
-    timestamp: 0,
-    mocked: false,
-    coords: {
-      altitude: 0,
-      heading: 0,
-      altitudeAccuracy: 0,
-      latitude: 0,
-      speed: 0,
-      longitude: 0,
-      accuracy: 0,
-    },
-  });
-  const [errorMsg, setErrorMsg] = useState(null);
   const { eventList } = useSelector((state) => state.event);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest,
-      });
-      setLocation(location);
-    })();
-  }, []);
-
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
+  const { location } = useSelector((state) => state.user);
 
   const region = {
-    latitude: location.coords.latitude,
-    longitude: location.coords.longitude,
+    latitude: location.latitude,
+    longitude: location.longitude,
     latitudeDelta: 0.0115,
     longitudeDelta: 0.0015,
   };
@@ -100,7 +61,6 @@ const Map = ({ navigation }) => {
             {
               latitude: parseFloat(location.latitude),
               longitude: parseFloat(location.longitude),
-              // ...location,
               latitudeDelta: region.latitudeDelta,
               longitudeDelta: region.longitudeDelta,
             },
@@ -132,8 +92,8 @@ const Map = ({ navigation }) => {
     if (location.latitude != "" && location.longitude != "") {
       _map.current.animateToRegion(
         {
-          latitude: parseFloat(location.coords.latitude),
-          longitude: parseFloat(location.coords.longitude),
+          latitude: parseFloat(location.latitude),
+          longitude: parseFloat(location.longitude),
           // ...location,
           latitudeDelta: region.latitudeDelta,
           longitudeDelta: region.longitudeDelta,
@@ -155,7 +115,7 @@ const Map = ({ navigation }) => {
           navigation.goBack();
         }}
       />
-      {location.coords.latitude == 0 ? (
+      {location.latitude == 0 ? (
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -205,8 +165,8 @@ const Map = ({ navigation }) => {
             )}
             <Marker
               coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
+                latitude: location.latitude,
+                longitude: location.longitude,
               }}
             />
           </>
@@ -221,54 +181,56 @@ const Map = ({ navigation }) => {
           />
         </Pressable>
       </View>
-      <Animated.ScrollView
-        horizontal
-        scrollEventThrottle={1}
-        showsHorizontalScrollIndicator={false}
-        style={styles.scrollView}
-        pagingEnabled
-        snapToInterval={CARD_WIDTH + 20}
-        snapToAlignment="center"
-        contentInset={{
-          top: 0,
-          left: width * 0.1 - 10,
-          bottom: 0,
-          right: width * 0.1 - 10,
-        }}
-        contentContainerStyle={{
-          paddingHorizontal: Platform.OS === "android" ? width * 0.075 : 0,
-        }}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: mapAnimation,
+      {eventList ? (
+        <Animated.ScrollView
+          horizontal
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          style={styles.scrollView}
+          pagingEnabled
+          snapToInterval={CARD_WIDTH + 20}
+          snapToAlignment="center"
+          contentInset={{
+            top: 0,
+            left: width * 0.1 - 10,
+            bottom: 0,
+            right: width * 0.1 - 10,
+          }}
+          contentContainerStyle={{
+            paddingHorizontal: Platform.OS === "android" ? width * 0.075 : 0,
+          }}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: mapAnimation,
+                  },
                 },
               },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
-      >
-        {eventList.map((marker, i) => (
-          <View style={[styles.card]} key={i}>
-            <Image
-              source={backgroundImages[marker.eventType.toLowerCase()].uri}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <View style={styles.textContent}>
-              <Text numberOfLines={1} style={styles.cardtitle}>
-                {marker.name}
-              </Text>
-              <Text numberOfLines={1} style={styles.cardDescription}>
-                {marker.eventType}
-              </Text>
+            ],
+            { useNativeDriver: true }
+          )}
+        >
+          {eventList.map((marker, i) => (
+            <View style={[styles.card]} key={i}>
+              <Image
+                source={backgroundImages[marker.eventType.toLowerCase()].uri}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <View style={styles.textContent}>
+                <Text numberOfLines={1} style={styles.cardtitle}>
+                  {marker.name}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {marker.eventType}
+                </Text>
+              </View>
             </View>
-          </View>
-        ))}
-      </Animated.ScrollView>
+          ))}
+        </Animated.ScrollView>
+      ) : null}
       <HomeMenu navigation={navigation} />
     </View>
   );

@@ -91,18 +91,44 @@ router.post("/create/:userId", async (req, res) => {
 });
 
 router.post("/:groupId/:userId", async (req, res) => {
+
   try {
     const exists = await GroupSchema.findByIdAndUpdate(req.params.groupId, {
       $push: {
+
+  const exists = await GroupSchema.findByIdAndUpdate(req.params.groupId, {
+    $push: {
+      members: req.params.userId,
+    },
+  });
+  const allMembers = await GroupSchema.findById(req.params.groupId);
+  console.log("ALL: ", allMembers);
+  res.json(allMembers);
+});
+
+router.delete("/:groupId/:userId", async (req, res) => {
+  try {
+    await GroupSchema.findByIdAndUpdate(req.params.groupId, {
+      $pull: {
+
         members: req.params.userId,
       },
     });
     const allMembers = await GroupSchema.findById(req.params.groupId);
+
     console.log("ALL: ", allMembers);
     res.json(allMembers);
     return res.status(200).json(allMembers);
   } catch (err) {
     return res.status(500).json(err);
+
+    if (allMembers.members.length == 0)
+      await GroupSchema.findByIdAndRemove(req.params.groupId);
+
+    res.status(200).json(allMembers);
+  } catch (error) {
+    res.status(500).json("norbert na skuterku");
+
   }
 });
 

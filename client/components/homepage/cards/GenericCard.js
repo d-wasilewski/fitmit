@@ -15,7 +15,6 @@ const GenericCard = (props) => {
         <Text style={styles.title}>
           {data.username ? data.username : data.name}
         </Text>
-        <Text style={styles.text}>{data._id}</Text>
       </View>
       <View style={styles.img}>
         {data?.profilePicture?.url ? (
@@ -49,7 +48,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-  title: { fontFamily: "RobotoRegular", color: colors.grey100, fontSize: 17 },
+  title: {
+    fontFamily: "RobotoRegular",
+    color: colors.grey100,
+    fontSize: 22,
+    marginLeft: 10,
+  },
   text: { fontFamily: "RobotoLight", color: colors.grey200, fontSize: 14 },
   textWrapper: {
     flex: 1,

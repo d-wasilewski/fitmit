@@ -42,7 +42,7 @@ const GenericCardHolder = (props) => {
         cards.map((val, index) => {
           return (
             <Pressable
-              key={val._id + index + val.name}
+              key={val._id + index + val.name + val}
               onPress={() => handleClick(val)}
             >
               <GenericCard data={val}></GenericCard>

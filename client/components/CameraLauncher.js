@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   icon: {
     justifyContent: "center",
     alignItems: "center",
-    color: colors.greenSecondary,
+    color: colors.white,
     // marginHorizontal: 25,
   },
 });

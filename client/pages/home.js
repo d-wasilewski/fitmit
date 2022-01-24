@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,6 +12,7 @@ import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import * as Location from "expo-location";
 
 import TopBar from "../components/shared/TopBar";
 import HomeMenu from "../components/shared/HomeMenu";
@@ -21,12 +22,19 @@ import EventSection from "../components/homepage/EventSection";
 import GroupsCard from "../components/homepage/cards/GroupsCard";
 import { logoutUser, updateUserData } from "../redux/actions/userActions";
 import { getEvents } from "../redux/actions/eventActions";
+import GenericAd from "../components/homepage/GenericAd";
+import { SET_LOCATION } from "../redux/types";
 
 const Home = ({ navigation }) => {
-  const { username, _id } = useSelector((state) => state?.user?.user);
+  const {
+    username,
+    _id,
+    premium = "error",
+  } = useSelector((state) => state?.user?.user);
   const { currentEvents } = useSelector((state) => state?.event);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     dispatch(getEvents(_id));
@@ -37,6 +45,38 @@ const Home = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      await Location.watchPositionAsync(
+        {
+          timeInterval: 5000,
+          accuracy: Location.Accuracy.High,
+        },
+        (loc) => {
+          const payload = {
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude,
+          };
+
+          dispatch({ type: SET_LOCATION, payload: payload });
+        }
+      );
+    })();
+  }, []);
+
+  let text = "Waiting...";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -46,7 +86,16 @@ const Home = ({ navigation }) => {
       >
         <Greeting username={username}></Greeting>
         <ActivitySlider />
+        {premium ? null : (
+          <GenericAd url="https://www.youtube.com/user/DisStream/videos" />
+        )}
         <EventSection />
+        {premium ? null : (
+          <GenericAd
+            url="https://www.youtube.com/user/DisStream/videos"
+            style={{ marginTop: -30, marginBottom: 30 }}
+          />
+        )}
         <GroupsCard navigation={navigation} />
       </ScrollView>
       <View style={[styles.boxBehindLogo, { height: height * 0.1 }]}>
