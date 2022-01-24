@@ -5,6 +5,7 @@ import {
   SET_AUTHENTICATED,
   SET_CURRENT_USER,
   SET_LOADING_PICTURE,
+  SET_LOCATION,
 } from "../types";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   user: {},
   currentUser: null,
   loading: false,
+  location: {},
 };
 
 export default function (state = initialState, action) {
@@ -53,6 +55,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: action.payload,
+      };
+
+    case SET_LOCATION:
+      return {
+        ...state,
+        location: action.payload,
       };
 
     default:

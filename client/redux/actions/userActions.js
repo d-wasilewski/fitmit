@@ -9,9 +9,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getGroups } from "./groupActions";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
+import { getEvents } from "./eventActions";
 
 export const loginUser = (userData) => (dispatch) => {
-  //   dispatch({ type: LOADING_UI });
   const { login: username, password, checkboxState } = userData;
 
   axios
@@ -23,6 +23,7 @@ export const loginUser = (userData) => (dispatch) => {
         payload: res.data,
       });
       dispatch(getGroups(res.data._id));
+      dispatch(getEvents(res.data._id));
       registerForPushNotificationsAsync().then((pushToken) =>
         dispatch(
           updateUserData(res.data._id, { userId: res.data._id, pushToken })
@@ -48,6 +49,7 @@ export const registerUser = (userData) => (dispatch) => {
         payload: res.data,
       });
       dispatch(getGroups(res.data._id));
+      dispatch(getEvents(res.data._id));
       registerForPushNotificationsAsync().then((pushToken) =>
         dispatch(
           updateUserData(res.data._id, { userId: res.data._id, pushToken })
