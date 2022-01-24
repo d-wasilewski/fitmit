@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,9 +12,62 @@ import { faCalendar, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import backgroundImages from "../../../utils/backgroungImages";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const EventCard = (props) => {
   const windowWidth = Dimensions.get("window").width;
+  const { location } = useSelector((state) => state.user);
+  const [distance, setDistance] = useState("6.9");
+  const { style, altBg, data } = props;
+
+  const { name = "", date = new Date(), eventType } = data;
+  const eventTime = new Date(date);
+  const weekDay = getWeekDay(eventTime);
+
+  //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+
+  function calcDistance(lat1, lat2, lon1, lon2) {
+    // The math module contains a function
+    // named toRadians which converts from
+    // degrees to radians.
+    lon1 = toRad(lon1);
+    lon2 = toRad(lon2);
+    lat1 = toRad(lat1);
+    lat2 = toRad(lat2);
+
+    // Haversine formula
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+
+    let a =
+      Math.pow(Math.sin(dlat / 2), 2) +
+      Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    // Radius of earth in kilometers. Use 3956
+    // for miles
+    let r = 6371;
+
+    // calculate the result
+
+    return c * r;
+  }
+
+  useEffect(() => {
+    const d = calcDistance(
+      parseFloat(data.location.latitude),
+      location.latitude,
+      parseFloat(data.location.longitude),
+      location.longitude
+    ).toFixed(1);
+    setDistance(d);
+  }, [location]);
+
+  // Converts numeric degrees to radians
+  function toRad(val) {
+    return (val * Math.PI) / 180;
+  }
 
   function getWeekDay(date) {
     today = new Date();
@@ -31,12 +84,6 @@ const EventCard = (props) => {
         return `In ${difference} days`;
     }
   }
-
-  const { style, altBg, data } = props;
-
-  const { name = "", date = new Date(), eventType } = data;
-  const eventTime = new Date(date);
-  const weekDay = getWeekDay(eventTime);
 
   const additionalStyle = altBg ? styles.altBgColor : {};
   const gradientColors = altBg
@@ -110,7 +157,7 @@ const EventCard = (props) => {
                   { fontSize: 13, marginLeft: 3, marginTop: 3 },
                 ]}
               >
-                6.9 km
+                {distance + " km"}
               </Text>
             </View>
           </View>
