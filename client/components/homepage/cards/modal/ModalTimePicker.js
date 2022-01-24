@@ -22,8 +22,7 @@ const ModalTimePicker = (props) => {
         onPress={() => setShowDatePicker(true)}
       >
         <Text style={styles.pickerText}>
-          {moment(date).format("HH") + ":"}
-          {moment(date).format("MM")}
+          {moment(date).format("HH")}:{moment(date).format("mm")}
         </Text>
         <ModalTime
           hours={hours}
