@@ -30,6 +30,10 @@ const RegisterForm = ({ navigation }) => {
       .min(4, "Hasło nie może mieć mniej niż 4 znaki!")
       .max(20, "Hasło nie może mieć więcej niż 20 znaków!")
       .required("To pole jest wymagane!"),
+    confirmPassword: Yup.string()
+      .min(4, "Hasło nie może mieć mniej niż 4 znaki!")
+      .max(20, "Hasło nie może mieć więcej niż 20 znaków!")
+      .required("To pole jest wymagane!"),
     email: Yup.string()
       .email("Niepoprawny email")
       .required("To pole jest wymagane!"),
@@ -37,7 +41,12 @@ const RegisterForm = ({ navigation }) => {
 
   return (
     <PoteznyForm
-      initialValues={{ login: "", password: "", email: "" }}
+      initialValues={{
+        login: "",
+        password: "",
+        confirmPassword: "",
+        email: "",
+      }}
       onSubmit={(values) => handleSubmit(values)}
       validationSchema={SignupSchema}
     >
@@ -84,6 +93,18 @@ const RegisterForm = ({ navigation }) => {
           </View>
           {errors.password && touched.password ? (
             <Text style={styles.error}>{errors.password}</Text>
+          ) : null}
+          <View style={styles.input}>
+            <Input
+              placeholder="Confirm password"
+              onChange={handleChange("confirmPassword")}
+              // value={values.register}
+              name="confirmPassword"
+              secureTextEntry={true}
+            />
+          </View>
+          {errors.confirmPassword && touched.confirmPassword ? (
+            <Text style={styles.error}>{errors.confirmPassword}</Text>
           ) : null}
           <View style={styles.checkbox}>
             <BouncyCheckbox
@@ -136,7 +157,7 @@ const styles = StyleSheet.create({
   primmary_button: {
     height: "6%",
     width: "100%",
-    marginTop: "30%", // Podnosi inputy do góry
+    marginTop: "26%", // Podnosi inputy do góry
   },
   input: {
     marginBottom: "10%", // Zwieksza przerwy miedzy inputami
@@ -148,8 +169,9 @@ const styles = StyleSheet.create({
   checkbox: {
     color: "#f0f0f0",
     alignItems: "center",
-    marginTop: "10%",
+    marginTop: 0,
     flexDirection: "row",
+    justifyContent: "center",
   },
   text: {
     color: "#f0f0f0",
