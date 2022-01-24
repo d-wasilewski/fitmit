@@ -57,6 +57,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  interests: [{ type: String, default: [] }],
 });
 
 module.exports = mongoose.model("user", UserSchema);

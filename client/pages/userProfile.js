@@ -19,6 +19,8 @@ import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
 import TopBar from "../components/shared/TopBar";
 import { SET_CURRENT_USER } from "../redux/types";
+import InterestsList from "../components/homepage/user_profile/InterestsList";
+import InterestModal from "../components/homepage/user_profile/modal/InterestModal";
 
 const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
@@ -30,12 +32,36 @@ const User = ({ navigation, route }) => {
   const { currentUser } = useSelector((state) => state?.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const { premium = "error" } = useSelector((state) => state?.user?.user);
+  const { premium = "error", interests: userInterests } = useSelector(
+    (state) => state?.user?.user
+  );
+
+  const [interestModalVisible, setInterestModalVisible] = useState(false);
+
+  const [interests, setInterests] = useState([
+    { name: "Food 🍔", selected: false },
+    { name: "Mobilki 📱", selected: false },
+    { name: "Football 🗑", selected: false },
+    { name: "Basketball 🏀", selected: false },
+    { name: "Pipong 🏓", selected: false },
+    { name: "Volleyball 🏐", selected: false },
+    { name: "Calisthenics 🦍", selected: false },
+  ]);
 
   useEffect(() => {
     navigation.addListener("beforeRemove", () => {
       dispatch({ type: SET_CURRENT_USER, payload: null });
     });
+    const user_interests =
+      currentUser != null ? currentUser.interests : userInterests;
+
+    const updatedInterests = JSON.parse(JSON.stringify(interests));
+    updatedInterests.forEach((val) =>
+      user_interests.some((int) => val.name == int)
+        ? (val.selected = true)
+        : null
+    );
+    setInterests(updatedInterests);
   }, [currentUser]);
 
   function getPremiumStyle() {
@@ -90,7 +116,7 @@ const User = ({ navigation, route }) => {
         <Text style={styles.aboutMeText}>About me</Text>
         {currentUser && currentUser._id != _id ? null : (
           <TouchableOpacity>
-            <FontAwesomeIcon icon={faPen} style={styles.icon} />
+            <FontAwesomeIcon icon={faPen} style={styles.icon} size={20} />
           </TouchableOpacity>
         )}
       </View>
@@ -102,7 +128,19 @@ const User = ({ navigation, route }) => {
           ? desc
           : "No personal info"}
       </Text>
-
+      <InterestsList
+        title={"Interests"}
+        onPress={() => setInterestModalVisible(true)}
+        data={interests}
+      />
+      <InterestModal
+        visible={interestModalVisible}
+        title="Interests"
+        closeModal={() => setInterestModalVisible(false)}
+        data={interests}
+        onChange={(arr) => setInterests(arr)}
+        user={currentUser ? currentUser._id : _id}
+      />
       <HomeMenu navigation={navigation} />
     </View>
   );
@@ -154,12 +192,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     marginLeft: "7%",
     marginRight: 10,
-    fontSize: 20,
+    fontSize: 22,
+    fontFamily: "RobotoBold",
   },
   icon: {
     color: colors.greenSecondary,
-    height: 20,
-    width: 20,
   },
   loading: {
     height: 300,
