@@ -68,7 +68,7 @@ const GroupProfile = ({ navigation, route }) => {
             leftIcon={faArrowLeft}
             position="relative"
             style={styles.topbar}
-            onPressLeft={() => navigation.navigate("Home")}
+            onPressLeft={() => navigation.goBack()}
           />
           <ImagePicker
             style={{ marginTop: 0, borderWidth: 2, borderColor: colors.orange }}

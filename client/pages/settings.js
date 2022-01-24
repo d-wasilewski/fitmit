@@ -79,7 +79,7 @@ const Settings = ({ navigation }) => {
         color={colors.greenSecondary}
         leftIcon={faArrowLeft}
         position="relative"
-        onPressLeft={() => navigation.navigate("Home")}
+        onPressLeft={() => navigation.goBack()}
       />
       <Text style={styles.section}>General</Text>
       <View style={styles.settingsWrapper}>
