@@ -6,6 +6,7 @@ import {
   SET_CURRENT_USER,
   SET_LOADING_PICTURE,
   SET_LOCATION,
+  SET_FIRST_TIME_MESSAGE,
 } from "../types";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   currentUser: null,
   loading: false,
   location: {},
+  firstTime: false,
 };
 
 export default function (state = initialState, action) {
@@ -61,6 +63,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         location: action.payload,
+      };
+
+    case SET_FIRST_TIME_MESSAGE:
+      return {
+        ...state,
+        firstTime: true,
       };
 
     default:

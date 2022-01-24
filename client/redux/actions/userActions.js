@@ -3,6 +3,7 @@ import {
   SET_UNAUTHENTICATED,
   SET_LOADING_PICTURE,
   CHANGE_PICTURE,
+  SET_FIRST_TIME_MESSAGE,
 } from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -48,6 +49,7 @@ export const registerUser = (userData) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
+      dispatch({ type: SET_FIRST_TIME_MESSAGE });
       dispatch(getGroups(res.data._id));
       dispatch(getEvents(res.data._id));
       registerForPushNotificationsAsync().then((pushToken) =>
