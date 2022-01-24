@@ -4,15 +4,23 @@ import InterestItem from "./InterestItem";
 import colors from "../../../styles/colors";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { useSelector } from "react-redux";
 
 const InterestsList = ({ style, title, onPress, data }) => {
+  const { username, desc, _id, profilePicture } = useSelector(
+    (state) => state?.user?.user
+  );
+  // profile of the user whose page is being viewed
+  const { currentUser } = useSelector((state) => state?.user);
   return (
     <View style={[styles.wrapper, style]}>
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity onPress={onPress}>
-          <FontAwesomeIcon icon={faPen} style={styles.icon} size={20} />
-        </TouchableOpacity>
+        {currentUser && currentUser._id != _id ? null : (
+          <TouchableOpacity onPress={onPress}>
+            <FontAwesomeIcon icon={faPen} style={styles.icon} size={20} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.container}>
         {/* <InterestItem name="jebanie disa 🍆" />

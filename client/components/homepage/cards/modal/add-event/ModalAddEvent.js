@@ -76,12 +76,18 @@ const ModalAddEvent = (props) => {
   async function sendPushNotification() {
     let tokensToNotify = [];
 
-    // TODO: usunac powiadomienia dla twórcy
-    currentGroup.members.map((member) => {
-      if (member["pushToken"] !== undefined) {
-        tokensToNotify.push(member["pushToken"]);
-      }
-    });
+    try {
+      currentGroup.members.map((member) => {
+        if (
+          member["pushToken"] !== undefined &&
+          member._id !== currentUser._id
+        ) {
+          tokensToNotify.push(member["pushToken"]);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
     const message = {
       to: tokensToNotify,

@@ -32,8 +32,8 @@ const Map = ({ navigation }) => {
   };
 
   const region2 = {
-    latitude: parseFloat(eventList[0].location.latitude),
-    longitude: parseFloat(eventList[0].location.longitude),
+    latitude: parseFloat(eventList[0]?.location?.latitude),
+    longitude: parseFloat(eventList[0]?.location?.longitude),
     latitudeDelta: 0.0115,
     longitudeDelta: 0.0015,
   };
@@ -126,7 +126,7 @@ const Map = ({ navigation }) => {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          initialRegion={region2}
+          initialRegion={eventList.length > 0 ? region2 : region}
           ref={_map}
         >
           <>

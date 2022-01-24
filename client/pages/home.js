@@ -78,9 +78,7 @@ const Home = ({ navigation }) => {
       >
         <Greeting username={username}></Greeting>
         <ActivitySlider />
-        {premium ? null : (
-          <GenericAd url="https://www.youtube.com/user/DisStream/videos" />
-        )}
+
         <EventSection />
         {premium ? null : (
           <GenericAd
