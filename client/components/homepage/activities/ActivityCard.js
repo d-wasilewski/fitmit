@@ -6,9 +6,9 @@ import colors from "../../../styles/colors";
 const ActivityCard = (props) => {
   const {
     statistics = [
-      { name: "Steps", value: 4560, unit: "m" },
-      { name: "Calories", value: 2480, unit: "kcal" },
-      { name: "Time In Action", value: "1:20", unit: "hr" },
+      { name: "Steps", value: 0, unit: "m" },
+      { name: "Calories", value: 0, unit: "kcal" },
+      { name: "Time In Action", value: "00:00", unit: "hr" },
     ],
     weekDay = "Today",
     date = "24.10.2021",
