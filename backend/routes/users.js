@@ -75,14 +75,14 @@ router.post("/uploadImage", async (req, res) => {
 
 //update user
 router.put("/:id", async (req, res) => {
-    try {
-      await UserSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body.newData,
-      });
-      res.status(200).json("Account has been updated");
-    } catch (err) {
-      return res.status(500).json(err);
-    }
+  try {
+    await UserSchema.findByIdAndUpdate(req.params.id, {
+      $set: req.body.newData,
+    });
+    res.status(200).json("Account has been updated");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
 // delete user (nie wiadomo czy bedzie)
@@ -123,7 +123,8 @@ router.get("/:id/events", async (req, res) => {
 
     const events = await EventSchema.find({
       group: { $in: groupIds },
-    });
+    }).sort({ date: 1 });
+    console.log(events);
 
     return res.status(200).json(events);
   } catch (error) {

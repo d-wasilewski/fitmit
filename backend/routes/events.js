@@ -17,6 +17,7 @@ router.get("/:id", async (req, res) => {
   try {
     const eventId = req.params.id;
     const event = await EventSchema.findById(eventId);
+    console.log(event);
     res.status(200).json(event);
   } catch (err) {
     console.log(err);

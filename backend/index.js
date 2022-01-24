@@ -15,7 +15,7 @@ const activityUrls = require("./routes/activity.js");
 
 dotenv.config();
 
-let config = require('config');
+let config = require("config");
 
 mongoose.connect(config.DBHost, () => console.log("Database connected"));
 // mongoose.connect(process.env.DB_URL, () => console.log("Database connected"));
@@ -40,4 +40,4 @@ app.listen(5000, () => {
   console.log("Server is running");
 });
 
-module.exports = app
+module.exports = app;
