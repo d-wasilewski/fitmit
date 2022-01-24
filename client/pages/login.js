@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   child: {
     height: "100%",
-    backgroundColor: "rgba(0,0,0,0.3)",
+    backgroundColor: "rgba(0,0,0,0.35)",
     justifyContent: "flex-end",
     alignItems: "center",
   },

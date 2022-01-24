@@ -1,12 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import colors from "../../styles/colors";
+import { useSelector } from "react-redux";
 
 const Greeting = (props) => {
+  const { firstTime } = useSelector((state) => state.user);
   return (
     <View style={styles.decorativeElement}>
       <Text style={styles.topText}>Hi, {props.username}</Text>
-      <Text style={styles.bottomText}>Welcome back</Text>
+      <Text style={styles.bottomText}>
+        {firstTime ? "Welcome" : "Welcome back"}
+      </Text>
     </View>
   );
 };

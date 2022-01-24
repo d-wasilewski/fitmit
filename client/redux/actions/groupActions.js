@@ -28,8 +28,6 @@ export const createGroup = (userId, name) => (dispatch) => {
 };
 
 export const populateMembers = (members) => (dispatch) => {
-  // console.log("populating", members);
-
   axios.put("/group/usersOfTheGroup", members).then((res) => {
     dispatch({
       type: POPULATE_MEMBERS,

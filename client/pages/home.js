@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,6 +12,7 @@ import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import * as Location from "expo-location";
 
 import TopBar from "../components/shared/TopBar";
 import HomeMenu from "../components/shared/HomeMenu";
@@ -22,6 +23,7 @@ import GroupsCard from "../components/homepage/cards/GroupsCard";
 import { logoutUser, updateUserData } from "../redux/actions/userActions";
 import { getEvents } from "../redux/actions/eventActions";
 import GenericAd from "../components/homepage/GenericAd";
+import { SET_LOCATION } from "../redux/types";
 
 const Home = ({ navigation }) => {
   const {
@@ -32,6 +34,7 @@ const Home = ({ navigation }) => {
   const { currentEvents } = useSelector((state) => state?.event);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     dispatch(getEvents(_id));
@@ -41,6 +44,38 @@ const Home = ({ navigation }) => {
     dispatch(logoutUser());
     navigation.navigate("Login");
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      await Location.watchPositionAsync(
+        {
+          timeInterval: 5000,
+          accuracy: Location.Accuracy.High,
+        },
+        (loc) => {
+          const payload = {
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude,
+          };
+
+          dispatch({ type: SET_LOCATION, payload: payload });
+        }
+      );
+    })();
+  }, []);
+
+  let text = "Waiting...";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   return (
     <View style={styles.container}>

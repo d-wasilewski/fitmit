@@ -1,4 +1,3 @@
-import axios from "axios";
 import moment from "moment";
 import React, { useState, useEffect, useRef } from "react";
 import {
@@ -18,10 +17,8 @@ import colors from "../../../../../styles/colors";
 import ModalDatePicker from "../ModalDatePicker";
 import ModalDropdownItem from "../ModalDropdownItem";
 import ModalDropdownMenu from "../ModalDropdownMenu";
-import ModalInput from "../ModalInput";
 import ModalTimePicker from "../ModalTimePicker";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import * as Location from "expo-location";
 import { createEvent } from "../../../../../redux/actions/eventActions";
 import useIsMounted from "../../../../../hooks/useIsMounted";
 
@@ -34,19 +31,6 @@ const ModalAddEvent = (props) => {
   const dispatch = useDispatch();
   const [marker, setMarker] = useState(null);
   const heightFromDimensions = Dimensions.get("window").height * 0.4;
-  const [location, setLocation] = useState({
-    timestamp: 0,
-    mocked: false,
-    coords: {
-      altitude: 0,
-      heading: 0,
-      altitudeAccuracy: 0,
-      latitude: 0,
-      speed: 0,
-      longitude: 0,
-      accuracy: 0,
-    },
-  });
   const [eventDate, setEventDate] = useState(dateNow);
   const [hours, setHours] = useState(dateNow.getHours());
   const [minutes, setMinutes] = useState(dateNow.getMinutes());
@@ -56,6 +40,7 @@ const ModalAddEvent = (props) => {
   const notificationListener = useRef();
   const responseListener = useRef();
   const isMounted = useIsMounted();
+  const { location } = useSelector((state) => state.user);
 
   async function createNewEvent(obj) {
     dispatch(createEvent(obj));
@@ -77,8 +62,8 @@ const ModalAddEvent = (props) => {
   }
 
   const region = {
-    latitude: location.coords.latitude,
-    longitude: location.coords.longitude,
+    latitude: location.latitude,
+    longitude: location.longitude,
     latitudeDelta: 0.0115,
     longitudeDelta: 0.0015,
   };
@@ -140,21 +125,6 @@ const ModalAddEvent = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest,
-      });
-      setLocation(location);
-    })();
-  }, []);
-
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modal}>
@@ -211,8 +181,8 @@ const ModalAddEvent = (props) => {
                 >
                   <Marker
                     coordinate={{
-                      latitude: location.coords.latitude,
-                      longitude: location.coords.longitude,
+                      latitude: location.latitude,
+                      longitude: location.longitude,
                     }}
                   />
                   {marker ? (
