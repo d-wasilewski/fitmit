@@ -34,7 +34,6 @@ const Home = ({ navigation }) => {
   const { currentEvents } = useSelector((state) => state?.event);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions();
-  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     dispatch(getEvents(_id));
@@ -69,13 +68,6 @@ const Home = ({ navigation }) => {
       );
     })();
   }, []);
-
-  let text = "Waiting...";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
 
   return (
     <View style={styles.container}>

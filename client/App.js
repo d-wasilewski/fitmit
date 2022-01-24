@@ -24,11 +24,12 @@ import { getUserData, logoutUser } from "./redux/actions/userActions";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { getGroups } from "./redux/actions/groupActions";
 import Map from "./pages/map";
+import { getEvents } from "./redux/actions/eventActions";
 
 const Stack = createNativeStackNavigator();
 
-// axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
-axios.defaults.baseURL = "http://192.168.100.8:5000/api/";
+axios.defaults.baseURL = "http://192.168.1.11:5000/api/";
+// axios.defaults.baseURL = "http://192.168.100.8:5000/api/";
 moment().locale("en-gb");
 
 Notifications.setNotificationHandler({
@@ -56,6 +57,7 @@ export default function App() {
         store.dispatch({ type: SET_AUTHENTICATED });
         store.dispatch(getUserData(decodedToken.user_id));
         store.dispatch(getGroups(decodedToken.user_id));
+        store.dispatch(getEvents(decodedToken.user_id));
 
         setRouteName("Home");
       }
