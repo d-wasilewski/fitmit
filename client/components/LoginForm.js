@@ -1,24 +1,32 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text, ToastAndroid } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Input from "./LoginInput";
 import Button from "./shared/Button";
 import { Formik as PoteznyForm } from "formik";
+import Toast from "react-native-toast-message";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { loginUser } from "../redux/actions/userActions";
+import { CLEAR_ERROR } from "../redux/types";
 
 const LoginForm = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.user);
   const [checkboxState, setCheckboxState] = useState(false);
 
   const handleSubmit = (values) => {
     values.checkboxState = checkboxState;
-    dispatch(loginUser(values));
-
-    navigation.navigate("Home");
+    dispatch(loginUser(values, navigation));
   };
+
+  useEffect(() => {
+    if (error != null) {
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+      dispatch({ type: CLEAR_ERROR });
+    }
+  }, [error]);
 
   const LoginSchema = Yup.object().shape({
     login: Yup.string().required("To pole jest wymagane!"),

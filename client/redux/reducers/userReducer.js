@@ -7,6 +7,8 @@ import {
   SET_LOADING_PICTURE,
   SET_LOCATION,
   SET_FIRST_TIME_MESSAGE,
+  SET_ERROR_MESSAGE,
+  CLEAR_ERROR,
 } from "../types";
 
 const initialState = {
@@ -16,6 +18,7 @@ const initialState = {
   loading: false,
   location: {},
   firstTime: false,
+  error: null,
 };
 
 export default function (state = initialState, action) {
@@ -69,6 +72,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         firstTime: true,
+      };
+
+    case SET_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: "Something went wrong",
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

@@ -4,6 +4,7 @@ import {
   SET_LOADING_PICTURE,
   CHANGE_PICTURE,
   SET_FIRST_TIME_MESSAGE,
+  SET_ERROR_MESSAGE,
 } from "../types";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,13 +13,15 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { getEvents } from "./eventActions";
 
-export const loginUser = (userData) => (dispatch) => {
+export const loginUser = (userData, navigation) => (dispatch) => {
   const { login: username, password, checkboxState } = userData;
 
   axios
     .post("/login", { username, password, checkboxState })
     .then((res) => {
+      console.log("success");
       setAuthorizationHeader(res.data.token);
+      navigation.navigate("Home");
       dispatch({
         type: SET_USER,
         payload: res.data,
@@ -31,12 +34,17 @@ export const loginUser = (userData) => (dispatch) => {
         )
       );
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: SET_ERROR_MESSAGE,
+      });
+    });
 };
 
-export const registerUser = (userData) => (dispatch) => {
+export const registerUser = (userData, navigation) => (dispatch) => {
   const { login, email, password } = userData;
-
+  console.log(navigation);
   axios
     .post("/register", {
       username: login,
@@ -45,6 +53,7 @@ export const registerUser = (userData) => (dispatch) => {
     })
     .then((res) => {
       setAuthorizationHeader(res.data.token);
+      navigation.navigate("Home");
       dispatch({
         type: SET_USER,
         payload: res.data,
@@ -58,7 +67,12 @@ export const registerUser = (userData) => (dispatch) => {
         )
       );
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: SET_ERROR_MESSAGE,
+      });
+    });
 };
 
 export const logoutUser = () => async (dispatch) => {
@@ -85,12 +99,11 @@ export const getUserData = (userId) => (dispatch) => {
 };
 
 export const updateUserData = (userId, newData) => (dispatch) => {
-  console.log("NEW DATA: ", newData);
   axios
     .put(`/${userId}`, {
       newData,
     })
-    .then((res) => console.log("User po pucie: ", res.data))
+    .then((res) => console.log(res.data))
     .catch((err) => console.log(err));
 
   if (newData?.settings?.dontLogout) {
@@ -137,7 +150,6 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }

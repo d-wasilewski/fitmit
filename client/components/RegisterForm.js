@@ -13,9 +13,7 @@ const RegisterForm = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    dispatch(registerUser(values));
-
-    navigation.navigate("Home");
+    dispatch(registerUser(values, navigation));
   };
 
   const [isTermsOfServiceModalVisible, setTermsOfServiceModalVisible] =

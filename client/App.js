@@ -21,16 +21,14 @@ import GroupProfile from "./pages/groupProfile";
 import Settings from "./pages/settings";
 
 import { getUserData, logoutUser } from "./redux/actions/userActions";
-import { SET_AUTHENTICATED } from "./redux/types";
+import { SET_AUTHENTICATED, CLEAR_ERROR } from "./redux/types";
 import { getGroups } from "./redux/actions/groupActions";
 import Map from "./pages/map";
 import { getEvents } from "./redux/actions/eventActions";
 
 const Stack = createNativeStackNavigator();
 
-
-axios.defaults.baseURL = "http://192.168.55.107:5000/api/";
-// axios.defaults.baseURL = "http://192.168.100.8:5000/api/";
+axios.defaults.baseURL = "https://fitmit.herokuapp.com/api/";
 
 moment().locale("en-gb");
 
