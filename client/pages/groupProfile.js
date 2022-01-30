@@ -119,12 +119,6 @@ const GroupProfile = ({ navigation, route }) => {
             data={eventsData}
             navigation={navigation}
           />
-          {premium ? null : (
-            <GenericAd
-              url="https://www.youtube.com/user/DisStream/videos"
-              style={{ marginBottom: 50 }}
-            />
-          )}
           <MemberCardHolder
             setModalVisible={() =>
               setAddMemberModalVisible(!isAddMemberModalVisible)
@@ -132,7 +126,6 @@ const GroupProfile = ({ navigation, route }) => {
             isModalVisible={isAddMemberModalVisible}
             navigation={navigation}
             cards={currentGroup.members}
-            navigation={navigation}
           />
         </View>
       </ScrollView>
@@ -151,7 +144,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexDirection: "column",
     width: "100%",
-    paddingBottom: 80,
+    paddingBottom: 160,
   },
   headerImage: {
     width: "100%",

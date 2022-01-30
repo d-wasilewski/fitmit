@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
+  Image
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
@@ -82,13 +83,17 @@ const User = ({ navigation, route }) => {
         style={[styles.image, { height: height * 0.3 }]}
       >
         {currentUser ? (
-          <ImagePicker
-            style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
-            navigation={navigation}
-            pictureFromCamera={route.params}
-            currentPicture={currentUser.profilePicture.url}
-            _id={currentUser._id}
-          />
+          // <ImagePicker
+          //   style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
+          //   navigation={navigation}
+          //   pictureFromCamera={route.params}
+          //   currentPicture={currentUser.profilePicture.url}
+          //   _id={currentUser._id}
+          // />
+          <Image
+          style={[styles.profilePicture, { marginTop: height * 0.12, }, ]}
+          source={{ uri: currentUser.profilePicture.url }}
+        />
         ) : (
           <ImagePicker
             style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
@@ -99,14 +104,24 @@ const User = ({ navigation, route }) => {
           />
         )}
       </ImageBackground>
-      <TopBar
+
+      
+      {currentUser && currentUser._id != _id ?
+       <TopBar
         title
         leftIcon={faArrowLeft}
-        rightIcon={<Ionicons name="settings-sharp" size={25} color="black" />}
         color={colors.blackPrimary}
         onPressLeft={() => navigation.goBack()}
-        onPressRight={() => navigation.navigate("Settings")}
-      />
+      /> : (
+          <TopBar
+          title
+          leftIcon={faArrowLeft}
+          rightIcon={<Ionicons name="settings-sharp" size={25} color="black" />}
+          color={colors.blackPrimary}
+          onPressLeft={() => navigation.goBack()}
+          onPressRight={() => navigation.navigate("Settings")}
+        />
+        )}
 
       <Text style={[styles.name, getPremiumStyle()]}>
         <Text style={{ fontSize: 32 }}>{premium ? "😎" : ""}</Text>
@@ -170,6 +185,8 @@ const styles = StyleSheet.create({
     height: 180,
     backgroundColor: "green",
     borderRadius: 9999,
+    borderWidth: 2,
+    borderColor: colors.greenSecondary,
   },
   name: {
     fontSize: 40,

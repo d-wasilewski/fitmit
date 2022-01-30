@@ -27,11 +27,18 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": [ "ACCESS_FINE_LOCATION", "ACCESS_BACKGROUND_LOCATION", "ACCESS_COARSE_LOCATION"],
+      "icon": "./assets/icon.png",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBwc96SLbo0qo0hL01BdWlYq6ueiT12YZE"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.yourcompany.yourappname",
+      "package": "com.fitmit",
       "versionCode": 1
     },
     "web": {
