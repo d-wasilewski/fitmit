@@ -35,7 +35,7 @@ const Settings = ({ navigation }) => {
 
   useEffect(() => {
     navigation.addListener("beforeRemove", (e) => {
-      if (!showButton) {
+      if (!showButton ) {
         return;
       }
       // Prevent default behavior of leaving the screen

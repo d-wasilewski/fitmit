@@ -25,6 +25,16 @@ import { getEvents } from "../redux/actions/eventActions";
 import GenericAd from "../components/homepage/GenericAd";
 import { SET_LOCATION } from "../redux/types";
 
+
+// import {
+//   AdMobBanner,
+//   AdMobInterstitial,
+//   PublisherBanner,
+//   AdMobRewarded,
+//   setTestDeviceIDAsync,
+// } from 'expo-ads-admob';
+// setTestDeviceIDAsync('EMULATOR');
+
 const Home = ({ navigation }) => {
   const {
     username,
@@ -69,6 +79,14 @@ const Home = ({ navigation }) => {
     })();
   }, []);
 
+  // const funkcja = async () => {
+  //   await AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712'); // Test ID, Replace with your-admob-unit-id
+  //   await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});
+  //   await AdMobInterstitial.showAdAsync();
+  // }
+
+  // funkcja()
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -80,12 +98,8 @@ const Home = ({ navigation }) => {
         <ActivitySlider />
 
         <EventSection />
-        {premium ? null : (
-          <GenericAd
-            url="https://www.youtube.com/user/DisStream/videos"
-            style={{ marginTop: -30, marginBottom: 30 }}
-          />
-        )}
+        
+        
         <GroupsCard navigation={navigation} />
       </ScrollView>
       <View style={[styles.boxBehindLogo, { height: height * 0.1 }]}>
@@ -118,7 +132,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     marginTop: "30%",
-    paddingBottom: 200,
+    paddingBottom: 250,
   },
   boxBehindLogo: {
     width: "100%",
