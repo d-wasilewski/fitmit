@@ -29,6 +29,7 @@ import { getEvents } from "./redux/actions/eventActions";
 const Stack = createNativeStackNavigator();
 
 axios.defaults.baseURL = "https://fitmit.herokuapp.com/api/";
+// axios.defaults.baseURL = "http://192.168.100.8:5000/api/";
 
 moment().locale("en-gb");
 

@@ -21,6 +21,7 @@ import TopBar from "../components/shared/TopBar";
 import { SET_CURRENT_USER } from "../redux/types";
 import InterestsList from "../components/homepage/user_profile/InterestsList";
 import InterestModal from "../components/homepage/user_profile/modal/InterestModal";
+import DescriptionModal from "../components/homepage/user_profile/modal/DescriptionModal";
 
 const User = ({ navigation, route }) => {
   const { height } = useWindowDimensions();
@@ -37,6 +38,7 @@ const User = ({ navigation, route }) => {
   );
 
   const [interestModalVisible, setInterestModalVisible] = useState(false);
+  const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
 
   const [interests, setInterests] = useState([
     { name: "Food 🍔", selected: false },
@@ -115,7 +117,7 @@ const User = ({ navigation, route }) => {
       <View style={styles.aboutMe}>
         <Text style={styles.aboutMeText}>About me</Text>
         {currentUser && currentUser._id != _id ? null : (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setDescriptionModalVisible(true)}>
             <FontAwesomeIcon icon={faPen} style={styles.icon} size={20} />
           </TouchableOpacity>
         )}
@@ -139,6 +141,13 @@ const User = ({ navigation, route }) => {
         closeModal={() => setInterestModalVisible(false)}
         data={interests}
         onChange={(arr) => setInterests(arr)}
+        user={currentUser ? currentUser._id : _id}
+      />
+      <DescriptionModal
+        visible={descriptionModalVisible}
+        title="About Me"
+        closeModal={() => setDescriptionModalVisible(false)}
+        data={desc}
         user={currentUser ? currentUser._id : _id}
       />
       <HomeMenu navigation={navigation} />
