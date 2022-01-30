@@ -35,6 +35,8 @@ const EventSchema = new mongoose.Schema({
     type: Date,
     require: true,
     default: new Date(),
+    expires: "2h",
+    required: true,
   },
 });
 
