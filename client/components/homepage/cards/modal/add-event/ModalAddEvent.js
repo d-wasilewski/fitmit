@@ -57,7 +57,7 @@ const ModalAddEvent = (props) => {
       eventType: eventType,
       group: groupId,
       location: marker,
-      date: eventDate.setHours(hours, minutes),
+      date: eventDate.setHours(hours, minutes, 0),
     };
   }
 

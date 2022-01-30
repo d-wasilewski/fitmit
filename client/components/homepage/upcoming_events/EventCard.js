@@ -139,7 +139,7 @@ const EventCard = (props) => {
                   {eventTime != undefined
                     ? moment(date).format("HH") +
                       ":" +
-                      moment(date).format("MM")
+                      moment(date).format("mm")
                     : ""}
                 </Text>
               </View>
