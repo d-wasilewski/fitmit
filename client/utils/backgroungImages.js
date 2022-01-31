@@ -14,6 +14,9 @@ const images = {
   football: {
     uri: require("../assets/football.png"),
   },
+  gym: {
+    uri: require("../assets/gym.png"),
+  },
 };
 
 export default images;

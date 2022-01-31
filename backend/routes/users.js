@@ -76,10 +76,14 @@ router.post("/uploadImage", async (req, res) => {
 //update user
 router.put("/:id", async (req, res) => {
   try {
-    await UserSchema.findByIdAndUpdate(req.params.id, {
-      $set: req.body.newData,
-    });
-    res.status(200).json("Account has been updated");
+    const userAfterUpdate = await UserSchema.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body.newData,
+      },
+      { new: true }
+    );
+    res.status(200).json(userAfterUpdate);
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -133,32 +137,4 @@ router.get("/:id/events", async (req, res) => {
   }
 });
 
-router.get("/:id/interests", async (req, res) => {
-  const userId = req.params.id;
-  try {
-    const interests = await UserSchema.findById(userId);
-
-    return res.status(200).json(interests);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
-  }
-});
-
-router.put("/:id/interests", async (req, res) => {
-  const interests = req.body.interests;
-  const userId = req.params.id;
-  try {
-    await UserSchema.findByIdAndUpdate(userId, {
-      $set: { interests },
-    });
-
-    return res.status(200).json("gituwa ziomal");
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
-  }
-});
-
-// add a friend (?)
 module.exports = router;

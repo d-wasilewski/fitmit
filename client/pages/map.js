@@ -128,7 +128,7 @@ const Map = ({ navigation }) => {
           style={styles.map}
           initialRegion={eventList.length > 0 ? region2 : region}
           ref={_map}
-          showsUserLocation
+          // showsUserLocation
         >
           <>
             {eventList ? (
@@ -164,7 +164,12 @@ const Map = ({ navigation }) => {
             ) : (
               <></>
             )}
-            
+            <Marker
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+            />
           </>
         </MapView>
       )}

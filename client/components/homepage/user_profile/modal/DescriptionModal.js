@@ -6,14 +6,12 @@ import {
   Pressable,
   TextInput,
   Dimensions,
-  Keyboard,
 } from "react-native";
 import React, { useState } from "react";
 import colors from "../../../../styles/colors";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { AntDesign } from "@expo/vector-icons";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateUserData } from "../../../../redux/actions/userActions";
 
@@ -55,9 +53,7 @@ const DescriptionModal = ({
               multiline={true}
               placeholder="Description"
               placeholderTextColor={colors.grey200}
-              // returnKeyType="done"
               spellCheck={false}
-              // onSubmitEditing={() => console.log("gowno")}
             />
             <Pressable
               onPress={async () => {

@@ -5,7 +5,8 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { AntDesign } from "@expo/vector-icons";
 import InterestModalItem from "./InterestModalItem";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateUserData } from "../../../../redux/actions/userActions";
 
 const InterestModal = ({
   visible,
@@ -16,6 +17,8 @@ const InterestModal = ({
   onChange,
   user,
 }) => {
+  const dispatch = useDispatch();
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modal}>
@@ -33,7 +36,7 @@ const InterestModal = ({
                 const arr = data
                   .filter((val) => val.selected)
                   .map((val) => val.name);
-                await axios.put(`/${user}/interests`, { interests: arr });
+                dispatch(updateUserData(user, { interests: arr }));
                 closeModal();
               }}
               style={styles.crossWrapper}

@@ -153,6 +153,7 @@ const ModalAddEvent = (props) => {
                 <ModalDropdownItem label="🏐 Volleyball" value="VOLLEYBALL" />
                 <ModalDropdownItem label="🏓 Pingpong" value="PINGPONG" />
                 <ModalDropdownItem label="⚽ Football" value="FOOTBALL" />
+                <ModalDropdownItem label="💪 Gym" value="GYM" />
                 <ModalDropdownItem
                   label="🦍 Calisthenics"
                   value="CALISTHENICS"

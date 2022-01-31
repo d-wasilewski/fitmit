@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
-  Image
+  Image,
 } from "react-native";
 import colors from "../styles/colors";
 import bgImg from "../assets/user_profile_bg.png";
@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 
+import noImg from "../assets/no-img.png";
 import ImagePicker from "../components/ImagePicker";
 import HomeMenu from "../components/shared/HomeMenu";
 import TopBar from "../components/shared/TopBar";
@@ -43,10 +44,10 @@ const User = ({ navigation, route }) => {
 
   const [interests, setInterests] = useState([
     { name: "Food 🍔", selected: false },
-    { name: "Mobilki 📱", selected: false },
+    { name: "Gym 💪", selected: false },
     { name: "Football 🗑", selected: false },
     { name: "Basketball 🏀", selected: false },
-    { name: "Pipong 🏓", selected: false },
+    { name: "Pingpong 🏓", selected: false },
     { name: "Volleyball 🏐", selected: false },
     { name: "Calisthenics 🦍", selected: false },
   ]);
@@ -85,17 +86,17 @@ const User = ({ navigation, route }) => {
         style={[styles.image, { height: height * 0.3 }]}
       >
         {currentUser ? (
-          // <ImagePicker
-          //   style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
-          //   navigation={navigation}
-          //   pictureFromCamera={route.params}
-          //   currentPicture={currentUser.profilePicture.url}
-          //   _id={currentUser._id}
-          // />
-          <Image
-          style={[styles.profilePicture, { marginTop: height * 0.12, }, ]}
-          source={{ uri: currentUser.profilePicture.url }}
-        />
+          currentUser?.profilePicture?.url ? (
+            <Image
+              style={[styles.profilePicture, { marginTop: height * 0.12 }]}
+              source={{ uri: currentUser.profilePicture.url }}
+            />
+          ) : (
+            <Image
+              style={[styles.profilePicture, { marginTop: height * 0.12 }]}
+              source={noImg}
+            />
+          )
         ) : (
           <ImagePicker
             style={{ borderWidth: 2, borderColor: colors.greenSecondary }}
@@ -107,15 +108,15 @@ const User = ({ navigation, route }) => {
         )}
       </ImageBackground>
 
-      
-      {currentUser && currentUser._id != _id ?
-       <TopBar
-        title
-        leftIcon={faArrowLeft}
-        color={colors.blackPrimary}
-        onPressLeft={() => navigation.goBack()}
-      /> : (
-          <TopBar
+      {currentUser && currentUser._id != _id ? (
+        <TopBar
+          title
+          leftIcon={faArrowLeft}
+          color={colors.blackPrimary}
+          onPressLeft={() => navigation.goBack()}
+        />
+      ) : (
+        <TopBar
           title
           leftIcon={faArrowLeft}
           rightIcon={<Ionicons name="settings-sharp" size={25} color="black" />}
@@ -123,7 +124,7 @@ const User = ({ navigation, route }) => {
           onPressLeft={() => navigation.goBack()}
           onPressRight={() => navigation.navigate("Settings")}
         />
-        )}
+      )}
 
       <Text style={[styles.name, getPremiumStyle()]}>
         <Text style={{ fontSize: 32 }}>{premium ? "😎" : ""}</Text>

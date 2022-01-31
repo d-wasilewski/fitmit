@@ -103,7 +103,12 @@ export const updateUserData = (userId, newData) => (dispatch) => {
     .put(`/${userId}`, {
       newData,
     })
-    .then((res) => console.log(res.data))
+    .then((res) => {
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+    })
     .catch((err) => console.log(err));
 
   if (newData?.settings?.dontLogout) {
